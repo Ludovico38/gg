@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Prodotti</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script type="text/javascript" src="js/bootstrap.js"></script>
+        <link rel="stylesheet" href="css/bootstrap.css" type="text/css"/>
+        <link rel="icon" href="img/icona_magazzino.png">
+    </head>
+    <body>
+
+        <!---------------------- INIZIO NAVBAR ------------------------>
+        
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigazione" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="index.html">
+                        <img alt="Magazzino" src="img/icona_magazzino.png" width="20"></a>
+                </div>
+
+                <div class="collapse navbar-collapse" id="navigazione">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/magazzino/prodotti.html">Prodotti</a></li>
+                        <li><a href="/magazzino/scaffali.html">Scaffali</a></li>
+                        <li><a href="#">Magazzinieri</a></li>
+                        <li><a href="#">Veicoli</a></li>
+                        <li><a href="#">Fornitori</a></li>
+                        <li><a href="#">Entrate/Uscite</a></li>
+                    </ul>                                        
+                </div>
+            </div>
+        </nav> 
+        
+        <!---------------------- FINE NAVBAR ------------------------>
+
+        <!---------------------- INIZIO INPUT PRODOTTO ------------------------>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <h3>------------------------------------------------------------------Inserisci un nuovo prodotto------------------------------------------------------------------</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+                <label class="label label-primary">Nome:</label> <input class="input-sm" type="text" name="nome">
+            </div>
+            <div class="col-sm-2">
+                <label class="label label-primary">Prezzo cad:</label> <input class="input-sm" type="number" name="prezzo" min="0.1" max="9999">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+                <label class="label label-primary">Provenienza:</label> <input class="input-sm" type="text" name="provenienza">
+            </div>
+            <div class="col-sm-2">
+                <label class="label label-primary">Scadenza:</label> <input class="input-sm" type="date" name="scadenza">
+            </div>
+            <div class="col-sm-1">
+                <input class="btn btn-primary" type="submit">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+                <label class="label label-primary">Fornitore:</label> <select class="input-sm" name="id_fornitore">
+                    <option value="1">Fornitore 1</option>
+                    <option value="2">Fornitore 2</option>
+                    <option value="3">Fornitore 3</option>
+                    <option value="4">Fornitore 4</option>
+                </select>
+            </div>
+        </div>
+
+        <!---------------------- FINE INPUT PRODOTTO ------------------------>
+
+        <!---------------------- INIZIO CERCA PRODOTTO ------------------------>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <h3>------------------------------------------------------------------Ricerca un prodotto nel magazzino------------------------------------------------------------------</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+                <label class="label label-primary">ID prodotto:</label> <input class="input-sm" type="number" name="id_ricerca" min="1">
+            </div>
+            <div class="col-sm-2">
+                <label class="label label-primary">Nome prodotto:</label> <input class="input-sm" type="text" name="nome_ricerca">
+            </div>
+            <div class="col-sm-1">
+                <input class="btn btn-primary" type="submit">
+            </div>
+        </div>
+        
+        <!---------------------- FINE CERCA PRODOTTO ------------------------>
+        
+        <!---------------------- INIZIO TABELLA PRODOTTI ------------------------>
+        
+        <div class="row">
+            <div class="col-sm-8">
+                <table class="table">
+                    <thead>
+                    <th>
+                        ID
+                    </th>
+                    <th>
+                        Nome
+                    </th>
+                    <th>
+                        Prezzo
+                    </th>
+                    <th>
+                        Provenienza
+                    </th>
+                    <th>
+                        Scadenza
+                    </th>
+                    <th>
+                        Fornitore
+                    </th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                Elemento1.ID
+                            </td>
+                            <td>
+                                Elemento1.Nome
+                            </td>
+                            <td>
+                                Elemento1.Prezzo
+                            </td>
+                            <td>
+                                Elemento1.Provenienza
+                            </td>
+                            <td>
+                                Elemento1.Scadenza
+                            </td>
+                            <td>
+                                Elemento1.Fornitore
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Elemento2.ID
+                            </td>
+                            <td>
+                                Elemento2.Nome
+                            </td>
+                            <td>
+                                Elemento2.Prezzo
+                            </td>
+                            <td>
+                                Elemento2.Provenienza
+                            </td>
+                            <td>
+                                Elemento2.Scadenza
+                            </td>
+                            <td>
+                                Elemento2.Fornitore
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!---------------------- FINE TABELLA PRODOTTI ------------------------>
+
+        <footer class="panel-footer">
+            <div class="text-right">
+                <span class="text-muted">Team: Alciati, Arrichiello, Lombardi, Rosmarino</span>
+            </div>
+        </footer>
+    </body>
+</html>
