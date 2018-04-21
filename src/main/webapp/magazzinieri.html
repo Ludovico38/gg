@@ -6,7 +6,7 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>Prodotti</title>
+        <title>Magazziniere</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script type="text/javascript" src="js/bootstrap.js"></script>
@@ -14,7 +14,7 @@ and open the template in the editor.
         <link rel="icon" href="img/icona_magazzino.png">
     </head>
     <body>
-
+        
         <!---------------------- INIZIO NAVBAR ------------------------>
         
         <nav class="navbar navbar-default">
@@ -44,140 +44,110 @@ and open the template in the editor.
         </nav> 
         
         <!---------------------- FINE NAVBAR ------------------------>
-
-        <!---------------------- INIZIO INPUT PRODOTTO ------------------------>
+        
+        <!---------------------- INIZIO INPUT MAGAZZINIERE ------------------------>
 
         <div class="row">
             <div class="col-sm-12">
-                <h3>------------------------------------------------------------------Inserisci un nuovo prodotto------------------------------------------------------------------</h3>
+                <h3>------------------------------------------------------------------Cerca un magazziniere------------------------------------------------------------------</h3>
             </div>
         </div>
         <div class="row">
             <div class="col-sm-2">
-                <label class="label label-primary">Nome:</label> <input class="input-sm" type="text" name="nome">
+                <label class="label label-primary">Codice fiscale:</label> <input class="input-sm" type="text" name="codice_fiscale">
             </div>
             <div class="col-sm-2">
-                <label class="label label-primary">Prezzo cad:</label> <input class="input-sm" type="number" name="prezzo" min="0.1" max="9999">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-2">
-                <label class="label label-primary">Provenienza:</label> <input class="input-sm" type="text" name="provenienza">
-            </div>
-            <div class="col-sm-2">
-                <label class="label label-primary">Scadenza:</label> <input class="input-sm" type="date" name="scadenza">
+                <label class="label label-primary">Patente:</label> <input class="input-sm" type="text" name="patente">
             </div>
             <div class="col-sm-1">
                 <input class="btn btn-primary" type="submit">
             </div>
         </div>
-        <div class="row">
-            <div class="col-sm-2">
-                <label class="label label-primary">Fornitore:</label> <select class="input-sm" name="id_fornitore">
-                    <option value="1">Fornitore 1</option>
-                    <option value="2">Fornitore 2</option>
-                    <option value="3">Fornitore 3</option>
-                    <option value="4">Fornitore 4</option>
-                </select>
-            </div>
-        </div>
 
-        <!---------------------- FINE INPUT PRODOTTO ------------------------>
-
-        <!---------------------- INIZIO CERCA PRODOTTO ------------------------>
-
-        <div class="row">
-            <div class="col-sm-12">
-                <h3>------------------------------------------------------------------Ricerca un prodotto nel magazzino------------------------------------------------------------------</h3>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-2">
-                <label class="label label-primary">ID prodotto:</label> <input class="input-sm" type="number" name="id_ricerca" min="1">
-            </div>
-            <div class="col-sm-2">
-                <label class="label label-primary">Nome prodotto:</label> <input class="input-sm" type="text" name="nome_ricerca">
-            </div>
-            <div class="col-sm-1">
-                <input class="btn btn-primary" type="submit">
-            </div>
-        </div>
+        <!---------------------- FINE INPUT MAGAZZINIERE ------------------------>
         
-        <!---------------------- FINE CERCA PRODOTTO ------------------------>
-        
-        <!---------------------- INIZIO TABELLA PRODOTTI ------------------------>
+        <!---------------------- INIZIO TABELLA MAGAZZINIERI ------------------------>
         
         <div class="row">
             <div class="col-sm-8">
                 <table class="table">
                     <thead>
                     <th>
-                        ID
+                        ID Magazziniere
                     </th>
                     <th>
                         Nome
                     </th>
                     <th>
-                        Prezzo
+                        Cognome
                     </th>
                     <th>
-                        Provenienza
+                        Data di nascita
                     </th>
                     <th>
-                        Scadenza
+                        Codice fiscale
                     </th>
                     <th>
-                        Fornitore
+                        Patente
+                    </th>
+                    <th>
+                        Veicolo assegnato
                     </th>
                     </thead>
                     <tbody>
                         <tr>
                             <td>
-                                Elemento1.ID
+                                Magazziniere1.ID
                             </td>
                             <td>
-                                Elemento1.Nome
+                                Magazziniere1.Nome
                             </td>
                             <td>
-                                Elemento1.Prezzo
+                                Magazziniere1.Cognome
                             </td>
                             <td>
-                                Elemento1.Provenienza
+                                Magazziniere1.Data_di_nascita
                             </td>
                             <td>
-                                Elemento1.Scadenza
+                                Magazziniere1.Codice_fiscale
                             </td>
                             <td>
-                                Elemento1.Fornitore
+                                Magazziniere1.Patente
+                            </td>
+                            <td>
+                                Magazziniere1.Veicolo_assegnato
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                Elemento2.ID
+                                Magazziniere2.ID
                             </td>
                             <td>
-                                Elemento2.Nome
+                                Magazziniere2.Nome
                             </td>
                             <td>
-                                Elemento2.Prezzo
+                                Magazziniere2.Cognome
                             </td>
                             <td>
-                                Elemento2.Provenienza
+                                Magazziniere2.Data_di_nascita
                             </td>
                             <td>
-                                Elemento2.Scadenza
+                                Magazziniere2.Codice_fiscale
                             </td>
                             <td>
-                                Elemento2.Fornitore
+                                Magazziniere2.Patente
+                            </td>
+                            <td>
+                                Magazziniere2.Veicolo_assegnato
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
-
-        <!---------------------- FINE TABELLA PRODOTTI ------------------------>
-
+        
+        <!---------------------- FINE TABELLA MAGAZZINIERI ------------------------>
+        
         <footer class="panel-footer">
             <div class="text-right">
                 <span class="text-muted">Team: Alciati, Arrichiello, Lombardi, Rosmarino</span>
