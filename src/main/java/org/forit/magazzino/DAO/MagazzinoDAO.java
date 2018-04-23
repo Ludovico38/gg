@@ -5,7 +5,6 @@
  */
 package org.forit.magazzino.DAO;
 
-import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -16,153 +15,105 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import org.forit.magazzino.DTO.PaymentToSupplierDTO;
-import org.forit.magazzino.DTO.ProdottoDTO;
-import org.forit.magazzino.DTO.ProductDetailsDTO;
-import org.forit.magazzino.DTO.ScaffaleDTO;
+import org.forit.magazzino.DTO.MagazziniereDTO;
 import org.forit.magazzino.Exception.MagazzinoException;
-import org.forit.magazzino.classes.Queries;
-
 
 /**
  *
- * @author forIT
+ * @author UTENTE
  */
 public class MagazzinoDAO {
 
-    public final static String DB_URL = "jdbc:mysql://localhost:3306/magazzino?useSSL=false&user=forit&password=12345";
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/magazzino?user=forit&password=12345";
 
-    public List<ProdottoDTO> getListaProdotti() throws MagazzinoException {
+    static {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private static final String listaMagazzinieri
+            = "SELECT tv.ID, m.NOME,m.COGNOME,m.PATENTE,m.ID_VEICOLO "
+            + "FROM veicolo v,tipo_veicolo tv, magazziniere m "
+            + "WHERE tv.ID = v.ID_TIPO_VEICOLO AND m.ID_VEICOLO = v.ID "
+            + "ORDER BY m.COGNOME";
+    private static final String inserisciMagazziniere
+            = "INSERT INTO magazziniere (NOME,COGNOME,CODICE_FISCALE,DATA_NASCITA,PATENTE,ID_VEICOLO)"
+            + "VALUES (?,?,?,?,?,?)";
+    private static final String modificaMagazziniere
+            = "UPDATE magazziniere "
+            + "SET NOME = ?, PATENTE = ?, COGNOME = ?, CODICE_FISCALE = ?, DATA_DI_NASCITA = ?, ID_PATENTE = ? "
+            + "WHERE ID = ?";
+    private static final String modificaMagazziniere2
+            = "UPDATE magazziniere "
+            + "SET NOME = ?, PATENTE = ?, COGNOME = ?, CODICE_FISCALE = ?, DATA_DI_NASCITA = ?, ID_PATENTE = ? "
+            + "WHERE CODICE_FISCALE = ?";
+
+    public List<MagazziniereDTO> getListaMagazziniere() throws MagazzinoException {
         try (Connection conn = DriverManager.getConnection(DB_URL);
                 Statement st = conn.createStatement();
-                ResultSet rs = st.executeQuery(Queries.GET_PRODOTTI)) {
-            List<ProdottoDTO> listaProdotti = new ArrayList<>();
-            long ID;
-            BigDecimal prezzo;
-            String nome, provenienza;
-            LocalDate scadenza;
+                ResultSet rs = st.executeQuery(listaMagazzinieri)) {
+
+            List<MagazziniereDTO> listaMagazziniere = new ArrayList<>();
             while (rs.next()) {
-                ID = rs.getLong("ID");
-                nome = rs.getString("NOME");
-                prezzo = new BigDecimal(rs.getDouble("PREZZO"));
-                if (rs.getDate("SCADENZA") == null) {
-                    scadenza = LocalDate.now();
-                } else {
-                    scadenza = rs.getDate("SCADENZA").toLocalDate();
-                }
-                provenienza = rs.getString("PROVENIENZA");
-                listaProdotti.add(new ProdottoDTO(ID, nome, prezzo, scadenza, provenienza));
+                long id = rs.getLong("ID");
+                String nome = rs.getString("NOME");
+                String cognome = rs.getString("COGNOME");
+                String patente = rs.getString("PATENTE");
+                long idveicolo = rs.getLong("ID_VEICOLO");
+
+                MagazziniereDTO Magazziniere = new MagazziniereDTO(id, nome, cognome, patente, idveicolo);
+                listaMagazziniere.add(Magazziniere);
             }
-            return listaProdotti;
+            return listaMagazziniere;
         } catch (SQLException ex) {
-            System.out.println("ERRORE:" + ex);
+            System.out.println("Si è verificato un errore" + ex.getMessage());
             throw new MagazzinoException(ex);
         }
     }
 
-    public List<ScaffaleDTO> getListaScaffali() throws MagazzinoException {
-        try (Connection conn = DriverManager.getConnection(DB_URL);
-                Statement st = conn.createStatement();
-                ResultSet rs = st.executeQuery(Queries.GET_SCAFFALI)) {
-            List<ScaffaleDTO> listaScaffali = new ArrayList<>();
-            long ID;
-            String descrizione;
-            while (rs.next()) {
-                ID = rs.getLong("ID");
-                descrizione = rs.getString("DESCRIZIONE");
-                listaScaffali.add(new ScaffaleDTO(ID, descrizione));
+    public void insertMagazzinieri(String nome, String cognome, String codiceFiscale, LocalDate datanascita, String patente, long idveicolo) throws MagazzinoException {
+        try (Connection conn = DriverManager.getConnection(DB_URL)) {
+            conn.setAutoCommit(false);
+            try (PreparedStatement ps1 = conn.prepareStatement(inserisciMagazziniere, Statement.RETURN_GENERATED_KEYS)) {
+
+                ps1.setString(1, nome);
+                ps1.setString(2, cognome);
+                ps1.setString(3, codiceFiscale);
+                ps1.setDate(4, Date.valueOf(datanascita));
+                ps1.setString(5, patente);
+                ps1.setLong(6, idveicolo);
+                ps1.executeUpdate();
+
+                ResultSet generatedKey = ps1.getGeneratedKeys();
+                generatedKey.next();
+                //long Id = generatedKey.getLong(1);
+
+                conn.commit();
+            } catch (SQLException ex) {
+                conn.rollback();
+                throw ex;
             }
-            return listaScaffali;
+
         } catch (SQLException ex) {
-            System.out.println("ERRORE:" + ex);
-            throw new MagazzinoException(ex);
+            System.out.println("Si è verificato un errore" + ex.getMessage());
+
         }
     }
 
-    public void insertProdotto(String nome, BigDecimal prezzo, LocalDate scadenza, String provenienza, long id_fornitore) throws MagazzinoException {
-        try (Connection conn = DriverManager.getConnection(DB_URL);
-                PreparedStatement st = conn.prepareStatement(Queries.INSERT_PRODOTTI)) {
-            st.setString(1, nome);
-            st.setBigDecimal(2, prezzo);
-            st.setDate(3, Date.valueOf(scadenza));
-            st.setString(4, provenienza);
-            st.setLong(5, id_fornitore);
-            st.executeUpdate();
-        } catch (SQLException ex) {
-            System.out.println("ERRORE:" + ex);
-            throw new MagazzinoException(ex);
-        }
-    }
+    public void updateMagazziniere() throws MagazzinoException {
+        try (Connection conn = DriverManager.getConnection(DB_URL)) {
+            conn.setAutoCommit(false);
+            try (PreparedStatement ps2 = conn.prepareStatement(modificaMagazziniere, Statement.RETURN_GENERATED_KEYS)) {
 
-    public void insertProdotto(ProdottoDTO prodotto) throws MagazzinoException {
-        try (Connection conn = DriverManager.getConnection(DB_URL);
-                PreparedStatement st = conn.prepareStatement(Queries.INSERT_PRODOTTI)) {
-            st.setString(1, prodotto.getNome());
-            st.setBigDecimal(2, prodotto.getPrezzo());
-            st.setDate(3, Date.valueOf(prodotto.getScadenza()));
-            st.setString(4, prodotto.getProvenienza());
-            st.setLong(5, prodotto.getIdFornitore());
-            st.executeUpdate();
-        } catch (SQLException ex) {
-            System.out.println("ERRORE:" + ex);
-            throw new MagazzinoException(ex);
-        }
-    }
-
-    public List<PaymentToSupplierDTO> getPayments(int min, int max) throws MagazzinoException {
-        try (Connection conn = DriverManager.getConnection(DB_URL);
-                PreparedStatement pst = conn.prepareStatement(Queries.PAYMENTS_BY_SUPPLIER)) {
-            List<PaymentToSupplierDTO> listaPagamenti = new ArrayList<>();
-            String nome;
-            BigDecimal pagamento;
-            pst.setInt(1, min);
-            pst.setInt(2, max);
-            ResultSet rs = pst.executeQuery();
-            while (rs.next()) {
-                nome = rs.getString("NOME");
-                pagamento = rs.getBigDecimal("PAGAMENTO");
-                listaPagamenti.add(new PaymentToSupplierDTO(nome, pagamento));
+            } catch (SQLException ex) {
+                conn.rollback();
+                throw ex;
             }
-            return listaPagamenti;
         } catch (SQLException ex) {
-            System.out.println("ERRORE:" + ex);
-            throw new MagazzinoException(ex);
-        }
-    }
-
-    public List<ProductDetailsDTO> getProductDetails() throws MagazzinoException {
-        try (Connection conn = DriverManager.getConnection(DB_URL);
-                Statement st=conn.createStatement();
-                ResultSet rs = st.executeQuery(Queries.GET_PRODUCTS_DETAILS)) {
-            List<ProductDetailsDTO> listaDettagli = new ArrayList<>();
-            String nome, provenienza, categoria, nome_fornitore;
-            BigDecimal prezzo_vendita, prezzo_acquisto, spesa_totale, ritorno;
-            LocalDate scadenza;
-            long id_scaffale;
-            int quantita_acquistati, quantita_venduti;
-            while (rs.next()) {
-                nome = rs.getString("NOME");
-                prezzo_vendita = rs.getBigDecimal("PREZZO");
-                provenienza = rs.getString("PROVENIENZA");
-                if (rs.getDate("SCADENZA") == null) {
-                    scadenza = LocalDate.of(9999, 1, 1);
-                } else {
-                    scadenza = rs.getDate("SCADENZA").toLocalDate();
-                }
-                id_scaffale = rs.getLong("ID_SCAFFALE");
-                categoria = rs.getString("CATEGORIA");
-                prezzo_acquisto = rs.getBigDecimal("PREZZO_DI_ACQUISTO");
-                quantita_acquistati = rs.getInt("QUANTITA_ACQUISTATI");
-                spesa_totale = rs.getBigDecimal("SPESA_TOTALE");
-                quantita_venduti = rs.getInt("QUANTITA_VENDUTE");
-                ritorno = rs.getBigDecimal("RITORNO");
-                nome_fornitore = rs.getString("NOME_FORNITORE");
-                listaDettagli.add(new ProductDetailsDTO(nome, prezzo_vendita, provenienza, scadenza, id_scaffale, categoria, prezzo_acquisto, quantita_acquistati, spesa_totale, quantita_venduti, ritorno, nome_fornitore));
-            }
-            return listaDettagli;
-        } catch (SQLException ex) {
-            System.out.println("ERRORE:" + ex);
-            throw new MagazzinoException(ex);
+            System.out.println("Si è verificato un errore" + ex.getMessage());
         }
     }
 }
