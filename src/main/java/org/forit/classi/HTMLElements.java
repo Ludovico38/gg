@@ -262,7 +262,7 @@ public class HTMLElements {
                 + "<a href='?ID=" + veicolo.getId() + "&action=view' ><span class='glyphicon glyphicon-eye-open'></span></a>"
                 + "<a href='?ID=" + veicolo.getId() + "&action=edit' ><span class='glyphicon glyphicon-pencil'></span></a>"
                 + "</td>"
-                + "<td>" + veicolo.getTipoVeiocolo() + "</td>"
+                + "<td>" + veicolo.getTipoVeicolo() + "</td>"
                 + "<td>" + veicolo.getPatenteRichiesta()+ "</td>").reduce(codiceElementi, String::concat);
         tabella = tabella.replace("<!--SOSTITUISCI_QUI_GLI_ELEMENTI-->", codiceElementi);
         return tabella;
