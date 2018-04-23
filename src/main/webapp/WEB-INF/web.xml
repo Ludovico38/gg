@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <servlet>
-        <servlet-name>MagazzinoServlet</servlet-name>
-        <servlet-class>org.forit.magazzino.servlet.MagazzinoServlet</servlet-class>
+        <servlet-name>ProdottiServlet</servlet-name>
+        <servlet-class>org.forit.magazzino.servlet.ProdottiServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>FornitoriServlet</servlet-name>
@@ -24,6 +24,10 @@
         <servlet-name>VeicoliServlet</servlet-name>
         <url-pattern>/veicoli</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProdottiServlet</servlet-name>
+        <url-pattern>/prodotti</url-pattern>
+    </servlet-mapping>            
     <session-config>
         <session-timeout>
             30
