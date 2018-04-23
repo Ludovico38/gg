@@ -30,7 +30,15 @@ import org.forit.magazzino.classes.Queries;
  */
 public class MagazzinoDAO {
 
-    public final static String DB_URL = "jdbc:mysql://localhost:3306/magazzino?useSSL=false&user=forit&password=12345";
+    public final static String DB_URL = "jdbc:mysql://localhost:3306/magazzino?useSSL=false&user=ForIT&password=12345";
+    
+    static {
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+        } catch (ClassNotFoundException ex){
+            ex.printStackTrace();
+        }
+    }
 
     public List<ProdottoDTO> getListaProdotti() throws MagazzinoException {
         try (Connection conn = DriverManager.getConnection(DB_URL);
@@ -44,7 +52,7 @@ public class MagazzinoDAO {
             while (rs.next()) {
                 ID = rs.getLong("ID");
                 nome = rs.getString("NOME");
-                prezzo = new BigDecimal(rs.getDouble("PREZZO"));
+                prezzo = rs.getBigDecimal("PREZZO");
                 if (rs.getDate("SCADENZA") == null) {
                     scadenza = LocalDate.now();
                 } else {
