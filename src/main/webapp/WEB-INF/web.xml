@@ -9,16 +9,41 @@
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
+    <servlet>
+        <servlet-name>ProdottiServlet</servlet-name>
+        <servlet-class>org.forit.magazzino.servlet.ProdottiServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ScaffaliServlet</servlet-name>
+        <servlet-class>org.forit.magazzino.servlet.ScaffaliServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>MagazzinieriServlet</servlet-name>
+        <servlet-class>org.forit.magazzino.servlet.MagazzinieriServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>VeicoliServlet</servlet-name>
+        <servlet-class>org.forit.magazzino.servlet.VeicoliServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
-        <servlet-name>Faces Servlet</servlet-name>
-        <url-pattern>/faces/*</url-pattern>
+        <servlet-name>ProdottiServlet</servlet-name>
+        <url-pattern>/prodotti</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ScaffaliServlet</servlet-name>
+        <url-pattern>/scaffali</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MagazzinieriServlet</servlet-name>
+        <url-pattern>/magazzinieri</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>VeicoliServlet</servlet-name>
+        <url-pattern>/veicoli</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
-    <welcome-file-list>
-        <welcome-file>faces/index.xhtml</welcome-file>
-    </welcome-file-list>
 </web-app>
