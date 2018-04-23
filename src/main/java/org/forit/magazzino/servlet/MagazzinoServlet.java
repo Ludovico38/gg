@@ -3,10 +3,6 @@ package org.forit.magazzino.servlet;
 import java.io.PrintWriter;
 import javax.servlet.http.HttpServlet;
 
-/**
- *
- * @author UTENTE
- */
 public class MagazzinoServlet extends HttpServlet {
 
     protected final static String HEAD
