@@ -13,14 +13,14 @@ import java.util.Objects;
  */
 public class VeicoloDTO {
     private long id;
-    private String tipoVeiocolo,patenteRichiesta;
+    private String tipoVeicolo,patenteRichiesta;
 
     public VeicoloDTO() {
     }
 
-    public VeicoloDTO(long id, String tipoVeiocolo, String patenteRichiesta) {
+    public VeicoloDTO(long id, String tipoVeicolo, String patenteRichiesta) {
         this.id = id;
-        this.tipoVeiocolo = tipoVeiocolo;
+        this.tipoVeicolo = tipoVeicolo;
         this.patenteRichiesta = patenteRichiesta;
     }
 
@@ -32,12 +32,12 @@ public class VeicoloDTO {
         this.id = id;
     }
 
-    public String getTipoVeiocolo() {
-        return tipoVeiocolo;
+    public String getTipoVeicolo() {
+        return tipoVeicolo;
     }
 
-    public void setTipoVeiocolo(String tipoVeiocolo) {
-        this.tipoVeiocolo = tipoVeiocolo;
+    public void setTipoVeicolo(String tipoVeicolo) {
+        this.tipoVeicolo = tipoVeicolo;
     }
 
     public String getPatenteRichiesta() {
@@ -52,7 +52,7 @@ public class VeicoloDTO {
     public int hashCode() {
         int hash = 5;
         hash = 53 * hash + (int) (this.id ^ (this.id >>> 32));
-        hash = 53 * hash + Objects.hashCode(this.tipoVeiocolo);
+        hash = 53 * hash + Objects.hashCode(this.tipoVeicolo);
         hash = 53 * hash + Objects.hashCode(this.patenteRichiesta);
         return hash;
     }
@@ -72,7 +72,7 @@ public class VeicoloDTO {
         if (this.id != other.id) {
             return false;
         }
-        if (!Objects.equals(this.tipoVeiocolo, other.tipoVeiocolo)) {
+        if (!Objects.equals(this.tipoVeicolo, other.tipoVeicolo)) {
             return false;
         }
         if (!Objects.equals(this.patenteRichiesta, other.patenteRichiesta)) {
@@ -83,6 +83,6 @@ public class VeicoloDTO {
 
     @Override
     public String toString() {
-        return "VeicoloDTO{" + "id=" + id + ", tipoVeiocolo=" + tipoVeiocolo + ", patenteRichiesta=" + patenteRichiesta + '}';
+        return "VeicoloDTO{" + "id=" + id + ", tipoVeicolo=" + tipoVeicolo + ", patenteRichiesta=" + patenteRichiesta + '}';
     }
 }
