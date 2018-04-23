@@ -2,11 +2,11 @@
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <servlet>
         <servlet-name>FornitoriServlet</servlet-name>
-        <servlet-class>org.forit.magazzino.servlet.FornitoriServlet</servlet-class>
+        <servlet-class>org.forit.magazzino.servlet.MagazzinoServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>FornitoriServlet</servlet-name>
-        <url-pattern>/fornitori</url-pattern>
+        <servlet-name>MagazzinoServlet</servlet-name>
+        <url-pattern>/magazzino</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
