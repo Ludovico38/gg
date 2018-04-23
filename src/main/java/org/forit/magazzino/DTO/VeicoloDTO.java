@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.forit.DTO;
+package org.forit.magazzino.DTO;
 
 import java.util.Objects;
 
@@ -18,9 +18,9 @@ public class VeicoloDTO {
     public VeicoloDTO() {
     }
 
-    public VeicoloDTO(long id, String tipoVeiocolo, String patenteRichiesta) {
+    public VeicoloDTO(long id, String tipoVeicolo, String patenteRichiesta) {
         this.id = id;
-        this.tipoVeicolo = tipoVeiocolo;
+        this.tipoVeicolo = tipoVeicolo;
         this.patenteRichiesta = patenteRichiesta;
     }
 
@@ -32,7 +32,7 @@ public class VeicoloDTO {
         this.id = id;
     }
 
-    public String getTipoVeiocolo() {
+    public String getTipoVeicolo() {
         return tipoVeicolo;
     }
 
@@ -83,6 +83,6 @@ public class VeicoloDTO {
 
     @Override
     public String toString() {
-        return "VeicoloDTO{" + "id=" + id + ", tipoVeiocolo=" + tipoVeicolo + ", patenteRichiesta=" + patenteRichiesta + '}';
+        return "VeicoloDTO{" + "id=" + id + ", tipoVeicolo=" + tipoVeicolo + ", patenteRichiesta=" + patenteRichiesta + '}';
     }
 }

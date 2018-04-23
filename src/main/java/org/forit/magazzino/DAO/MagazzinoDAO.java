@@ -16,10 +16,12 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import org.forit.magazzino.DTO.MagazziniereDTO;
 import org.forit.magazzino.DTO.PaymentToSupplierDTO;
 import org.forit.magazzino.DTO.ProdottoDTO;
 import org.forit.magazzino.DTO.ProductDetailsDTO;
 import org.forit.magazzino.DTO.ScaffaleDTO;
+import org.forit.magazzino.DTO.VeicoloDTO;
 import org.forit.magazzino.Exception.MagazzinoException;
 import org.forit.magazzino.classes.Queries;
 
@@ -32,6 +34,14 @@ public class MagazzinoDAO {
 
     public final static String DB_URL = "jdbc:mysql://localhost:3306/magazzino?useSSL=false&user=forit&password=12345";
 
+    static{
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
     public List<ProdottoDTO> getListaProdotti() throws MagazzinoException {
         try (Connection conn = DriverManager.getConnection(DB_URL);
                 Statement st = conn.createStatement();
@@ -73,6 +83,50 @@ public class MagazzinoDAO {
                 listaScaffali.add(new ScaffaleDTO(ID, descrizione));
             }
             return listaScaffali;
+        } catch (SQLException ex) {
+            System.out.println("ERRORE:" + ex);
+            throw new MagazzinoException(ex);
+        }
+    }
+    
+    public List<MagazziniereDTO> getListaMagazzinieri() throws MagazzinoException{
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+                Statement st = conn.createStatement();
+                ResultSet rs = st.executeQuery(Queries.GET_MAGAZZINIERI)) {
+            List<MagazziniereDTO> listaMagazzinieri = new ArrayList<>();
+            long ID;
+            String nome,cognome,codiceFiscale,patente;
+            LocalDate dataNascita;
+            while (rs.next()) {
+                ID = rs.getLong("ID");
+                nome = rs.getString("NOME");
+                cognome = rs.getString("COGNOME");
+                codiceFiscale = rs.getString("CODICE_FISCALE");
+                patente = rs.getString("PATENTE");
+                dataNascita = rs.getDate("DATA_NASCITA").toLocalDate();
+                listaMagazzinieri.add(new MagazziniereDTO(ID, nome,cognome,codiceFiscale,dataNascita,patente));
+            }
+            return listaMagazzinieri;
+        } catch (SQLException ex) {
+            System.out.println("ERRORE:" + ex);
+            throw new MagazzinoException(ex);
+        }
+    }
+    
+    public List<VeicoloDTO> getListaVeicoli() throws MagazzinoException{
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+                Statement st = conn.createStatement();
+                ResultSet rs = st.executeQuery(Queries.GET_VEICOLI)) {
+            List<VeicoloDTO> listaVeicoli = new ArrayList<>();
+            long ID;
+            String tipoVeicolo,patenteRichiesta;
+            while (rs.next()) {
+                ID = rs.getLong("ID");
+                tipoVeicolo = rs.getString("DESCRIZIONE");
+                patenteRichiesta = rs.getString("PATENTE_RICHIESTA");
+                listaVeicoli.add(new VeicoloDTO(ID,tipoVeicolo,patenteRichiesta));
+            }
+            return listaVeicoli;
         } catch (SQLException ex) {
             System.out.println("ERRORE:" + ex);
             throw new MagazzinoException(ex);
