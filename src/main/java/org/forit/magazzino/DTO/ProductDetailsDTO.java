@@ -14,6 +14,7 @@ import java.util.Objects;
  * @author forIT
  */
 public class ProductDetailsDTO {
+    private long id;
     private String nome;
     private BigDecimal prezzo_vendita;
     private String provenienza;
@@ -43,6 +44,30 @@ public class ProductDetailsDTO {
         this.quantita_venduti = quantita_venduti;
         this.ritorno = ritorno;
         this.nome_fornitore = nome_fornitore;
+    }
+
+    public ProductDetailsDTO(long id,String nome, BigDecimal prezzo_vendita, String provenienza, LocalDate scadenza, long id_scaffale, String categoria, BigDecimal prezzo_acquisto, int quantita_acquistati, BigDecimal spesa_totale, int quantita_venduti, BigDecimal ritorno, String nome_fornitore) {
+        this.id=id;
+        this.nome = nome;
+        this.prezzo_vendita = prezzo_vendita;
+        this.provenienza = provenienza;
+        this.scadenza = scadenza;
+        this.id_scaffale = id_scaffale;
+        this.categoria = categoria;
+        this.prezzo_acquisto = prezzo_acquisto;
+        this.quantita_acquistati = quantita_acquistati;
+        this.spesa_totale = spesa_totale;
+        this.quantita_venduti = quantita_venduti;
+        this.ritorno = ritorno;
+        this.nome_fornitore = nome_fornitore;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getNome() {
@@ -143,19 +168,20 @@ public class ProductDetailsDTO {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 47 * hash + Objects.hashCode(this.nome);
-        hash = 47 * hash + Objects.hashCode(this.prezzo_vendita);
-        hash = 47 * hash + Objects.hashCode(this.provenienza);
-        hash = 47 * hash + Objects.hashCode(this.scadenza);
-        hash = 47 * hash + (int) (this.id_scaffale ^ (this.id_scaffale >>> 32));
-        hash = 47 * hash + Objects.hashCode(this.categoria);
-        hash = 47 * hash + Objects.hashCode(this.prezzo_acquisto);
-        hash = 47 * hash + this.quantita_acquistati;
-        hash = 47 * hash + Objects.hashCode(this.spesa_totale);
-        hash = 47 * hash + this.quantita_venduti;
-        hash = 47 * hash + Objects.hashCode(this.ritorno);
-        hash = 47 * hash + Objects.hashCode(this.nome_fornitore);
+        int hash = 3;
+        hash = 37 * hash + (int) (this.id ^ (this.id >>> 32));
+        hash = 37 * hash + Objects.hashCode(this.nome);
+        hash = 37 * hash + Objects.hashCode(this.prezzo_vendita);
+        hash = 37 * hash + Objects.hashCode(this.provenienza);
+        hash = 37 * hash + Objects.hashCode(this.scadenza);
+        hash = 37 * hash + (int) (this.id_scaffale ^ (this.id_scaffale >>> 32));
+        hash = 37 * hash + Objects.hashCode(this.categoria);
+        hash = 37 * hash + Objects.hashCode(this.prezzo_acquisto);
+        hash = 37 * hash + this.quantita_acquistati;
+        hash = 37 * hash + Objects.hashCode(this.spesa_totale);
+        hash = 37 * hash + this.quantita_venduti;
+        hash = 37 * hash + Objects.hashCode(this.ritorno);
+        hash = 37 * hash + Objects.hashCode(this.nome_fornitore);
         return hash;
     }
 
@@ -171,6 +197,9 @@ public class ProductDetailsDTO {
             return false;
         }
         final ProductDetailsDTO other = (ProductDetailsDTO) obj;
+        if (this.id != other.id) {
+            return false;
+        }
         if (this.id_scaffale != other.id_scaffale) {
             return false;
         }
@@ -212,7 +241,7 @@ public class ProductDetailsDTO {
 
     @Override
     public String toString() {
-        return "ProductDetailsDTO{" + "nome=" + nome + ", prezzo_vendita=" + prezzo_vendita + ", provenienza=" + provenienza + ", scadenza=" + scadenza + ", id_scaffale=" + id_scaffale + ", categoria=" + categoria + ", prezzo_acquisto=" + prezzo_acquisto + ", quantita_acquistati=" + quantita_acquistati + ", spesa_totale=" + spesa_totale + ", quantita_venduti=" + quantita_venduti + ", ritorno=" + ritorno + ", nome_fornitore=" + nome_fornitore + '}';
+        return "ProductDetailsDTO{" + "id=" + id + ", nome=" + nome + ", prezzo_vendita=" + prezzo_vendita + ", provenienza=" + provenienza + ", scadenza=" + scadenza + ", id_scaffale=" + id_scaffale + ", categoria=" + categoria + ", prezzo_acquisto=" + prezzo_acquisto + ", quantita_acquistati=" + quantita_acquistati + ", spesa_totale=" + spesa_totale + ", quantita_venduti=" + quantita_venduti + ", ritorno=" + ritorno + ", nome_fornitore=" + nome_fornitore + '}';
     }
     
     

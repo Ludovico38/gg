@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.forit.magazzino.DAO.MagazzinoDAO;
 import org.forit.magazzino.DTO.ProdottoDTO;
+import org.forit.magazzino.DTO.ProductDetailsDTO;
 import org.forit.magazzino.Exception.MagazzinoException;
 import org.forit.magazzino.utilities.HTMLElements;
 
@@ -42,17 +43,18 @@ public class ProdottiServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String action = req.getParameter("action");
         resp.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = resp.getWriter()) {
-            writePage(out, action);
+            writePage(out,req);
         } catch (MagazzinoException ex) {
             Logger.getLogger(ProdottiServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public static void writePage(PrintWriter out, String action) throws MagazzinoException {
+    public static void writePage(PrintWriter out,HttpServletRequest req) throws MagazzinoException {
         MagazzinoDAO magazzino = new MagazzinoDAO();
+        String action = req.getParameter("action");
+        long id=Long.parseLong(req.getParameter("ID"));
         out.println("<!DOCTYPE html>");
         out.println("<html>");
         out.println(HTMLElements.HEAD);
@@ -63,11 +65,17 @@ public class ProdottiServlet extends HttpServlet {
         } else {
             switch (action) {
                 case "view":
+                    writeDettagli(out,magazzino,id);
                     break;
             }
         }
         out.println(HTMLElements.FOOTER);
         out.println("</html>");
+    }
+    
+    public static void writeDettagli(PrintWriter out, MagazzinoDAO magazzino,long id_prodotto) throws MagazzinoException{
+        ProductDetailsDTO dettaglio =magazzino.getProductDetail(id_prodotto);
+        out.println(HTMLElements.getDettagliProdotto(dettaglio));
     }
 
     public static void writeListaProdotti(PrintWriter out, MagazzinoDAO magazzino) throws MagazzinoException {
