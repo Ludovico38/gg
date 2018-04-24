@@ -17,16 +17,20 @@ public class MagazziniereDTO {
     private long id;
     private String nome;
     private String cognome;
+    private String codiceFiscale;
+    private LocalDate dataDiNascita;
     private String patente;
     private long idVeicolo;
 
     public MagazziniereDTO() {
     }
 
-    public MagazziniereDTO(long id, String nome, String cognome, String patente, long idVeicolo) {
+    public MagazziniereDTO(long id, String nome, String cognome, String codiceFiscale, LocalDate dataDiNascita, String patente, long idVeicolo) {
         this.id = id;
         this.nome = nome;
         this.cognome = cognome;
+        this.codiceFiscale = codiceFiscale;
+        this.dataDiNascita = dataDiNascita;
         this.patente = patente;
         this.idVeicolo = idVeicolo;
     }
@@ -55,6 +59,22 @@ public class MagazziniereDTO {
         this.cognome = cognome;
     }
 
+    public String getCodiceFiscale() {
+        return codiceFiscale;
+    }
+
+    public void setCodiceFiscale(String codiceFiscale) {
+        this.codiceFiscale = codiceFiscale;
+    }
+
+    public LocalDate getDataDiNascita() {
+        return dataDiNascita;
+    }
+
+    public void setDataDiNascita(LocalDate dataDiNascita) {
+        this.dataDiNascita = dataDiNascita;
+    }
+
     public String getPatente() {
         return patente;
     }
@@ -74,12 +94,13 @@ public class MagazziniereDTO {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 73 * hash + (int) (this.id ^ (this.id >>> 32));
-        hash = 73 * hash + Objects.hashCode(this.nome);
-        hash = 73 * hash + Objects.hashCode(this.cognome);
-
-        hash = 73 * hash + Objects.hashCode(this.patente);
-        hash = 73 * hash + (int) (this.idVeicolo ^ (this.idVeicolo >>> 32));
+        hash = 61 * hash + (int) (this.id ^ (this.id >>> 32));
+        hash = 61 * hash + Objects.hashCode(this.nome);
+        hash = 61 * hash + Objects.hashCode(this.cognome);
+        hash = 61 * hash + Objects.hashCode(this.codiceFiscale);
+        hash = 61 * hash + Objects.hashCode(this.dataDiNascita);
+        hash = 61 * hash + Objects.hashCode(this.patente);
+        hash = 61 * hash + (int) (this.idVeicolo ^ (this.idVeicolo >>> 32));
         return hash;
     }
 
@@ -107,17 +128,23 @@ public class MagazziniereDTO {
         if (!Objects.equals(this.cognome, other.cognome)) {
             return false;
         }
-
+        if (!Objects.equals(this.codiceFiscale, other.codiceFiscale)) {
+            return false;
+        }
         if (!Objects.equals(this.patente, other.patente)) {
             return false;
         }
-
+        if (!Objects.equals(this.dataDiNascita, other.dataDiNascita)) {
+            return false;
+        }
         return true;
     }
 
     @Override
     public String toString() {
-        return "MagazziniereDTO{" + "id=" + id + ", nome=" + nome + ", cognome=" + cognome + ", patente=" + patente + ", idVeicolo=" + idVeicolo + '}';
+        return "MagazziniereDTO{" + "id=" + id + ", nome=" + nome + ", cognome=" + cognome + ", codiceFiscale=" + codiceFiscale + ", dataDiNascita=" + dataDiNascita + ", patente=" + patente + ", idVeicolo=" + idVeicolo + '}';
     }
+
+    
 
 }

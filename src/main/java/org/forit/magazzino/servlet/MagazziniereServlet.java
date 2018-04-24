@@ -112,20 +112,20 @@ public class MagazziniereServlet extends HttpServlet {
     }
 
     private void listaMagazzinieri(HttpServletResponse resp) throws IOException {
-        List<MagazziniereDTO> magazzinieri;
-        String messaggioErrore = null;
-        try {
-            MagazzinoDAO magazzinoDAO = new MagazzinoDAO();
-            magazzinieri = magazzinoDAO.getListaMagazziniere();
-        } catch (MagazzinoException ex) {
-            magazzinieri = new ArrayList<>();
-            messaggioErrore = "Impossibile leggere i dati dal database";
-        }
-        try (PrintWriter out = resp.getWriter()) {
-            this.apriHTML(out, messaggioErrore, "$$clienti$$");
-            this.createTabellaMagazzinieri(out, magazzinieri);
-            this.chiudiHTML(out);
-        }
+//        List<MagazziniereDTO> magazzinieri;
+//        String messaggioErrore = null;
+//        try {
+//            MagazzinoDAO magazzinoDAO = new MagazzinoDAO();
+//            magazzinieri = magazzinoDAO.getMagazziniere(ID);)
+//        } catch (MagazzinoException ex) {
+//            magazzinieri = new ArrayList<>();
+//            messaggioErrore = "Impossibile leggere i dati dal database";
+//        }
+//        try (PrintWriter out = resp.getWriter()) {
+//            this.apriHTML(out, messaggioErrore, "$$clienti$$");
+//            this.createTabellaMagazzinieri(out, magazzinieri);
+//            this.chiudiHTML(out);
+//        }
     }
 
     private void createTabellaMagazzinieri(PrintWriter out, List<MagazziniereDTO> magazzinieri) {
