@@ -42,7 +42,35 @@ public class ProdottiServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String action = req.getParameter("action");
+        resp.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = resp.getWriter()) {
+            writePage(out, action);
+        } catch (MagazzinoException ex) {
+            Logger.getLogger(ProdottiServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public static void writePage(PrintWriter out, String action) throws MagazzinoException {
         MagazzinoDAO magazzino = new MagazzinoDAO();
+        out.println("<!DOCTYPE html>");
+        out.println("<html>");
+        out.println(HTMLElements.HEAD);
+        out.println(HTMLElements.NAVBAR);
+        if (action == null) {
+            out.println(HTMLElements.RICERCA_PRODOTTO);
+            writeListaProdotti(out, magazzino);
+        } else {
+            switch (action) {
+                case "view":
+                    break;
+            }
+        }
+        out.println(HTMLElements.FOOTER);
+        out.println("</html>");
+    }
+
+    public static void writeListaProdotti(PrintWriter out, MagazzinoDAO magazzino) throws MagazzinoException {
         List<ProdottoDTO> listaprodotti = null;
         boolean errore = false;
         try {
@@ -50,24 +78,10 @@ public class ProdottiServlet extends HttpServlet {
         } catch (MagazzinoException ex) {
             errore = true;
         }
-        resp.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = resp.getWriter()) {
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println(HTMLElements.HEAD);
-            out.println("<body>");
-            out.println(HTMLElements.NAVBAR);
-            out.println(HTMLElements.RICERCA_PRODOTTO);
-            if (!errore) {
-                out.println(HTMLElements.getTabellaProdotti(magazzino.getListaProdotti()));
-            } else {
-                out.println("<h2>IMPOSSIBILE CARICARE I PRODOTTI</h2>");
-            }
-            out.println(HTMLElements.FOOTER);
-            out.println("</body>");
-            out.println("</html>");
-        } catch (MagazzinoException ex) {
-            Logger.getLogger(ProdottiServlet.class.getName()).log(Level.SEVERE, null, ex);
+        if (!errore) {
+            out.println(HTMLElements.getTabellaProdotti(magazzino.getListaProdotti()));
+        } else {
+            out.println("<h2>IMPOSSIBILE CARICARE I PRODOTTI</h2>");
         }
     }
 

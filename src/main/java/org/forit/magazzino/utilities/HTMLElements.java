@@ -29,7 +29,8 @@ public class HTMLElements {
             + "    </head>";
 
     public static final String NAVBAR
-            = "        <nav class='navbar navbar-default'>"
+            = "    <body>"
+            + "        <nav class='navbar navbar-default'>"
             + "            <div class='container-fluid'>"
             + "                <div class='navbar-header'>"
             + "                    <button type='button' class='navbar-toggle' data-toggle='collapse' data-target='#navigazione' aria-expanded='false'>"
@@ -60,16 +61,17 @@ public class HTMLElements {
             + "            <div class='text-right'>"
             + "                <span class='text-muted'>Team: Alciati, Arrichiello, Lombardi, Rosmarino</span>"
             + "            </div>"
-            + "        </footer>";
+            + "        </footer>"
+            + "    </body>";
 
     public static final String RICERCA_PRODOTTO
             = "    <form class='form-control'>"
-            + "        <div class='row'>"
+            + "        <div class='row form-group'>"
             + "            <div class='col-sm-12'>"
             + "                <h3>------------------------------------------------------------------Ricerca un prodotto nel magazzino------------------------------------------------------------------</h3>"
             + "            </div>"
             + "        </div>"
-            + "        <div class='row'>"
+            + "        <div class='row form-group'>"
             + "            <div class='col-sm-2'>"
             + "                <label class='label label-primary'>ID prodotto:</label> <input class='input-sm' type='number' name='id__prodotto_ricerca' min='1'>"
             + "            </div>"
@@ -85,7 +87,7 @@ public class HTMLElements {
     private static final String STRUTTURA_TABELLA_PRODOTTO
             = "        <div class='row'>"
             + "            <div class='col-sm-8'>"
-            + "                <table class='table'>"
+            + "                <table class='table table-responsive'>"
             + "                    <thead>"
             + "                        <tr>"
             + "                            <th>"
