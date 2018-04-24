@@ -12,10 +12,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.forit.DAO.MagazzinoDAO;
-import org.forit.DTO.VeicoloDTO;
-import org.forit.Exception.MagazzinoException;
-import org.forit.classi.HTMLElements;
+import org.forit.magazzino.DAO.MagazzinoDAO;
+import org.forit.magazzino.DTO.VeicoloDTO;
+import org.forit.magazzino.Exception.MagazzinoException;
+import org.forit.magazzino.utilities.HTMLElements;
 
 /**
  *

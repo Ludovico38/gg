@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.forit.DAO;
+package org.forit.magazzino.DAO;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
@@ -16,14 +16,14 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import org.forit.classi.Queries;
-import org.forit.DTO.MagazziniereDTO;
-import org.forit.DTO.PaymentToSupplierDTO;
-import org.forit.DTO.ProdottoDTO;
-import org.forit.DTO.ProductDetailsDTO;
-import org.forit.DTO.ScaffaleDTO;
-import org.forit.DTO.VeicoloDTO;
-import org.forit.Exception.MagazzinoException;
+import org.forit.magazzino.utilities.Queries;
+import org.forit.magazzino.DTO.MagazziniereDTO;
+import org.forit.magazzino.DTO.PaymentToSupplierDTO;
+import org.forit.magazzino.DTO.ProdottoDTO;
+import org.forit.magazzino.DTO.ProductDetailsDTO;
+import org.forit.magazzino.DTO.ScaffaleDTO;
+import org.forit.magazzino.DTO.VeicoloDTO;
+import org.forit.magazzino.Exception.MagazzinoException;
 
 /**
  *

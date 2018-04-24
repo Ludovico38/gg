@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.forit.classi;
+package org.forit.magazzino.utilities;
 
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import org.forit.DTO.MagazziniereDTO;
-import org.forit.DTO.ProdottoDTO;
-import org.forit.DTO.ScaffaleDTO;
-import org.forit.DTO.VeicoloDTO;
+import org.forit.magazzino.DTO.MagazziniereDTO;
+import org.forit.magazzino.DTO.ProdottoDTO;
+import org.forit.magazzino.DTO.ScaffaleDTO;
+import org.forit.magazzino.DTO.VeicoloDTO;
 
 /**
  *
@@ -63,22 +63,24 @@ public class HTMLElements {
             + "        </footer>";
 
     public static final String RICERCA_PRODOTTO
-            = "        <div class='row'>"
+            = "    <form class='form-control'>"
+            + "        <div class='row'>"
             + "            <div class='col-sm-12'>"
             + "                <h3>------------------------------------------------------------------Ricerca un prodotto nel magazzino------------------------------------------------------------------</h3>"
             + "            </div>"
             + "        </div>"
             + "        <div class='row'>"
             + "            <div class='col-sm-2'>"
-            + "                <label class='label label-primary'>ID prodotto:</label> <input class='input-sm' type='number' name='id_ricerca' min='1'>"
+            + "                <label class='label label-primary'>ID prodotto:</label> <input class='input-sm' type='number' name='id__prodotto_ricerca' min='1'>"
             + "            </div>"
             + "            <div class='col-sm-2'>"
-            + "                <label class='label label-primary'>Nome prodotto:</label> <input class='input-sm' type='text' name='nome_ricerca'>"
+            + "                <label class='label label-primary'>Nome prodotto:</label> <input class='input-sm' type='text' name='nome_prodotto_ricerca'>"
             + "            </div>"
             + "            <div class='col-sm-1'>"
             + "                <input class='btn btn-primary' type='submit'>"
             + "            </div>"
-            + "        </div>";
+            + "        </div>"
+            + "    </form>";
 
     private static final String STRUTTURA_TABELLA_PRODOTTO
             = "        <div class='row'>"
