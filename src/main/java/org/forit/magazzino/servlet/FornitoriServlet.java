@@ -11,6 +11,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.forit.magazzino.utilities.HTMLElements;
 
 /**
  *
@@ -38,7 +39,12 @@ public class FornitoriServlet extends HttpServlet {
         resp.setContentType("text/html;charset=UTF-8");
         try(PrintWriter out=resp.getWriter()){
             out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println(HTMLElements.HEAD);
+            out.println(HTMLElements.NAVBAR);
+            //TODO FORNITORI PAGE
+            out.println(HTMLElements.FOOTER);
+            out.println("</html>");
         }
     }
-
 }

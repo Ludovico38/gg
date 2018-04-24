@@ -49,7 +49,7 @@ public class HTMLElements {
             + "                        <li><a href='scaffali'>Scaffali</a></li>"
             + "                        <li><a href='magazzinieri'>Magazzinieri</a></li>"
             + "                        <li><a href='veicoli'>Veicoli</a></li>"
-            + "                        <li><a href='#'>Fornitori</a></li>"
+            + "                        <li><a href='fornitori'>Fornitori</a></li>"
             + "                        <li><a href='#'>Entrate/Uscite</a></li>"
             + "                    </ul>                                        "
             + "                </div>"

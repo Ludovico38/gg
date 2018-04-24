@@ -19,6 +19,7 @@ public class Queries {
     public static final String GET_VEICOLI ="SELECT v.ID,tv.DESCRIZIONE,v.PATENTE_RICHIESTA "
             + "FROM veicolo as v,tipo_veicolo as tv "
             + "WHERE v.ID_TIPO_VEICOLO=tv.ID;";
+    public static final String GET_FORNITORI="SELECT * FROM magazzino.fornitore;";
     public static final String GET_PRODOTTI_WITH_NAME = "SELECT * FROM prodotto WHERE nome=?";
     public static final String INSERT_PRODOTTI = "INSERT INTO prodotto (NOME,PREZZO,SCADENZA,PROVENIENZA,ID_FORNITORE) values(?,?,?,?,?)";
     public static final String PAYMENTS_BY_SUPPLIER = "Select f.NOME,sum(oxp.PREZZO_DI_ACQUISTO*oxp.QUANTITA) as PAGAMENTO"
