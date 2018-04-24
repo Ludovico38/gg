@@ -4,7 +4,6 @@
         <servlet-name>MagazzinoServlet</servlet-name>
         <servlet-class>org.forit.magazzino.servlet.MagazzinoServlet</servlet-class>
     </servlet>
-    
     <servlet>
         <servlet-name>MagazziniereServlet</servlet-name>
         <servlet-class>org.forit.magazzino.servlet.MagazziniereServlet</servlet-class>
@@ -13,7 +12,6 @@
         <servlet-name>MagazzinoServlet</servlet-name>
         <url-pattern>/magazzino</url-pattern>
     </servlet-mapping>
-    
     <servlet-mapping>
         <servlet-name>MagazziniereServlet</servlet-name>
         <url-pattern>/magazziniere</url-pattern>

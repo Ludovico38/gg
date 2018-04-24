@@ -7,7 +7,6 @@ package org.forit.magazzino.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -24,7 +23,8 @@ import org.forit.magazzino.Exception.MagazzinoException;
  */
 public class MagazziniereServlet extends HttpServlet {
 
-    private final static String HEAD = "<head> "
+    private final static String HEAD
+            = "<head> "
             + "<title>Magazzino</title> "
             + "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"> "
             + "<script type=\"text/javascript\" src=\"js/bootstrap.js\"></script> "
@@ -58,7 +58,6 @@ public class MagazziniereServlet extends HttpServlet {
             + "</div> "
             + "</div> "
             + "</nav>";
-
     private final static String THEAD
             = "<thead>"
             + "<tr>"
@@ -89,50 +88,87 @@ public class MagazziniereServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("text/html;charset=UTF=8");
+        String action = req.getParameter("action");
+        if (action == null) {
+            this.listaMagazzinieri(resp);
+        } else {
+            switch (action) {
+                case "view":
+                    String ID = req.getParameter("ID");
+//                    this.dettaglioMagazziniere(resp, Long.parseLong(ID), true);
+                    break;
+                case "edit":
+                    ID = req.getParameter("ID");
+//                    this.dettaglioMagazziniere(resp, Long.parseLong(ID), false);
+                    break;
+                case "new":
+                    break;
+                default:
+                    this.listaMagazzinieri(resp);
+            }
+        }
+        this.listaMagazzinieri(resp);
+    }
+
+    private void listaMagazzinieri(HttpServletResponse resp) throws IOException {
         List<MagazziniereDTO> magazzinieri;
-        String messaggioerrore = null;
+        String messaggioErrore = null;
         try {
             MagazzinoDAO magazzinoDAO = new MagazzinoDAO();
             magazzinieri = magazzinoDAO.getListaMagazziniere();
         } catch (MagazzinoException ex) {
             magazzinieri = new ArrayList<>();
-            messaggioerrore = "Impossibile leggere i dati dal Database";
+            messaggioErrore = "Impossibile leggere i dati dal database";
         }
-        resp.setContentType("text/html;charset=UTF=8");
         try (PrintWriter out = resp.getWriter()) {
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println(HEAD);
-            out.println("<body>");
-            out.println(NAVBAR);
-            if (messaggioerrore != null) {
-                out.println("<h2>" + messaggioerrore + "</h2>");
-            }
-            out.println("<div class='table-responsive'>");
-            out.println("<table class='table'>");
-            out.println(THEAD);
-            magazzinieri.forEach(magazziniere -> {
-                out.println("<tr>");
-                out.println("<td>");
-                out.println("<a href ='?ID = " + magazziniere.getId() + "&action= view' class = 'btn btn-default' title = 'Visualizza Dettaglio'>");
-                out.println("<span class='glyphicon glyphicon-eye-open'></span>");
-                out.println("</a>");
-                out.println("<a href='?ID = " + magazziniere.getId() + "&action= edit' class='btn btn-default' title='Modifica Dati'>");
-                out.println("<span class='glyphicon glyphicon-pencil'></span>");
-                out.println("</a>");
-                out.println("</td>");
-                out.println("<td>" + magazziniere.getNome() + "</td>");
-                out.println("<td>" + magazziniere.getCognome() + "</td>");
-                out.println("<td>" + magazziniere.getPatente() + "</td>");
-                out.println("</tr>");
-            });
-            out.println("<tbody>");
-            out.println("</tbody>");
-
-            out.println("</table>");
-            out.println("</div>");
-            out.println("</body>");
-            out.println("</html>");
+            this.apriHTML(out, messaggioErrore, "$$clienti$$");
+            this.createTabellaMagazzinieri(out, magazzinieri);
+            this.chiudiHTML(out);
         }
+    }
+
+    private void createTabellaMagazzinieri(PrintWriter out, List<MagazziniereDTO> magazzinieri) {
+        out.println("<div class='container-fluid table-responsive'>");
+        out.println("<table class='table'>");
+        out.println(THEAD);
+        out.println("<tbody>");
+        magazzinieri.forEach(magazziniere -> {
+            out.println("<tr>");
+            out.println("  <td>");
+            out.println("    <a href='?ID=" + magazziniere.getId() + "&action=view' class='btn btn-default' title='Visualizza Dettaglio'>");
+            out.println("      <span class='glyphicon glyphicon-eye-open'></span>");
+            out.println("    </a>");
+            out.println("    <a href='?ID=" + magazziniere.getId() + "&action=edit' class='btn btn-default' title='Modifica Dati'>");
+            out.println("      <span class='glyphicon glyphicon-pencil'></span>");
+            out.println("    </a>");
+            out.println("  </td>");
+            out.println("  <td>" + magazziniere.getNome() + "</td>");
+            out.println("  <td>" + magazziniere.getCognome() + "</td>");
+            out.println("  <td>" + magazziniere.getPatente() + "</td>");
+            out.println("</tr>");
+        });
+        out.println("</tbody>");
+        out.println("</table>");
+        out.println("</div>");
+    }
+
+   
+
+    protected void apriHTML(PrintWriter out, String messaggioErrore, String active) {
+        out.println("<!DOCTYPE html>");
+        out.println("<html>");
+        out.println(HEAD);
+        out.println("<body>");
+        out.println(NAVBAR.replace(active, "active"));
+
+        if (messaggioErrore != null) {
+            out.println("<h2>" + messaggioErrore + "</h2>");
+        }
+    }
+
+    protected void chiudiHTML(PrintWriter out) {
+        out.println("</body>");
+        out.println("</html>");
     }
 }
