@@ -1,18 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package org.forit.magazzino.DTO;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
 
-/**
- *
- * @author forIT
- */
+
 public class ProdottoDTO {
     private long id,idFornitore;
     private String nome,provenienza;
