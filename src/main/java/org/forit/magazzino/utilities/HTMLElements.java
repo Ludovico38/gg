@@ -5,7 +5,6 @@
  */
 package org.forit.magazzino.utilities;
 
-import java.math.BigDecimal;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import org.forit.magazzino.DTO.MagazziniereDTO;

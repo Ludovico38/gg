@@ -16,8 +16,6 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import org.forit.magazzino.utilities.Queries;
 import org.forit.magazzino.DTO.MagazziniereDTO;
 import org.forit.magazzino.DTO.PaymentToSupplierDTO;
