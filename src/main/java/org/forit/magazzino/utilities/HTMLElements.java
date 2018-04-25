@@ -313,14 +313,14 @@ public class HTMLElements {
             + "            </div>"
             + "        </div>";
     
-    public static String getDettagliProdotto(ProductDetailsDTO dettaglioProdotto){
+    public static String getDettagliProdotto(ProductDetailsDTO dettaglioProdotto, boolean edit){
         String tabella = STRUTTURA_TABELLA_DETTAGLIO_PRODOTTO,pannello = DETTAGLIO_PRODOTTO;
         String codiceTabella = "";
-        pannello.replace("nome_prodotto_value", dettaglioProdotto.getNome());
-        pannello.replace("prezzo_prodotto_value", String.valueOf(dettaglioProdotto.getPrezzo_vendita()));
-        pannello.replace("provenienza_prodotto_value", dettaglioProdotto.getProvenienza());
-        pannello.replace("scadenza_prodotto_value", dettaglioProdotto.getScadenza().toString());
-        pannello.replace("fornitore_prodotto_value", dettaglioProdotto.getNome_fornitore());
+        pannello=pannello.replace("nome_prodotto_value", dettaglioProdotto.getNome());
+        pannello=pannello.replace("prezzo_prodotto_value", String.valueOf(dettaglioProdotto.getPrezzo_vendita()));
+        pannello=pannello.replace("provenienza_prodotto_value", dettaglioProdotto.getProvenienza());
+        pannello=pannello.replace("scadenza_prodotto_value", dettaglioProdotto.getScadenza().toString());
+        pannello=pannello.replace("fornitore_prodotto_value", dettaglioProdotto.getNome_fornitore());
         codiceTabella+="<tr>"
                 + "<td>"+dettaglioProdotto.getId_scaffale()+"</td>"
                 + "<td>"+dettaglioProdotto.getCategoria()+"</td>"
@@ -331,7 +331,9 @@ public class HTMLElements {
                 + "<td>"+dettaglioProdotto.getRitorno()+"</td>"
                 + "</tr>";
         tabella = tabella.replace("<!--SOSTITUISCI_QUI_GLI_ELEMENTI-->", codiceTabella);
-        
+        if(edit){
+            pannello=pannello.replaceAll("disabled='' ", "");
+        }
         return pannello+" "+tabella;
     }
 

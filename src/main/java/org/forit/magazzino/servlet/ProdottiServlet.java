@@ -45,16 +45,15 @@ public class ProdottiServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = resp.getWriter()) {
-            writePage(out,req);
+            writePage(out, req);
         } catch (MagazzinoException ex) {
             Logger.getLogger(ProdottiServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public static void writePage(PrintWriter out,HttpServletRequest req) throws MagazzinoException {
+    public static void writePage(PrintWriter out, HttpServletRequest req) throws MagazzinoException {
         MagazzinoDAO magazzino = new MagazzinoDAO();
         String action = req.getParameter("action");
-        long id=Long.parseLong(req.getParameter("ID"));
         out.println("<!DOCTYPE html>");
         out.println("<html>");
         out.println(HTMLElements.HEAD);
@@ -63,19 +62,27 @@ public class ProdottiServlet extends HttpServlet {
             out.println(HTMLElements.RICERCA_PRODOTTO);
             writeListaProdotti(out, magazzino);
         } else {
+            long id = Long.parseLong(req.getParameter("ID"));
             switch (action) {
                 case "view":
-                    writeDettagli(out,magazzino,id);
+                    writeDettagli(out, magazzino, id, false);
+                    break;
+                case "edit":
+                    writeDettagli(out, magazzino, id, true);
                     break;
             }
         }
         out.println(HTMLElements.FOOTER);
         out.println("</html>");
     }
-    
-    public static void writeDettagli(PrintWriter out, MagazzinoDAO magazzino,long id_prodotto) throws MagazzinoException{
-        ProductDetailsDTO dettaglio =magazzino.getProductDetail(id_prodotto);
-        out.println(HTMLElements.getDettagliProdotto(dettaglio));
+
+    public static void writeDettagli(PrintWriter out, MagazzinoDAO magazzino, long id_prodotto, boolean edit) throws MagazzinoException {
+        ProductDetailsDTO dettaglio = magazzino.getProductDetail(id_prodotto);
+        if (dettaglio != null) {
+            out.println(HTMLElements.getDettagliProdotto(dettaglio, edit));
+        } else {
+            out.println("<h3>ERRORE</h3>");
+        }
     }
 
     public static void writeListaProdotti(PrintWriter out, MagazzinoDAO magazzino) throws MagazzinoException {

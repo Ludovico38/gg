@@ -28,7 +28,7 @@ public class Queries {
             + " where f.ID_ORDINE=oxp.ID AND (oxp.PREZZO_DI_ACQUISTO*oxp.QUANTITA>? AND oxp.PREZZO_DI_ACQUISTO*oxp.QUANTITA<?)"
             + " group by f.nome"
             + " order by f.nome";
-    public static final String GET_PRODUCTS_DETAILS = "Select p.NOME ,p.PREZZO,p.PROVENIENZA ,p.SCADENZA ,s.ID AS ID_SCAFFALE ,c.DESCRIZIONE AS CATEGORIA ,oxp.PREZZO_DI_ACQUISTO"
+    public static final String GET_PRODUCTS_DETAILS = "Select p.ID,p.NOME ,p.PREZZO,p.PROVENIENZA ,p.SCADENZA ,s.ID AS ID_SCAFFALE ,c.DESCRIZIONE AS CATEGORIA ,oxp.PREZZO_DI_ACQUISTO"
             + " ,sum(oxp.QUANTITA)as QUANTITA_ACQUISTATI , oxp.PREZZO_DI_ACQUISTO*sum(oxp.QUANTITA) as SPESA_TOTALE ,v.QUANTITA as QUANTITA_VENDUTE"
             + " ,p.PREZZO*v.QUANTITA as RITORNO ,f.NOME AS NOME_FORNITORE"
             + " from prodotto as p ,scaffale_x_prodotto as sxp ,scaffale as s ,ordine_x_prodotto as oxp ,ordine as o ,fornitore as f"

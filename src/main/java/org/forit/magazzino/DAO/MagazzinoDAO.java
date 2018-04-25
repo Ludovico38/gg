@@ -17,6 +17,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import org.forit.magazzino.utilities.Queries;
 import org.forit.magazzino.DTO.MagazziniereDTO;
 import org.forit.magazzino.DTO.PaymentToSupplierDTO;
@@ -214,9 +215,10 @@ public class MagazzinoDAO {
             String nome, provenienza, categoria, nome_fornitore;
             BigDecimal prezzo_vendita, prezzo_acquisto, spesa_totale, ritorno;
             LocalDate scadenza;
-            long id_scaffale;
+            long id_scaffale,id_prodotto;
             int quantita_acquistati, quantita_venduti;
             while (rs.next()) {
+                id_prodotto = rs.getLong("ID");
                 nome = rs.getString("NOME");
                 prezzo_vendita = rs.getBigDecimal("PREZZO");
                 provenienza = rs.getString("PROVENIENZA");
@@ -233,7 +235,7 @@ public class MagazzinoDAO {
                 quantita_venduti = rs.getInt("QUANTITA_VENDUTE");
                 ritorno = rs.getBigDecimal("RITORNO");
                 nome_fornitore = rs.getString("NOME_FORNITORE");
-                listaDettagli.add(new ProductDetailsDTO(nome, prezzo_vendita, provenienza, scadenza, id_scaffale, categoria, prezzo_acquisto, quantita_acquistati, spesa_totale, quantita_venduti, ritorno, nome_fornitore));
+                listaDettagli.add(new ProductDetailsDTO(id_prodotto,nome, prezzo_vendita, provenienza, scadenza, id_scaffale, categoria, prezzo_acquisto, quantita_acquistati, spesa_totale, quantita_venduti, ritorno, nome_fornitore));
             }
             return listaDettagli;
         } catch (SQLException ex) {
@@ -243,6 +245,10 @@ public class MagazzinoDAO {
     }
     
     public ProductDetailsDTO getProductDetail(long id_prodotto) throws MagazzinoException{
-        return getProductDetails().stream().filter(elemento->elemento.getId()==id_prodotto).collect(Collectors.toList()).get(0);
+        for(ProductDetailsDTO prodotto:getProductDetails()){
+            if(prodotto.getId()==id_prodotto)
+                return prodotto;
+        }
+        return null;
     }
 }
