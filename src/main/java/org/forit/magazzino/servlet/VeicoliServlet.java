@@ -15,7 +15,7 @@ import org.forit.magazzino.DTO.VeicoloDTO;
 import org.forit.magazzino.Exception.MagazzinoException;
 import org.forit.magazzino.classes.HTMLElements;
 
-public class VeicoliServlet extends HttpServlet {
+public class VeicoliServlet extends MagazzinoServlet {
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

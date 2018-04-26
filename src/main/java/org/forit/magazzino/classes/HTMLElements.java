@@ -11,6 +11,7 @@ import java.util.List;
 import org.forit.magazzino.DTO.MagazziniereDTO;
 import org.forit.magazzino.DTO.ProdottoDTO;
 import org.forit.magazzino.DTO.DettagliProdottoDTO;
+import org.forit.magazzino.DTO.FornitoreDTO;
 import org.forit.magazzino.DTO.ScaffaleDTO;
 import org.forit.magazzino.DTO.VeicoloDTO;
 
@@ -52,7 +53,7 @@ public class HTMLElements {
             + "                        <li><a href='magazzinieri'>Magazzinieri</a></li>"
             + "                        <li><a href='veicoli'>Veicoli</a></li>"
             + "                        <li><a href='fornitori'>Fornitori</a></li>"
-            + "                        <li><a href='#'>Entrate/Uscite</a></li>"
+            + "                        <li><a href='entrateuscite'>Entrate/Uscite</a></li>"
             + "                    </ul>                                        "
             + "                </div>"
             + "            </div>"
@@ -61,7 +62,7 @@ public class HTMLElements {
     public static final String FOOTER
             = "        <footer class='panel-footer'>"
             + "            <div class='text-right'>"
-            + "                <span class='text-muted'>Team: Alciati, Arrichiello, Lombardi, Rosmarino</span>"
+            + "                <span class='text-muted'>Team Magazzino: Alciati, Arrichiello, Lombardi, Rosmarino</span>"
             + "            </div>"
             + "        </footer>"
             + "    </body>";
@@ -110,6 +111,28 @@ public class HTMLElements {
             + "                            <th>Spesa totale</th>\n"
             + "                            <th>Quantita vendute</th>\n"
             + "                            <th>Ritorno</th>\n"
+            + "                        </tr>\n"
+            + "                    </thead>\n"
+            + "                    <tbody>\n"
+            + "                    <!--SOSTITUISCI_QUI_GLI_ELEMENTI-->"
+            + "                    </tbody>\n"
+            + "                </table>\n"
+            + "            </div>\n"
+            + "        </div>";
+    
+    private static final String STRUTTURA_TABELLA_DETTAGLIO_FORNITORE
+            = "        <h3>Dettagli Fornitore</h3>\n"
+            + "        <div class='row'>\n"
+            + "            <div class='col-sm-12'>\n"
+            + "                <table class='table table-striped table-responsive'>\n"
+            + "                    <thead>\n"
+            + "                        <tr>\n"
+            + "                            <th>ID Fornitore</th>\n"
+            + "                            <th>Nome</th>\n"
+            + "                            <th>Indirizzo</th>\n"
+            + "                            <th>ID Categoria</th>\n"
+            + "                            <th>Recapito</th>\n"
+            + "                            <th>ID Ordine</th>\n"
             + "                        </tr>\n"
             + "                    </thead>\n"
             + "                    <tbody>\n"
@@ -393,6 +416,23 @@ public class HTMLElements {
                 + "<td>" + prodotto.getProvenienza() + "</td>"
                 + "<td>" + prodotto.getScadenza().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "</td>"
                 + "<td>" + prodotto.getIdFornitore() + "</td>"
+                + "</tr>").reduce(codiceElementi, String::concat);
+        tabella = tabella.replace("<!--SOSTITUISCI_QUI_GLI_ELEMENTI-->", codiceElementi);
+        return tabella;
+    }
+    public static String getTabellaFornitori(List<FornitoreDTO> listaFornitori){
+        String tabella = STRUTTURA_TABELLA_DETTAGLIO_FORNITORE;
+        String codiceElementi = "";
+        codiceElementi = listaFornitori.stream().map((fornitore) -> "<tr>"
+                + "<td>"
+                + "<a href='?ID=" + fornitore.getId() + "&action=view' ><span class='glyphicon glyphicon-eye-open'></span></a>"
+                + "<a href='?ID=" + fornitore.getId() + "&action=edit' ><span class='glyphicon glyphicon-pencil'></span></a>"
+                + "</td>"
+                + "<td>" + fornitore.getNome() + "</td>"
+                + "<td>" + fornitore.getIndirizzo()+ "</td>"
+                + "<td>" + fornitore.getIdCategoria()+ "</td>"
+                + "<td>" + fornitore.getRecapito() + "</td>"
+                + "<td>" + fornitore.getIdOrdine()+ "</td>"
                 + "</tr>").reduce(codiceElementi, String::concat);
         tabella = tabella.replace("<!--SOSTITUISCI_QUI_GLI_ELEMENTI-->", codiceElementi);
         return tabella;
