@@ -7,6 +7,8 @@ package org.forit.magazzino.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,7 +40,27 @@ public class ProdottiServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        ProdottoDTO prodotto;
+        MagazzinoDAO magazzino=new MagazzinoDAO();
+        long id=Long.parseLong(req.getParameter("id_prodotto"));
+        String nome=req.getParameter("nome_prodotto"),provenienza=req.getParameter("provenienza_prodotto");
+        LocalDate data=LocalDate.parse(req.getParameter("scadenza_prodotto"));
+        BigDecimal prezzo=new BigDecimal(req.getParameter("prezzo_prodotto"));
+        prodotto= new ProdottoDTO(id, nome, prezzo, data, provenienza);
+        if(id==-1){
+            try {
+                magazzino.insertProdotto(prodotto);
+            } catch (MagazzinoException ex) {
+                System.out.println("ERRORE INSERIMENTO PRODOTTO");
+            }
+        }else{
+            try {
+                magazzino.updateProdotto(prodotto);
+            } catch (MagazzinoException ex) {
+                System.out.println("ERRORE AGGIORNAMENTO PRODOTTO");
+            }
+        }
+        resp.sendRedirect("prodotti");
     }
 
     @Override
@@ -59,27 +81,30 @@ public class ProdottiServlet extends HttpServlet {
         out.println(HTMLElements.HEAD);
         out.println(HTMLElements.NAVBAR);
         if (action == null) {
-            out.println(HTMLElements.RICERCA_PRODOTTO);
             writeListaProdotti(out, magazzino);
         } else {
-            long id = Long.parseLong(req.getParameter("ID"));
-            switch (action) {
-                case "view":
-                    writeDettagli(out, magazzino, id, false);
-                    break;
-                case "edit":
-                    writeDettagli(out, magazzino, id, true);
-                    break;
+            long id = -1;
+            boolean disabled = false;
+            if (!action.equals("new")) {
+                id = Long.parseLong(req.getParameter("ID"));
             }
+            if (action.equals("view")) {
+                disabled = true;
+            }
+            writeDettagli(out, magazzino, id, disabled);
         }
         out.println(HTMLElements.FOOTER);
         out.println("</html>");
     }
 
-    public static void writeDettagli(PrintWriter out, MagazzinoDAO magazzino, long id_prodotto, boolean edit) throws MagazzinoException {
+    public static void writeDettagli(PrintWriter out, MagazzinoDAO magazzino, long id_prodotto, boolean disabled) throws MagazzinoException {
+        if (id_prodotto == -1) {
+            out.println(HTMLElements.getPannelloProdotto(new ProductDetailsDTO(id_prodotto),disabled));
+            return;
+        }
         ProductDetailsDTO dettaglio = magazzino.getProductDetail(id_prodotto);
         if (dettaglio != null) {
-            out.println(HTMLElements.getDettagliProdotto(dettaglio, edit));
+            out.println(HTMLElements.getDettagliProdotto(dettaglio, disabled));
         } else {
             out.println("<h3>ERRORE</h3>");
         }

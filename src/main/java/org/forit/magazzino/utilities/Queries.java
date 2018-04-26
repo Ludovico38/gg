@@ -23,6 +23,7 @@ public class Queries {
     public static final String GET_PRODOTTI_WITH_NAME = "SELECT * FROM prodotto WHERE nome=?";
     public static final String GET_PRODOTTO_WITH_ID = "SELECT * FROM prodotto WHERE ID=?";
     public static final String INSERT_PRODOTTI = "INSERT INTO prodotto (NOME,PREZZO,SCADENZA,PROVENIENZA,ID_FORNITORE) values(?,?,?,?,?)";
+    public static final String UPDATE_PRODOTTI = "UPDATE prodotto SET NOME=?,PREZZO=?,SCADENZA=?,PROVENIENZA=? WHERE ID=?";
     public static final String PAYMENTS_BY_SUPPLIER = "Select f.NOME,sum(oxp.PREZZO_DI_ACQUISTO*oxp.QUANTITA) as PAGAMENTO"
             + " from ordine_x_prodotto as oxp, fornitore as f"
             + " where f.ID_ORDINE=oxp.ID AND (oxp.PREZZO_DI_ACQUISTO*oxp.QUANTITA>? AND oxp.PREZZO_DI_ACQUISTO*oxp.QUANTITA<?)"

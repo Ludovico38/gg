@@ -184,6 +184,21 @@ public class MagazzinoDAO {
         }
     }
     
+    public void updateProdotto(ProdottoDTO prodotto) throws MagazzinoException {
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+                PreparedStatement st = conn.prepareStatement(Queries.UPDATE_PRODOTTI)) {
+            st.setString(1, prodotto.getNome());
+            st.setBigDecimal(2, prodotto.getPrezzo());
+            st.setDate(3, Date.valueOf(prodotto.getScadenza()));
+            st.setString(4, prodotto.getProvenienza());
+            st.setLong(5, prodotto.getId());
+            st.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println("ERRORE:" + ex);
+            throw new MagazzinoException(ex);
+        }
+    }
+    
     public List<PaymentToSupplierDTO> getPayments(int min, int max) throws MagazzinoException {
         try (Connection conn = DriverManager.getConnection(DB_URL);
                 PreparedStatement pst = conn.prepareStatement(Queries.PAYMENTS_BY_SUPPLIER)) {

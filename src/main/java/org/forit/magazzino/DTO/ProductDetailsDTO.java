@@ -61,6 +61,9 @@ public class ProductDetailsDTO {
         this.ritorno = ritorno;
         this.nome_fornitore = nome_fornitore;
     }
+    public ProductDetailsDTO(long id) {
+        this.id=id;
+    }
 
     public long getId() {
         return id;

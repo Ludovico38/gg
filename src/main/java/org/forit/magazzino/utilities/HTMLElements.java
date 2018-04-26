@@ -66,77 +66,58 @@ public class HTMLElements {
             + "    </body>";
 
     private static final String DETTAGLIO_PRODOTTO
-            = "        <div class='panel panel-body'>\n"
-            + "            <div class='row'>\n"
-            + "                <div class='col-sm-6'>\n"
-            + "                    <label class='label label-primary col-sm-2'>Nome prodotto</label>\n"
-            + "                    <input disabled='' class='input-sm col-sm-8' type='text' value='nome_prodotto_value' name='nome_prodotto'/>\n"
-            + "                </div>\n"
-            + "                <div class='col-sm-6'>\n"
-            + "                    <label class='label label-primary col-sm-2'>Prezzo</label>\n"
-            + "                    <input disabled='' class='input-sm col-sm-8' type='text' value='prezzo_prodotto_value' name='prezzo_prodotto'/>\n"
-            + "                </div>\n"
-            + "            </div>\n"
-            + "            <div class='row'>\n"
-            + "                <div class='col-sm-6'>\n"
-            + "                    <label class='label label-primary col-sm-2'>Provenienza</label>\n"
-            + "                    <input disabled='' class='input-sm col-sm-8' type='text' value='provenienza_prodotto_value' name='provenienza_prodotto'/>\n"
-            + "                </div>\n"
-            + "                <div class='col-sm-6'>\n"
-            + "                    <label class='label label-primary col-sm-2'>Scadenza</label>\n"
-            + "                    <input disabled='' class='input-sm col-sm-8' type='text' value='scadenza_prodotto_value' name='scadenza_prodotto'/>\n"
-            + "                </div>\n"
-            + "            </div>\n"
-            + "            <div class='row'>\n"
-            + "                <div class='col-sm-12'>\n"
-            + "                    <label class='label label-primary col-sm-2'>Fornitore</label>\n"
-            + "                    <input disabled='' class='input-sm col-sm-8' type='text' value='fornitore_prodotto_value' name='fornitore_prodotto'/>\n"
-            + "                </div>\n"
-            + "            </div>\n"
+            = "        <div class='panel panel-body'>"
+            + "            <div class='row'>"
+            + "                <div class='col-sm-6'>"
+            + "                    <input type='hidden' name='id_prodotto' value='id_prodotto_value'/>"
+            + "                    <label class='label label-primary col-sm-2'>Nome prodotto</label>"
+            + "                    <input disabled='' class='input-sm col-sm-8' type='text' value='nome_prodotto_value' name='nome_prodotto'/>"
+            + "                </div>"
+            + "                <div class='col-sm-6'>"
+            + "                    <label class='label label-primary col-sm-2'>Prezzo</label>"
+            + "                    <input disabled='' class='input-sm col-sm-8' type='text' value='prezzo_prodotto_value' name='prezzo_prodotto'/>"
+            + "                </div>"
+            + "            </div>"
+            + "            <div class='row'>"
+            + "                <div class='col-sm-6'>"
+            + "                    <label class='label label-primary col-sm-2'>Provenienza</label>"
+            + "                    <input disabled='' class='input-sm col-sm-8' type='text' value='provenienza_prodotto_value' name='provenienza_prodotto'/>"
+            + "                </div>"
+            + "                <div class='col-sm-6'>"
+            + "                    <label class='label label-primary col-sm-2'>Scadenza</label>"
+            + "                    <input disabled='' class='input-sm col-sm-8' type='text' value='scadenza_prodotto_value' name='scadenza_prodotto'/>"
+            + "                </div>"
+            + "            </div>"
+            + "            <div class='row'>"
+            + "                <div class='col-sm-12'>"
+            + "                    <label class='label label-primary col-sm-2'>Fornitore</label>"
+            + "                    <input disabled='' class='input-sm col-sm-8' type='text' value='fornitore_prodotto_value' name='fornitore_prodotto'/>"
+            + "                </div>"
+            + "            </div>"
             + "        </div>";
 
     private static final String STRUTTURA_TABELLA_DETTAGLIO_PRODOTTO
-            = "        <h3>Detagli Prodotto</h3>\n"
-            + "        <div class='row'>\n"
-            + "            <div class='col-sm-12'>\n"
-            + "                <table class='table table-striped table-responsive'>\n"
-            + "                    <thead>\n"
-            + "                        <tr>\n"
-            + "                            <th>Numero Scaffale</th>\n"
-            + "                            <th>Categoria</th>\n"
-            + "                            <th>Prezzo di Acquisto</th>\n"
-            + "                            <th>Quantita acquistati</th>\n"
-            + "                            <th>Spesa totale</th>\n"
-            + "                            <th>Quantita vendute</th>\n"
-            + "                            <th>Ritorno</th>\n"
-            + "                        </tr>\n"
-            + "                    </thead>\n"
-            + "                    <tbody>\n"
-            + "                    <!--SOSTITUISCI_QUI_GLI_ELEMENTI-->"
-            + "                    </tbody>\n"
-            + "                </table>\n"
-            + "            </div>\n"
-            + "        </div>";
-
-    public static final String RICERCA_PRODOTTO
-            = "    <form class='form-control'>"
-            + "        <div class='row form-group'>"
+            = "        <h3>Detagli Prodotto</h3>"
+            + "        <div class='row'>"
             + "            <div class='col-sm-12'>"
-            + "                <h3>------------------------------------------------------------------Ricerca un prodotto nel magazzino------------------------------------------------------------------</h3>"
+            + "                <table class='table table-striped table-responsive'>"
+            + "                    <thead>"
+            + "                        <tr>"
+            + "                            <th>Numero Scaffale</th>"
+            + "                            <th>Categoria</th>"
+            + "                            <th>Prezzo di Acquisto</th>"
+            + "                            <th>Quantita acquistati</th>"
+            + "                            <th>Spesa totale</th>"
+            + "                            <th>Quantita vendute</th>"
+            + "                            <th>Ritorno</th>"
+            + "                        </tr>"
+            + "                    </thead>"
+            + "                    <tbody>"
+            + "                    <!--SOSTITUISCI_QUI_GLI_ELEMENTI-->"
+            + "                    </tbody>"
+            + "                </table>"
             + "            </div>"
-            + "        </div>"
-            + "        <div class='row form-group'>"
-            + "            <div class='col-sm-2'>"
-            + "                <label class='label label-primary'>ID prodotto:</label> <input class='input-sm' type='number' name='id__prodotto_ricerca' min='1'>"
-            + "            </div>"
-            + "            <div class='col-sm-2'>"
-            + "                <label class='label label-primary'>Nome prodotto:</label> <input class='input-sm' type='text' name='nome_prodotto_ricerca'>"
-            + "            </div>"
-            + "            <div class='col-sm-1'>"
-            + "                <input class='btn btn-primary' type='submit'>"
-            + "            </div>"
-            + "        </div>"
-            + "    </form>";
+            + "        </div>";
 
     private static final String STRUTTURA_TABELLA_PRODOTTO
             = "        <div class='row'>"
@@ -145,6 +126,7 @@ public class HTMLElements {
             + "                    <thead>"
             + "                        <tr>"
             + "                            <th>"
+            + "                                <a href='?action=new' class='btn btn-primary'>Nuovo</a>"
             + "                            </th>"
             + "                            <th>"
             + "                                Nome"
@@ -311,29 +293,49 @@ public class HTMLElements {
             + "                </table>"
             + "            </div>"
             + "        </div>";
-    
-    public static String getDettagliProdotto(ProductDetailsDTO dettaglioProdotto, boolean edit){
-        String tabella = STRUTTURA_TABELLA_DETTAGLIO_PRODOTTO,pannello = DETTAGLIO_PRODOTTO;
+
+    public static String getDettagliProdotto(ProductDetailsDTO dettaglioProdotto, boolean disabled) {
+        String tabella = STRUTTURA_TABELLA_DETTAGLIO_PRODOTTO, pannello = getPannelloProdotto(dettaglioProdotto,disabled);
         String codiceTabella = "";
-        pannello=pannello.replace("nome_prodotto_value", dettaglioProdotto.getNome());
-        pannello=pannello.replace("prezzo_prodotto_value", String.valueOf(dettaglioProdotto.getPrezzo_vendita()));
-        pannello=pannello.replace("provenienza_prodotto_value", dettaglioProdotto.getProvenienza());
-        pannello=pannello.replace("scadenza_prodotto_value", dettaglioProdotto.getScadenza().toString());
-        pannello=pannello.replace("fornitore_prodotto_value", dettaglioProdotto.getNome_fornitore());
-        codiceTabella+="<tr>"
-                + "<td>"+dettaglioProdotto.getId_scaffale()+"</td>"
-                + "<td>"+dettaglioProdotto.getCategoria()+"</td>"
-                + "<td>"+dettaglioProdotto.getPrezzo_acquisto()+"</td>"
-                + "<td>"+dettaglioProdotto.getQuantita_acquistati()+"</td>"
-                + "<td>"+dettaglioProdotto.getSpesa_totale()+"</td>"
-                + "<td>"+dettaglioProdotto.getQuantita_venduti()+"</td>"
-                + "<td>"+dettaglioProdotto.getRitorno()+"</td>"
+        codiceTabella += "<tr>"
+                + "<td>" + dettaglioProdotto.getId_scaffale() + "</td>"
+                + "<td>" + dettaglioProdotto.getCategoria() + "</td>"
+                + "<td>" + dettaglioProdotto.getPrezzo_acquisto() + "</td>"
+                + "<td>" + dettaglioProdotto.getQuantita_acquistati() + "</td>"
+                + "<td>" + dettaglioProdotto.getSpesa_totale() + "</td>"
+                + "<td>" + dettaglioProdotto.getQuantita_venduti() + "</td>"
+                + "<td>" + dettaglioProdotto.getRitorno() + "</td>"
                 + "</tr>";
         tabella = tabella.replace("<!--SOSTITUISCI_QUI_GLI_ELEMENTI-->", codiceTabella);
-        if(edit){
-            pannello=pannello.replaceAll("disabled='' ", "");
+        return pannello + " " + tabella;
+    }
+
+    public static String getPannelloProdotto(ProductDetailsDTO dettaglioProdotto,boolean disabled) {
+        String pannello = DETTAGLIO_PRODOTTO;
+        if (dettaglioProdotto.getId() != -1) {
+            pannello = pannello.replace("nome_prodotto_value", dettaglioProdotto.getNome());
+            pannello = pannello.replace("prezzo_prodotto_value", String.valueOf(dettaglioProdotto.getPrezzo_vendita()));
+            pannello = pannello.replace("provenienza_prodotto_value", dettaglioProdotto.getProvenienza());
+            pannello = pannello.replace("scadenza_prodotto_value", dettaglioProdotto.getScadenza().toString());
+            pannello = pannello.replace("fornitore_prodotto_value", dettaglioProdotto.getNome_fornitore());
+        } else{
+            pannello = pannello.replace("nome_prodotto_value", "");
+            pannello = pannello.replace("prezzo_prodotto_value", "");
+            pannello = pannello.replace("provenienza_prodotto_value", "");
+            pannello = pannello.replace("scadenza_prodotto_value", "");
+            pannello = pannello.replace("fornitore_prodotto_value", "");
         }
-        return pannello+" "+tabella;
+        if (!disabled) {
+            pannello = pannello.replace("id_prodotto_value", String.valueOf(dettaglioProdotto.getId()));
+            pannello = pannello.replaceAll("disabled='' ", "");
+            pannello = "<form action='prodotti' method='POST'>"
+                    + pannello
+                    + "<div class='row'>"
+                    + "<input class='btn btn-primary col-sm-1' type='submit'>"
+                    + "</div>"
+                    + "</form>";
+        }
+        return pannello;
     }
 
     public static String getTabellaVeicoli(List<VeicoloDTO> listaVeicoli) {
