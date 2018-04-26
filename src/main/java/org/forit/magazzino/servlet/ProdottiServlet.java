@@ -7,10 +7,11 @@ package org.forit.magazzino.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.forit.magazzino.DAO.MagazzinoDAO;
@@ -21,7 +22,7 @@ import org.forit.magazzino.Exception.MagazzinoException;
  *
  * @author UTENTE
  */
-public class ProdottiServlet extends HttpServlet {
+public class ProdottiServlet extends MagazzinoServlet {
 
     private final static String HEAD = "<head>\n"
             + "        <title>Prodotti</title>\n"
@@ -82,15 +83,45 @@ public class ProdottiServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        long ID = Long.parseLong(req.getParameter("ID"));
+        String nome = req.getParameter("nome");
+        BigDecimal prezzo = new BigDecimal(req.getParameter("prezzo"));
+        LocalDate scadenza = LocalDate.parse(req.getParameter("scadenza"));
+        String provenienza = req.getParameter("provenienza");
 
+        try {
+            ProdottoDTO prodotto = new ProdottoDTO(ID, nome, prezzo, scadenza, provenienza);
+            MagazzinoDAO magazzinoDAO = new MagazzinoDAO();
+
+            magazzinoDAO.insertProdotto(prodotto);
+            this.doGet(req, resp);
+        } catch (MagazzinoException ex) {
+            System.out.println("Errore");
+            resp.sendRedirect("prodotti?action=new");
+        }
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        resp.getContentType();
+        String action = req.getParameter("action");
+        if (action == null) {
+            this.listaProdotti(resp);
+        } else {
+            switch (action) {
+                case "new":
+                    this.inserisciProdotto(resp.getWriter(), new ProdottoDTO(-1, "", new BigDecimal(0), null, ""));
+                    break;
+                default:
+                    this.listaProdotti(resp);
+            }
+        }
+    }
+    
+    private void listaProdotti(HttpServletResponse resp) throws IOException {
         List<ProdottoDTO> prodotti;
         String messaggioErrore = null;
-
+        
         try {
             MagazzinoDAO MagazzinoDAO = new MagazzinoDAO();
             prodotti = MagazzinoDAO.getListaProdotti();
@@ -98,7 +129,7 @@ public class ProdottiServlet extends HttpServlet {
             prodotti = new ArrayList<>();
             messaggioErrore = "Errore: Impossibile leggere i dati dal DB";
         }
-
+        
         resp.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = resp.getWriter()) {
             out.println("<!DOCTYPE html>");
@@ -106,34 +137,79 @@ public class ProdottiServlet extends HttpServlet {
             out.println(HEAD);
             out.println("<body>");
             out.println(NAVBAR);
-
+            
             if (messaggioErrore != null) {
                 out.println("<h2>" + messaggioErrore + "</h2>");
             }
-
+            
             out.println("<div class='table-responsive'>");
             out.println("<table class='table'>");
             out.println(THEAD);
             out.println("<tbody>");
             prodotti.forEach(prodotto -> {
                 out.println("<tr>");
-
+                
                 out.println("<td>" + prodotto.getId() + "</td>");
                 out.println("<td>" + prodotto.getNome() + "</td>");
                 out.println("<td>" + prodotto.getPrezzo() + "</td>");
                 out.println("<td>" + prodotto.getScadenza() + "</td>");
                 out.println("<td>" + prodotto.getProvenienza() + "</td>");
-
+                
                 out.println("</tr>");
-
+                
             });
             out.println("</tbody>");
-
+            
             out.println("</table>");
             out.println("</div>");
-
+            
             out.println("</body>");
             out.println("</html>");
         }
     }
+
+    private void inserisciProdotto(PrintWriter out, ProdottoDTO prodotto) {
+        
+        out.println(HEAD);
+        out.println(NAVBAR);
+        
+        out.println("<form action='prodotti' method='POST' class='container-fluid'>");
+        out.println("<div class='panel panel-default'>");
+        out.println("<div class='panel-heading'>");
+        out.println("<div class='panel-title'>Inserimento Prodotto</div>");
+        out.println("</div>");
+        out.println("<div class='panel-body'>");
+        
+        out.println("<div class='row'>");
+        out.println("<div class='col-sm-6'>");
+        out.println("<label>Nome</label>");
+        out.println("<input type='text' name='nome' class='form-control' value='" + prodotto.getNome() + "'/>");
+        out.println("</div>");
+        out.println("<div class='col-sm-6'>");
+        out.println("<label>Prezzo</label>");
+        out.println("<input type='number' name='prezzo' class='form-control' value='" + prodotto.getPrezzo() + "'/>");
+        out.println("</div>");
+        out.println("</div>");
+        out.println("<div class='row'>");
+        out.println("<div class='col-sm-6'>");
+        out.println("<label>Scadenza</label>");
+        out.println("<input type='date' name='scadenza' class='form-control' value='" + prodotto.getScadenza() + "'/>");
+        out.println("</div>");
+        out.println("<div class='col-sm-6'>");
+        out.println("<label>Provenienza</label>");
+        out.println("<input type='text' name='provenienza' class='form-control' value='" + prodotto.getProvenienza() + "'/>");
+        out.println("</div>");
+        out.println("</div>");
+        out.println("</div>");
+        out.println("</div>");
+        out.println("<input type='hidden' name='ID' value='" + prodotto.getId() + "'/>");
+        
+        out.println("<footer class='footer'>");
+        out.println("<div class='container'>");
+        out.println("<input type='submit' class='btn btn-primary col-sm-1 col-sm-offset-12' value='Salva'/>");
+        out.println("</div>");
+        out.println("</footer>");
+        out.println("</form>");
+    }
+
 }

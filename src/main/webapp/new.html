@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Magazzino</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
+        <script type="text/javascript" src="js/bootstrap.js"></script>
+        <link rel="stylesheet" href="css/bootstrap.css" type="text/css"/>
+        <link rel="icon" href="img/icona_magazzino.png">
+    </head>
+    <body>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigazione" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="index.html">
+                        <img alt="Magazzino" src="img/icona_magazzino.png" width="20"></a>
+                </div>
+
+                <div class="collapse navbar-collapse" id="navigazione">
+                    <ul class="nav navbar-nav">
+                        <li><a href="prodotti">Prodotti</a></li>
+                        <li><a href="/magazzino/scaffali.html">Scaffali</a></li>
+                        <li><a href="/magazzino/magazzinieri.html">Magazzinieri</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav> 
+
+        <form>
+            <div class='panel panel-default'>
+                <div class='panel-heading'>
+                    <div class='panel-title'>Inserimento Prodotto</div>
+                </div>
+                <div class='panel-body'>
+                    <div class='row'>
+                        <div class='col-sm-6'>
+                            <label>Nome</label>
+                            <input type='text' name='nome' class='form-control'/>
+                        </div>
+                        <div class='col-sm-6'>
+                            <label>Prezzo</label>
+                            <input type='text' name='prezzo' class='form-control'/>
+                        </div>            
+                    </div>
+                    <div class='row'>
+                        <div class='col-sm-6'>
+                            <label>Scadenza</label>
+                            <input type='date' name='scadenza' class='form-control'/>
+                        </div>
+                        <div class='col-sm-6'>
+                            <label>Provenienza</label>
+                            <input type='text' name='provenienza' class='form-control'/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        
+        <footer class="footer">
+            <div class="container">
+                <input type='submit' class='btn btn-primary' value='Salva'/>
+                <span class="text-muted">RosmarinoTools2018™</span>
+            </div>
+        </footer>
+    </body>
+</html>

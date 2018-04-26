@@ -12,6 +12,10 @@
         <servlet-name>VeicoliServlet</servlet-name>
         <servlet-class>org.forit.magazzino.servlet.VeicoliServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>MagazzinoServlet</servlet-name>
+        <servlet-class>org.forit.magazzino.servlet.MagazzinoServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MagazzinoServlet</servlet-name>
         <url-pattern>/magazzino</url-pattern>
