@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.forit.magazzino.servlet;
 
 import java.io.IOException;
@@ -20,10 +15,6 @@ import org.forit.magazzino.DTO.DettagliProdottoDTO;
 import org.forit.magazzino.Exception.MagazzinoException;
 import org.forit.magazzino.classes.HTMLElements;
 
-/**
- *
- * @author forIT
- */
 public class ProdottiServlet extends HttpServlet {
 
     @Override
@@ -45,16 +36,16 @@ public class ProdottiServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = resp.getWriter()) {
-            writePage(out,req);
+            writePage(out, req);
         } catch (MagazzinoException ex) {
             Logger.getLogger(ProdottiServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public static void writePage(PrintWriter out,HttpServletRequest req) throws MagazzinoException {
+    public static void writePage(PrintWriter out, HttpServletRequest req) throws MagazzinoException {
         MagazzinoDAO magazzino = new MagazzinoDAO();
         String action = req.getParameter("action");
-        long id=Long.parseLong(req.getParameter("ID"));
+        long id = Long.parseLong(req.getParameter("ID"));
         out.println("<!DOCTYPE html>");
         out.println("<html>");
         out.println(HTMLElements.HEAD);
@@ -65,16 +56,20 @@ public class ProdottiServlet extends HttpServlet {
         } else {
             switch (action) {
                 case "view":
-                    writeDettagli(out,magazzino,id);
+                    writeDettagli(out, magazzino, id);
+                    break;
+                case "edit":
+                    break;
+                case "new":
                     break;
             }
         }
         out.println(HTMLElements.FOOTER);
         out.println("</html>");
     }
-    
-    public static void writeDettagli(PrintWriter out, MagazzinoDAO magazzino,long id_prodotto) throws MagazzinoException{
-        DettagliProdottoDTO dettaglio =magazzino.getDettaglioProdotto(id_prodotto);
+
+    public static void writeDettagli(PrintWriter out, MagazzinoDAO magazzino, long id_prodotto) throws MagazzinoException {
+        DettagliProdottoDTO dettaglio = magazzino.getDettaglioProdotto(id_prodotto);
         out.println(HTMLElements.getDettagliProdotto(dettaglio));
     }
 
