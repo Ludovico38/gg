@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.forit.magazzino.DAO;
 
 import java.math.BigDecimal;
@@ -26,11 +21,10 @@ import org.forit.magazzino.DTO.ScaffaleDTO;
 import org.forit.magazzino.DTO.VeicoloDTO;
 import org.forit.magazzino.Exception.MagazzinoException;
 import org.forit.magazzino.classes.Queries;
+import static org.forit.magazzino.classes.Queries.INSERT_FORNITORE;
+import static org.forit.magazzino.classes.Queries.UPDATE_FORNITORE;
 
-/**
- *
- * @author forIT
- */
+
 public class MagazzinoDAO {
 
     public final static String DB_URL = "jdbc:mysql://localhost:3306/magazzino?useSSL=false&user=forit&password=12345";
@@ -277,7 +271,64 @@ public class MagazzinoDAO {
         }
     }
 
-    public FornitoreDTO getFornitore(FornitoreDTO fornitore) {
-        return fornitore;
+    public FornitoreDTO getFornitore(long ID) throws MagazzinoException {
+        try (
+                Connection conn = DriverManager.getConnection(DB_URL);
+                PreparedStatement st = conn.prepareStatement(FORNITORE);) {
+
+            st.setLong(1, ID);
+            ResultSet rs = st.executeQuery();
+            rs.next();
+            long id = rs.getLong("ID");
+            long idCategoria = rs.getLong("ID_categoria");
+            String nome = rs.getString("NOME");
+            String indirizzo = rs.getString("INDIRIZZO");
+            String recapito = rs.getString("RECAPITO");
+            long idOrdine = rs.getLong("ID_ORDINE");
+
+            FornitoreDTO fornitore = new FornitoreDTO(id, idCategoria, nome, indirizzo, recapito, idOrdine);
+
+            return fornitore;
+        } catch (SQLException ex) {
+            System.out.println("Si è verificato un errore " + ex.getMessage());
+            throw new MagazzinoException(ex);
+        }
+    }
+
+    public void insertFornitore(long id, long idCategoria, String nome, String indirizzo, String recapito, long idOrdine) throws MagazzinoException {
+
+        try (
+                Connection conn = DriverManager.getConnection(DB_URL);
+                PreparedStatement ps = conn.prepareStatement(INSERT_FORNITORE);) {
+
+            ps.setString(1, nome);
+            ps.setString(2, indirizzo);
+            ps.setLong(3, idCategoria);
+            ps.setString(4, recapito);
+            ps.setLong(5, idOrdine);
+            ps.executeUpdate();
+
+        } catch (SQLException ex) {
+            System.out.println("Si è verificato un errore " + ex.getMessage());
+            throw new MagazzinoException(ex);
+        }
+    }
+
+    public void updateFornitore(long id, long idCategoria, String nome, String indirizzo, String recapito, long idOrdine) throws MagazzinoException {
+        try (
+                Connection conn = DriverManager.getConnection(DB_URL);
+                PreparedStatement ps = conn.prepareStatement(UPDATE_FORNITORE);) {
+
+            ps.setString(1, nome);
+            ps.setString(2, indirizzo);
+            ps.setLong(3, idCategoria);
+            ps.setString(4, recapito);
+            ps.setLong(5, idOrdine);
+            ps.executeUpdate();
+
+        } catch (SQLException ex) {
+            System.out.println("Si è verificato un errore " + ex.getMessage());
+            throw new MagazzinoException(ex);
+        }
     }
 }
