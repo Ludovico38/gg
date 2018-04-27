@@ -324,6 +324,7 @@ public class MagazzinoDAO {
             ps.setLong(3, idCategoria);
             ps.setString(4, recapito);
             ps.setLong(5, idOrdine);
+            ps.setLong(6, id);
             ps.executeUpdate();
 
         } catch (SQLException ex) {
