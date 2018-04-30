@@ -22,8 +22,9 @@ import org.forit.magazzino.DTO.VeicoloDTO;
 import org.forit.magazzino.Exception.MagazzinoException;
 import org.forit.magazzino.classes.Queries;
 import static org.forit.magazzino.classes.Queries.INSERT_FORNITORE;
+import static org.forit.magazzino.classes.Queries.INSERT_MAGAZZINIERE;
 import static org.forit.magazzino.classes.Queries.UPDATE_FORNITORE;
-
+import static org.forit.magazzino.classes.Queries.UPDATE_MAGAZZINIERE;
 
 public class MagazzinoDAO {
 
@@ -33,6 +34,11 @@ public class MagazzinoDAO {
             = "SELECT f.* "
             + "FROM fornitore f "
             + "WHERE f.ID=? ";
+
+    private static final String MAGAZZINIERE
+            = "SELECT m.* "
+            + "FROM magazziniere m "
+            + "WHERE m.ID=? ";
 
     static {
         try {
@@ -325,6 +331,70 @@ public class MagazzinoDAO {
             ps.setString(4, recapito);
             ps.setLong(5, idOrdine);
             ps.setLong(6, id);
+            ps.executeUpdate();
+
+        } catch (SQLException ex) {
+            System.out.println("Si è verificato un errore " + ex.getMessage());
+            throw new MagazzinoException(ex);
+        }
+    }
+
+    public MagazziniereDTO getMagazziniere(long ID) throws MagazzinoException {
+        try (
+                Connection conn = DriverManager.getConnection(DB_URL);
+                PreparedStatement st = conn.prepareStatement(MAGAZZINIERE);) {
+
+            st.setLong(1, ID);
+            ResultSet rs = st.executeQuery();
+            rs.next();
+            long id = rs.getLong("ID");
+            String nome = rs.getString("NOME");
+            String cognome = rs.getString("COGNOME");
+            String codiceFiscale = rs.getString("CODICE_FISCALE");
+            LocalDate dataNascita = rs.getDate("DATA_NASCITA").toLocalDate();
+            String patente = rs.getString("PATENTE");
+            long idVeicolo = rs.getLong("ID_VEICOLO");
+
+            MagazziniereDTO magazziniere = new MagazziniereDTO(id, nome, cognome, codiceFiscale, dataNascita, patente, idVeicolo);
+
+            return magazziniere;
+        } catch (SQLException ex) {
+            System.out.println("Si è verificato un errore " + ex.getMessage());
+            throw new MagazzinoException(ex);
+        }
+    }
+
+    public void insertMagazziniere(long id, String nome, String cognome, String codiceFiscale, LocalDate dataNascita, String patente, long idVeicolo) throws MagazzinoException {
+
+        try (
+                Connection conn = DriverManager.getConnection(DB_URL);
+                PreparedStatement ps = conn.prepareStatement(INSERT_MAGAZZINIERE);) {
+
+            ps.setString(1, nome);
+            ps.setString(2, cognome);
+            ps.setString(3, codiceFiscale);
+            ps.setDate(4, Date.valueOf(dataNascita));
+            ps.setString(5, patente);
+            ps.setLong(6, idVeicolo);
+            ps.executeUpdate();
+
+        } catch (SQLException ex) {
+            System.out.println("Si è verificato un errore " + ex.getMessage());
+            throw new MagazzinoException(ex);
+        }
+    }
+
+    public void updateMagazziniere(long id, String nome, String cognome, String codiceFiscale, LocalDate dataNascita, String patente, long idVeicolo) throws MagazzinoException {
+        try (
+                Connection conn = DriverManager.getConnection(DB_URL);
+                PreparedStatement ps = conn.prepareStatement(UPDATE_MAGAZZINIERE);) {
+
+            ps.setString(1, nome);
+            ps.setString(2, cognome);
+            ps.setString(3, codiceFiscale);
+            ps.setDate(4, Date.valueOf(dataNascita));
+            ps.setString(5, patente);
+            ps.setLong(6, idVeicolo);
             ps.executeUpdate();
 
         } catch (SQLException ex) {

@@ -1,0 +1,150 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
+<html xmlns='http://www.w3.org/1999/xhtml'
+      xmlns:h='http://xmlns.jcp.org/jsf/html'
+      xmlns:ui='http://xmlns.jcp.org/jsf/facelets'
+      xmlns:f='http://xmlns.jcp.org/jsf/core'>
+
+    <h:head>
+        <title>Magazzino</title>
+        <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'/>
+        <script type='text/javascript' src='../js/jquery-3.3.1.js'></script>
+        <script type='text/javascript' src='../js/bootstrap.js'></script>
+        <link rel='stylesheet' href='../css/bootstrap.css' type='text/css'/>
+        <link rel='icon' href='../img/icona_magazzino.png'/>
+
+        <style>td, th {vertical-align: middle !important}</style>
+        <script type='text/javascript'>
+            function mostraModale() {
+                $('#myModal').modal('show')
+            }
+
+            function nascondiModale() {
+                $('#myModal').modal('hide')
+            }
+        </script>        
+    </h:head>
+    <h:body>
+        <nav class='navbar navbar-default'>
+            <div class='container-fluid'>
+                <div class='navbar-header'>
+                    <button type='button' class='navbar-toggle' data-toggle='collapse' data-target='#navigazione'>
+                        <span class='icon-bar'></span>
+                        <span class='icon-bar'></span>
+                        <span class='icon-bar'></span>
+                    </button>
+                    <a class='navbar-brand' href='../index.html'>
+                        <img alt='Magazzino' src='../img/icona_magazzino.png' width='20'/>
+                    </a>
+                </div>
+
+                <div class='collapse navbar-collapse' id='navigazione'>
+                    <ul class='nav navbar-nav'>
+                        <li><a href='../prodotti'>Prodotti</a></li>
+                        <li><a href='#'>Scaffali</a></li>
+                        <li class='active'><a href='../faces/magazzinieri.xhtml'>Magazzinieri</a></li>
+                        <li><a href='#'>Veicoli</a></li>
+                        <li><a href='../faces/fornitori.xhtml'>Fornitori</a></li>
+                        <li><a href='#'>Entrate/Uscite</a></li>                        
+                    </ul>                                        
+                </div>
+            </div>
+        </nav>
+
+        <h:form id='tabella_magazzinieri'>
+            <div class='container-fluid table-responsive'>
+                <table class='table'>
+                    <thead>
+                        <tr>
+                            <th class='col-sm-1'>
+                                <h:commandButton value='Nuovo' class='btn btn-primary'>
+                                    <f:ajax  render='modale_magazzinieri' listener='#{mBean.loadMagazziniere(-1, false)}' onevent='mostraModale' />
+                                </h:commandButton>
+                            </th>
+                            <th class='col-sm-2'>Nome</th>
+                            <th class='col-sm-2'>Cognome</th>
+                            <th class='col-sm-2'>Codice Fiscale</th>
+                            <th class='col-sm-2'>Data di Nascita</th>
+                            <th class='col-sm-2'>Patente</th>
+                            <th class="col-sm-2">Id Veicolo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ui:repeat value='#{mBean.magazzinieri}' var='magazziniere'>
+                            <tr>
+                                <td>
+                                    <h:commandLink class='btn btn-default' title='Visualizza Dettaglio'>
+                                        <span class='glyphicon glyphicon-eye-open'></span>
+                                        <f:ajax render='modale_magazzinieri' listener='#{mBean.loadMagazziniere(magazziniere.id, true)}' onevent='mostraModale' />
+                                    </h:commandLink>
+                                    <h:commandLink class='btn btn-default' title='Modifica Dati'>
+                                        <span class='glyphicon glyphicon-pencil'></span>
+                                        <f:ajax render='modale_magazzinieri' listener='#{mBean.loadMagazziniere(magazziniere.id, false)}' onevent='mostraModale' />
+                                    </h:commandLink>
+                                </td>
+                                <td>#{magazziniere.nome}</td>
+                                <td>#{magazziniere.cognome}</td>
+                                <td>#{magazziniere.codiceFiscale}</td>
+                                <td>#{magazziniere.dataNascita}</td>
+                                <td>#{magazziniere.patente}</td>
+                                <td>#{magazziniere.id_veicolo}</td>
+                            </tr>
+                        </ui:repeat>
+                    </tbody>
+                </table>
+            </div>
+        </h:form>
+
+
+
+        <div class='modal fade' id='myModal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel'>
+
+            <div class='modal-dialog' role='document'>
+                <h:form id='modale_magazzinieri'>
+                    <div class='modal-content'>
+                        <div class='modal-header'>
+                            <button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
+                            <h4 class='modal-title' id='myModalLabel'>Dettaglio Magazziniere</h4>
+                        </div>
+                        <div class='modal-body'>
+                            <div class='col-sm-6'>
+                                <label>Nome</label>
+                                <h:inputText class='form-control' value='#{mBean.magazziniere.nome}' disabled='#{mBean.disabled}'/>
+                            </div>
+                            <div class='col-sm-6'>
+                                <label>Cognome</label>
+                                <h:inputText class='form-control' value='#{mBean.magazziniere.cognome}' disabled='#{mBean.disabled}'/>
+                            </div>
+                            <div class='row'>
+                                <div class='col-sm-3'>
+                                    <label>Codice Fiscale</label>
+                                    <h:inputText class='form-control' value='#{mBean.magazziniere.codiceFiscale}' disabled='#{mBean.disabled}' />
+                                </div>
+                                <div class="col-sm-3">
+                                    <label>Data di Nascita</label>
+                                    <h:inputText class="form-control" value="#{mBean.magazziniere.dataNascitaAsString}" disabled="#{aBean.disabled}">
+                                        <f:passThroughAttribute name="type" value="date" />
+                                    </h:inputText>
+                                </div>
+                                <div class='col-sm-3'>
+                                    <label>Patente</label>
+                                    <h:inputText class='form-control' value='#{mBean.magazziniere.patente}' disabled='#{mBean.disabled}' />
+                                </div>
+                                <div class='col-sm-3'>
+                                    <label>Id Veicolo</label>
+                                    <h:inputText class='form-control' value='#{mBean.magazziniere.id_veicolo}' disabled='#{mBean.disabled}' />
+                                </div>
+                            </div>
+                        </div>
+                        <div class='modal-footer'>
+                            <h:commandButton class='btn btn-primary' value='Salva' disabled='#{mBean.disabled}'>
+                                <f:ajax execute='modale_magazzinieri' render='tabella_magazzinieri' listener='#{mBean.saveMagazziniere()}' onevent='nascondiModale' />
+                            </h:commandButton>
+                            <button type='button' class='btn btn-default' data-dismiss='modal'>Chiudi</button>
+                        </div>
+                    </div>
+                </h:form>
+            </div>
+        </div>
+    </h:body>
+</html>
