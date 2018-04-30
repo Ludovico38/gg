@@ -10,7 +10,7 @@
         <script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
         <script type="text/javascript" src="../js/bootstrap.js"></script>
         <link rel="stylesheet" href="../css/bootstrap.css" type="text/css"/>
-        <link rel="icon" href="../img/icona_magazzino.ico"/>
+        <link rel="icon" href="../img/icona_magazzino.png"/>
 
         <script type="text/javascript">
             function mostraModale() {
@@ -32,7 +32,7 @@
                         <span class="icon-bar"></span>
                     </button>
                     <a class="navbar-brand" href="../index.html">
-                        <img alt="Netflix" src="../img/icona_magazzino.ico" width="20"/>
+                        <img alt="Netflix" src="../img/icona_magazzino.png" width="20"/>
                     </a>
                 </div>
 
@@ -55,7 +55,7 @@
                     <thead>
                         <tr>
                             <th class='col-sm-1'>
-                                <h:commandButton class='btn btn-primary' value="Nuovo">
+                                <h:commandButton class='btn btn-success' value="Nuovo">
                                     <f:ajax execute="" render="modale_prodotti" listener="#{pBean.loadProdotto(-1, false)}" onevent="mostraModale"/>
                                 </h:commandButton>
                             </th>
