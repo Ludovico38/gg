@@ -2,104 +2,114 @@
 <html>
     <head>
         <title>Magazzino</title>
-        <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
-        <script type='text/javascript' src='js/bootstrap.js'></script>
-        <link rel='stylesheet' href='css/bootstrap.css' type='text/css'/>
-        <link rel='icon' href='img/icona_magazzino.png'>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
+        <script type="text/javascript" src="js/bootstrap.js"></script>
+        <link rel="stylesheet" href="css/bootstrap.css" type="text/css"/>
+        <link rel="icon" href="img/icona_magazzino.png">
+        <style>#j_h2{color: #00cc00}</style>
+        <style>body{margin:auto}</style>
+
+        <script type="text/javascript">
+            function mostraModale() {
+                $('#myModal').modal('show');
+            }
+            function nascondiModale() {
+                $('#myModal').modal('hide');
+            }
+        </script>
     </head>
     <body>
-
-
-        <nav class='navbar navbar-default'>
-            <div class='container-fluid'>
-                <div class='navbar-header'>
-                    <button type='button' class='navbar-toggle' data-toggle='collapse' data-target='#navigazione' aria-expanded='false'>
-                        <span class='sr-only'>Toggle navigation</span>
-                        <span class='icon-bar'></span>
-                        <span class='icon-bar'></span>
-                        <span class='icon-bar'></span>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigazione" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
                     </button>
-                    <a class='navbar-brand' href='index.html'>
-                        <img alt='Magazzino' src='img/icona_magazzino.png' width='20'></a>
+                    <a class="navbar-brand" href="#">
+                        <img alt="Magazzino" src="img/icona_magazzino.png" width="20"></a>
                 </div>
 
-                <div class='collapse navbar-collapse' id='navigazione'>
-                    <ul class='nav navbar-nav'>
-                        <li><a href='prodotti'>Prodotti</a></li>
-                        <li><a href='scaffali'>Scaffali</a></li>
-                        <li><a href='faces/magazzinieri.xhtml'>Magazzinieri</a></li>
-                        <li><a href='veicoli'>Veicoli</a></li>
-                        <li><a href='faces/fornitori.xhtml'>Fornitori</a></li>
-                        <li><a href='entrateuscite'>Entrate/Uscite</a></li>
-                    </ul>                                        
+                <div class="collapse navbar-collapse" id="navigazione">
+                    <ul class="nav navbar-nav">
+                        <li><a href="faces/prodotti.xhtml">Prodotti</a></li>
+                        <li><a href="/magazzino/scaffali.html">Scaffali</a></li>
+                        <li><a href="/magazzino/magazzinieri.html">Magazzinieri</a></li>
+                        <li><a href="#">Fornitori</a></li>
+                        <li><a href="#">Entrate/Uscite</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="#" data-toggle="modal" data-target="#login-modal">Login</a></li>
+                    </ul>
                 </div>
             </div>
         </nav> 
 
 
-        <div class='row'>
-            <div class='col-sm-offset-1 col-sm-2'>
-                <h3 class='bg-primary' style='border-radius: 4px'>Titolo Descrizione #1</h3>
-            </div>
-            <div class='col-sm-offset-3 col-sm-2'>
-                <h3 class='bg-primary' style='border-radius: 4px'>Titolo Descrizione #4</h3>
-            </div>
-        </div>
-        <div class='row'>
-            <div class='col-sm-offset-1 col-sm-4'>
-                <h4>Descrizione #1</h4>
-            </div>
-            <div class='col-sm-offset-1 col-sm-4'>
-                <h4>Descrizione #4--------------------------------------------------------------------------------------------
-                    ---------------------------------------------------------------Fill for test-------------------------------
-                    -----------------------------------------------------------------------------------------------------------</h4>
-            </div>
+        <div class="page-header col-sm-offset-1">
+            <h1>RosMagazzino <small>Organizzazione prima di tutto</small></h1>
         </div>
 
+        <div class="jumbotron container-fluid">
+            <div class="row">
+                <div class="col-sm-5 col-sm-offset-1">
+                    <h2 id="j_h2">Chi Siamo</h2>
+                    <p>Siamo Alciati, Arrichiello, Lombardi e Rosmarino</p>
 
-        <div class='row'>
-            <div class='col-sm-offset-1 col-sm-2'>
-                <h3 class='bg-primary' style='border-radius: 4px'>Titolo Descrizione #2</h3>
-            </div>
-            <div class='col-sm-offset-3 col-sm-2'>
-                <h3 class='bg-primary' style='border-radius: 4px'>Titolo Descrizione #5</h3>
+                    <h2 id="j_h2">Da Dove Veniamo</h2>
+                    <p>Torino e dintorni... Chi più, chi meno</p>
+
+                    <h2 id="j_h2">Cosa Facciamo</h2>
+                    <p>Vendiamo merce terribile a prezzi esorbitanti.</p>
+                </div>
+
+                <div class="col-sm-5">
+                    <h2 id="j_h2">Perchè lo facciamo</h2>
+                    <p>Imparare a gestire le entrate e le uscite di un magazzino simulato.</p>
+
+                    <h2 id="j_h2">Dove trovarci</h2>
+                    <p>O in Corso Galileo Ferraris 2 c/o ForIT. Se non reperibili, a casa a riposare.</p>
+
+                    <h2 id="j_h2">Come contattarci</h2>
+                    <p>Scrivete una mail a: pippopippozzo@forit.org</p>
+                </div>
             </div>
         </div>
-        <div class='row'>
-            <div class='col-sm-offset-1 col-sm-4'>
-                <h4>Descrizione #2</h4>
-            </div>
-            <div class='col-sm-offset-1 col-sm-4'>
-                <h4>Descrizione #5</h4>
-            </div>
-        </div>
-
-
-        <div class='row'>
-            <div class='col-sm-offset-1 col-sm-2'>
-                <h3 class='bg-primary' style='border-radius: 4px'>Titolo Descrizione #3</h3>
-            </div>
-            <div class='col-sm-offset-3 col-sm-2'>
-                <h3 class='bg-primary' style='border-radius: 4px'>Titolo Descrizione #6</h3>
-            </div>
-        </div>
-        <div class='row'>
-            <div class='col-sm-offset-1 col-sm-4'>
-                <h4>Descrizione #3 --------------------------------------------------------------------------------------------
-                    ---------------------------------------------------------------Fill for test-------------------------------
-                    -----------------------------------------------------------------------------------------------------------</h4>
-            </div>
-            <div class='col-sm-offset-1 col-sm-4'>
-                <h4>Descrizione #6</h4>
-            </div>
-        </div>
-
-
-
-        <footer class='panel-footer'>
-            <div class='text-right'>
-                <span class='text-muted'>Team: Alciati, Arrichiello, Lombardi, Rosmarino</span>
+        <footer class="footer col-sm-2 col-sm-offset-10">
+            <div class="container col-sm-2">
+                <span class="text-muted">RosmarinoTools2018™</span>
+                <br>
+                <label></label>
             </div>
         </footer>
+
+        <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;background-color:transparent !important">
+            <div class="modal-dialog">
+                <div class="loginmodal-container">
+                    <h1 style="color:#00cc00">Effettua il login a RosMagazzino</h1><br>
+                    <form>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input class="form-control" type="text" name="user" placeholder="Username">
+                                <input class="form-control" type="password" name="pass" placeholder="Password" style="margin-top:20px">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2 col-md-offset-1" style="margin:auto">
+                                <input type="submit" name="login" class="btn btn-success" value="Login" style="margin-top:20px;margin-bottom:20px">
+                            </div>
+                        </div>
+
+                    </form>
+
+                    <div class="login-help">
+                        <a  style="color:#00cc00" href="#">Registrati</a> - <a  style="color:#00cc00" href="#">Password Dimenticata?</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
 </html>
