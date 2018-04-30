@@ -42,7 +42,7 @@
                     <ul class='nav navbar-nav'>
                         <li><a href='../prodotti'>Prodotti</a></li>
                         <li><a href='#'>Scaffali</a></li>
-                        <li><a href='#'>Magazzinieri</a></li>
+                        <li><a href='../faces/magazzinieri.xhtml'>Magazzinieri</a></li>
                         <li><a href='#'>Veicoli</a></li>
                         <li class='active'><a href='../faces/fornitori.xhtml'>Fornitori</a></li>
                         <li><a href='#'>Entrate/Uscite</a></li>                        
@@ -72,11 +72,11 @@
                         <ui:repeat value='#{fBean.fornitori}' var='fornitore'>
                             <tr>
                                 <td>
-                                    <h:commandLink class='btn btn-default' title='Visualizza Dettaglio'>
+                                    <h:commandLink class='btn btn-link' title='Visualizza Dettaglio'>
                                         <span class='glyphicon glyphicon-eye-open'></span>
                                         <f:ajax render='modale_fornitori' listener='#{fBean.loadFornitore(fornitore.id, true)}' onevent='mostraModale' />
                                     </h:commandLink>
-                                    <h:commandLink class='btn btn-default' title='Modifica Dati'>
+                                    <h:commandLink class='btn btn-link' title='Modifica Dati'>
                                         <span class='glyphicon glyphicon-pencil'></span>
                                         <f:ajax render='modale_fornitori' listener='#{fBean.loadFornitore(fornitore.id, false)}' onevent='mostraModale' />
                                     </h:commandLink>

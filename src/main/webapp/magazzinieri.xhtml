@@ -66,18 +66,18 @@
                             <th class='col-sm-2'>Codice Fiscale</th>
                             <th class='col-sm-2'>Data di Nascita</th>
                             <th class='col-sm-2'>Patente</th>
-                            <th class="col-sm-2">Id Veicolo</th>
+                            <th class='col-sm-2'>Id Veicolo</th>
                         </tr>
                     </thead>
                     <tbody>
                         <ui:repeat value='#{mBean.magazzinieri}' var='magazziniere'>
                             <tr>
                                 <td>
-                                    <h:commandLink class='btn btn-default' title='Visualizza Dettaglio'>
+                                    <h:commandLink class='btn btn-link' title='Visualizza Dettaglio'>
                                         <span class='glyphicon glyphicon-eye-open'></span>
                                         <f:ajax render='modale_magazzinieri' listener='#{mBean.loadMagazziniere(magazziniere.id, true)}' onevent='mostraModale' />
                                     </h:commandLink>
-                                    <h:commandLink class='btn btn-default' title='Modifica Dati'>
+                                    <h:commandLink class='btn btn-link' title='Modifica Dati'>
                                         <span class='glyphicon glyphicon-pencil'></span>
                                         <f:ajax render='modale_magazzinieri' listener='#{mBean.loadMagazziniere(magazziniere.id, false)}' onevent='mostraModale' />
                                     </h:commandLink>
@@ -120,10 +120,10 @@
                                     <label>Codice Fiscale</label>
                                     <h:inputText class='form-control' value='#{mBean.magazziniere.codiceFiscale}' disabled='#{mBean.disabled}' />
                                 </div>
-                                <div class="col-sm-3">
+                                <div class='col-sm-3'>
                                     <label>Data di Nascita</label>
-                                    <h:inputText class="form-control" value="#{mBean.magazziniere.dataNascitaAsString}" disabled="#{aBean.disabled}">
-                                        <f:passThroughAttribute name="type" value="date" />
+                                    <h:inputText class='form-control' value='#{mBean.magazziniere.dataNascitaAsString}' disabled='#{aBean.disabled}'>
+                                        <f:passThroughAttribute name='type' value='date' />
                                     </h:inputText>
                                 </div>
                                 <div class='col-sm-3'>
