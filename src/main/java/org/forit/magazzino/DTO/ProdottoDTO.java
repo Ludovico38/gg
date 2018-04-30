@@ -94,6 +94,14 @@ public class ProdottoDTO {
     public void setPrezzo(BigDecimal prezzo) {
         this.prezzo = prezzo;
     }
+    
+    public String getScadenzaAsString(){
+        return scadenza.toString();
+    }
+    
+    public void setScadenzaAsString(String scadenza){
+        this.scadenza = LocalDate.parse(scadenza);
+    }
 
     @Override
     public int hashCode() {

@@ -23,7 +23,6 @@ import org.forit.magazzino.DTO.ScaffaleDTO;
 import org.forit.magazzino.Exception.MagazzinoException;
 import org.forit.magazzino.classes.Queries;
 
-
 /**
  *
  * @author forIT
@@ -31,11 +30,11 @@ import org.forit.magazzino.classes.Queries;
 public class MagazzinoDAO {
 
     public final static String DB_URL = "jdbc:mysql://localhost:3306/magazzino?useSSL=false&user=ForIT&password=12345";
-    
+
     static {
-        try{
+        try {
             Class.forName("com.mysql.jdbc.Driver");
-        } catch (ClassNotFoundException ex){
+        } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
         }
     }
@@ -117,6 +116,28 @@ public class MagazzinoDAO {
         }
     }
 
+    public ProdottoDTO getProdotto(long id) throws MagazzinoException {
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+                PreparedStatement pst = conn.prepareStatement(Queries.GET_PRODOTTO_WITH_ID)) {
+            long idProdotto;
+            BigDecimal prezzo;
+            String nome, provenienza;
+            LocalDate scadenza;
+            pst.setLong(1, id);
+            ResultSet rs = pst.executeQuery();
+            rs.next();
+            idProdotto = rs.getLong("ID");
+            nome = rs.getString("NOME");
+            prezzo = rs.getBigDecimal("PREZZO");
+            provenienza = rs.getString("PROVENIENZA");
+            scadenza = rs.getDate("SCADENZA").toLocalDate();
+            return new ProdottoDTO(idProdotto, nome, prezzo, scadenza, provenienza, idProdotto);
+        } catch (SQLException ex) {
+            System.out.println("ERRORE:" + ex);
+            throw new MagazzinoException(ex);
+        }
+    }
+
     public List<PaymentToSupplierDTO> getPayments(int min, int max) throws MagazzinoException {
         try (Connection conn = DriverManager.getConnection(DB_URL);
                 PreparedStatement pst = conn.prepareStatement(Queries.PAYMENTS_BY_SUPPLIER)) {
@@ -140,7 +161,7 @@ public class MagazzinoDAO {
 
     public List<ProductDetailsDTO> getProductDetails() throws MagazzinoException {
         try (Connection conn = DriverManager.getConnection(DB_URL);
-                Statement st=conn.createStatement();
+                Statement st = conn.createStatement();
                 ResultSet rs = st.executeQuery(Queries.GET_PRODUCTS_DETAILS)) {
             List<ProductDetailsDTO> listaDettagli = new ArrayList<>();
             String nome, provenienza, categoria, nome_fornitore;
@@ -172,5 +193,22 @@ public class MagazzinoDAO {
             System.out.println("ERRORE:" + ex);
             throw new MagazzinoException(ex);
         }
+    }
+
+    public void updateProdotto(ProdottoDTO prodotto) throws MagazzinoException {
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+                PreparedStatement st = conn.prepareStatement(Queries.UPDATE_PRODOTTO)) {
+            st.setString(1, prodotto.getNome());
+            st.setBigDecimal(2, prodotto.getPrezzo());
+            st.setDate(3, Date.valueOf(prodotto.getScadenza()));
+            st.setString(4, prodotto.getProvenienza());
+            st.setLong(5, prodotto.getIdFornitore());
+            st.setLong(6, prodotto.getId());
+            st.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println("ERRORE:" + ex);
+            throw new MagazzinoException(ex);
+        }
+
     }
 }

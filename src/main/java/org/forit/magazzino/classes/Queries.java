@@ -11,11 +11,21 @@ package org.forit.magazzino.classes;
  */
 public class Queries {
 
-    public static final String GET_PRODOTTI = "SELECT p.ID,p.NOME,p.PREZZO,p.SCADENZA,p.PROVENIENZA "
+     public static final String GET_PRODOTTI = "SELECT p.ID,p.NOME,p.PREZZO,p.SCADENZA,p.PROVENIENZA "
             + "FROM magazzino.prodotto AS p";
+    public static final String GET_MAGAZZINIERI = "SELECT m.ID,m.NOME,m.COGNOME,m.CODICE_FISCALE,m.DATA_NASCITA,m.PATENTE "
+            + "FROM magazziniere as m;";
     public static final String GET_SCAFFALI = "SELECT s.ID,c.DESCRIZIONE FROM scaffale as s,categoria as c WHERE s.ID_CATEGORIA=c.ID";
+    public static final String GET_VEICOLI = "SELECT v.ID,tv.DESCRIZIONE,v.PATENTE_RICHIESTA "
+            + "FROM veicolo as v,tipo_veicolo as tv "
+            + "WHERE v.ID_TIPO_VEICOLO=tv.ID;";
+    public static final String GET_FORNITORI = "SELECT * FROM magazzino.fornitore;";
     public static final String GET_PRODOTTI_WITH_NAME = "SELECT * FROM prodotto WHERE nome=?";
+    public static final String GET_PRODOTTO_WITH_ID = "SELECT * FROM prodotto WHERE ID=?";
     public static final String INSERT_PRODOTTI = "INSERT INTO prodotto (NOME,PREZZO,SCADENZA,PROVENIENZA,ID_FORNITORE) values(?,?,?,?,?)";
+    
+    public static final String UPDATE_PRODOTTO = "UPDATE prodotto SET NOME=?,PREZZO=?,SCADENZA=?,PROVENIENZA=?,ID_FORNITORE=? WHERE ID=?";
+    
     public static final String PAYMENTS_BY_SUPPLIER = "Select f.NOME,sum(oxp.PREZZO_DI_ACQUISTO*oxp.QUANTITA) as PAGAMENTO"
             + " from ordine_x_prodotto as oxp, fornitore as f"
             + " where f.ID_ORDINE=oxp.ID AND (oxp.PREZZO_DI_ACQUISTO*oxp.QUANTITA>? AND oxp.PREZZO_DI_ACQUISTO*oxp.QUANTITA<?)"
@@ -29,4 +39,9 @@ public class Queries {
             + " where p.ID_FORNITORE=f.ID AND f.ID_ORDINE=o.ID AND o.ID_ORDINE_X_PRODOTTO=oxp.ID AND oxp.ID_PRODOTTO=p.ID AND p.ID=sxp.ID_PRODOTTO "
             + " AND sxp.ID_SCAFFALE=s.ID AND s.ID_CATEGORIA=c.ID AND v.ID_PRODOTTO=p.ID"
             + " group by p.nome";
+    public static final String INSERT_FORNITORE = "INSERT INTO fornitore (NOME,INDIRIZZO,ID_CATEGORIA,RECAPITO,ID) values(?,?,?,?,?)";
+    public static final String UPDATE_FORNITORE
+            = "UPDATE FORNITORE "
+            + "SET NOME = ?, INDIRIZZO = ?, ID_CATEGORIA = ?, RECAPITO = ?, ID_ORDINE = ? "
+            + "WHERE ID = ?";
 }
