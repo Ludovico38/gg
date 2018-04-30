@@ -44,4 +44,10 @@ public class Queries {
             = "UPDATE FORNITORE "
             + "SET NOME = ?, INDIRIZZO = ?, ID_CATEGORIA = ?, RECAPITO = ?, ID_ORDINE = ? "
             + "WHERE ID = ?";
+    public static final String INSERT_MAGAZZINIERE = "INSERT INTO magazziniere (NOME, COGNOME, CODICE_FISCALE, DATA_NASCITA, PATENTE, ID_VEICOLO)  values (?, ?, ?, ?, ?, ?)";
+
+    public static final String UPDATE_MAGAZZINIERE
+            = "UPDATE MAGAZZINIERE "
+            + "SET NOME = ?, COGNOME = ?, CODICE_FISCALE = ?, DATA_NASCITA = ?, PATENTE = ?, ID_VEICOLO = ? "
+            + "WHERE ID = ?";
 }

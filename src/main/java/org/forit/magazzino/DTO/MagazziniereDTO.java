@@ -1,17 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package org.forit.magazzino.DTO;
 
 import java.time.LocalDate;
 import java.util.Objects;
 
-/**
- *
- * @author forIT
- */
 public class MagazziniereDTO {
     private long id;
     private String nome,cognome,codiceFiscale,patente;
@@ -79,7 +71,13 @@ public class MagazziniereDTO {
     public void setDataNascita(LocalDate dataNascita) {
         this.dataNascita = dataNascita;
     }
-
+    public String getDataNascitaAsString() {
+        return dataNascita.toString();
+    }
+    
+   public void setDataNascitaAsString(String dataNascita){
+       this.dataNascita = LocalDate.parse(dataNascita);
+   }
     public String getPatente() {
         return patente;
     }

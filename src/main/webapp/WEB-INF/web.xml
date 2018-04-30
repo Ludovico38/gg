@@ -5,42 +5,10 @@
         <param-value>Development</param-value>
     </context-param>
     <servlet>
-        <servlet-name>ProdottiServlet</servlet-name>
-        <servlet-class>org.forit.magazzino.servlet.ProdottiServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>FornitoriServlet</servlet-name>
-        <servlet-class>org.forit.magazzino.servlet.FornitoriServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>VeicoliServlet</servlet-name>
-        <servlet-class>org.forit.magazzino.servlet.VeicoliServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>MagazzinoServlet</servlet-name>
-        <servlet-class>org.forit.magazzino.servlet.MagazzinoServlet</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>Faces Servlet</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
-    <servlet-mapping>
-        <servlet-name>MagazzinoServlet</servlet-name>
-        <url-pattern>/magazzino</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>FornitoriServlet</servlet-name>
-        <url-pattern>/fornitori</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>VeicoliServlet</servlet-name>
-        <url-pattern>/veicoli</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ProdottiServlet</servlet-name>
-        <url-pattern>/prodotti</url-pattern>
-    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>/faces/*</url-pattern>
