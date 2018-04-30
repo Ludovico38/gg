@@ -125,6 +125,7 @@ public class MagazzinoDAO {
             long ID;
             String nome, cognome, codiceFiscale, patente;
             LocalDate dataNascita;
+            long idVeicolo;
             while (rs.next()) {
                 ID = rs.getLong("ID");
                 nome = rs.getString("NOME");
@@ -132,7 +133,8 @@ public class MagazzinoDAO {
                 codiceFiscale = rs.getString("CODICE_FISCALE");
                 patente = rs.getString("PATENTE");
                 dataNascita = rs.getDate("DATA_NASCITA").toLocalDate();
-                listaMagazzinieri.add(new MagazziniereDTO(ID, nome, cognome, codiceFiscale, dataNascita, patente));
+                idVeicolo = rs.getLong("ID_VEICOLO");
+                listaMagazzinieri.add(new MagazziniereDTO(ID, nome, cognome, codiceFiscale, dataNascita, patente, idVeicolo));
             }
             return listaMagazzinieri;
         } catch (SQLException ex) {
@@ -395,6 +397,7 @@ public class MagazzinoDAO {
             ps.setDate(4, Date.valueOf(dataNascita));
             ps.setString(5, patente);
             ps.setLong(6, idVeicolo);
+            ps.setLong(7, id);
             ps.executeUpdate();
 
         } catch (SQLException ex) {
