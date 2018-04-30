@@ -5,12 +5,13 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Netflix</title>
+        <title>RosMagazzino - Prodotti</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
         <script type="text/javascript" src="../js/bootstrap.js"></script>
         <link rel="stylesheet" href="../css/bootstrap.css" type="text/css"/>
-        <link rel="icon" href="../img/icona_magazzino.png"/>
+        <link rel="stylesheet" href="../css/default.css" type="text/css"/>
+        <link rel="icon" href="../img/icon.png"/>
 
         <script type="text/javascript">
             function mostraModale() {
@@ -23,7 +24,7 @@
         </script>
     </h:head>
     <h:body>
-        <nav class="navbar navbar-default">
+        <nav class="navbar navbar-inverse">
             <div class="container-fluid">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigazione">
@@ -32,7 +33,7 @@
                         <span class="icon-bar"></span>
                     </button>
                     <a class="navbar-brand" href="../index.html">
-                        <img alt="Netflix" src="../img/icona_magazzino.png" width="20"/>
+                        <img id="icon" alt="Netflix" src="../img/icon.png" width="32"/>
                     </a>
                 </div>
 
@@ -42,8 +43,12 @@
                         <li><a href="#">Scaffali</a></li>
                         <li><a href="../faces/magazzinieri.xhtml">Magazzinieri</a></li>
                         <li><a href="#">Veicoli</a></li>
-                        <li><a href="../faces/faornitori.xhtml">Fornitori</a></li>
+                        <li><a href="../faces/fornitori.xhtml">Fornitori</a></li>
                         <li><a href="#">Entrate/Uscite</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="../map.html">Dove Siamo</a></li>
+                        <li><a href="#" data-toggle="modal" data-target="#login-modal">Login</a></li>
                     </ul>
                 </div>
             </div>
@@ -55,7 +60,7 @@
                     <thead>
                         <tr>
                             <th class='col-sm-1'>
-                                <h:commandButton class='btn btn-success' value="Nuovo">
+                                <h:commandButton class='btn btn-primary' value="Nuovo">
                                     <f:ajax execute="" render="modale_prodotti" listener="#{pBean.loadProdotto(-1, false)}" onevent="mostraModale"/>
                                 </h:commandButton>
                             </th>

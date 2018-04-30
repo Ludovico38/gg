@@ -6,12 +6,13 @@
       xmlns:f='http://xmlns.jcp.org/jsf/core'>
 
     <h:head>
-        <title>Magazzino</title>
+        <title>RosMagazzino - Magazzinieri</title>
         <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'/>
         <script type='text/javascript' src='../js/jquery-3.3.1.js'></script>
         <script type='text/javascript' src='../js/bootstrap.js'></script>
         <link rel='stylesheet' href='../css/bootstrap.css' type='text/css'/>
-        <link rel='icon' href='../img/icona_magazzino.png'/>
+        <link rel='stylesheet' href='../css/default.css' type='text/css'/>
+        <link rel='icon' href='../img/icon.png'/>
 
         <style>td, th {vertical-align: middle !important}</style>
         <script type='text/javascript'>
@@ -24,7 +25,7 @@
         </script>        
     </h:head>
     <h:body>
-        <nav class='navbar navbar-default'>
+        <nav class='navbar navbar-inverse'>
             <div class='container-fluid'>
                 <div class='navbar-header'>
                     <button type='button' class='navbar-toggle' data-toggle='collapse' data-target='#navigazione'>
@@ -33,7 +34,7 @@
                         <span class='icon-bar'></span>
                     </button>
                     <a class='navbar-brand' href='../index.html'>
-                        <img alt='Magazzino' src='../img/icona_magazzino.png' width='20'/>
+                        <img id="icon" alt='Magazzino' src='../img/icon.png' width='32'/>
                     </a>
                 </div>
 
@@ -45,7 +46,11 @@
                         <li><a href='#'>Veicoli</a></li>
                         <li><a href='../faces/fornitori.xhtml'>Fornitori</a></li>
                         <li><a href='#'>Entrate/Uscite</a></li>                        
-                    </ul>                                        
+                    </ul> 
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="../map.html">Dove Siamo</a></li>
+                        <li><a href="#" data-toggle="modal" data-target="#login-modal">Login</a></li>
+                    </ul>
                 </div>
             </div>
         </nav>
