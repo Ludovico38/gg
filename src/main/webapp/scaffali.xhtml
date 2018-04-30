@@ -1,0 +1,117 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Scaffali</title>
+        <ui:include src="header.xhtml"/>
+    </h:head>
+    <h:body>
+
+        <!-- \\\\\\\\\\\\\\\\\\\\\\\\\ INIZIO NAVBAR \\\\\\\\\\\\\\\\\\\\\\\\\ -->
+
+        <ui:include src="navbar.xhtml"/>
+
+        <!-- \\\\\\\\\\\\\\\\\\\\\\\\\ FINE NAVBAR \\\\\\\\\\\\\\\\\\\\\\\\\ -->
+
+        <!-- \\\\\\\\\\\\\\\\\\\\\\\\\ INIZIO TABELLA \\\\\\\\\\\\\\\\\\\\\\\\\ -->
+        <h:form id='tabella_prodotti'>
+            <div class='row'>
+                <div class='col-sm-8'>
+                    <table class='table table-responsive'>
+                        <thead>
+                            <tr>
+                                <th>
+                                    <h:commandLink value="Nuovo" class="btn btn-primary">
+                                        <f:ajax execute="" render="modale_prodotti" listener="#{scaffaleBean.loadScaffale(-1)}" onevent="showModal" />
+                                    </h:commandLink>
+                                </th>
+                                <th>
+                                    Numero
+                                </th>
+                                <th>
+                                    Categoria
+                                </th>
+                                <th>
+                                    Magazziniere
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ui:repeat value="#{scaffaleBean.listaScaffali}" var="scaffale"> 
+                                <tr>
+                                    <td>
+                                        <h:commandLink class="btn btn-default">
+                                            <span class="glyphicon glyphicon-eye-open"></span>
+                                            <f:ajax execute="" render="modale_prodotti" listener="#{scaffaleBean.loadScaffale(scaffale.id)}" onevent="showModal" />
+                                        </h:commandLink>
+                                        <h:commandLink class="btn btn-default">
+                                            <span class="glyphicon glyphicon-pencil"></span>
+                                            <f:ajax execute="" render="modale_prodotti" listener="#{scaffaleBean.loadScaffale(scaffale.id)}" onevent="showModal" />
+                                        </h:commandLink>
+                                    </td>
+                                    <td>#{scaffale.id}</td>
+                                    <td>#{scaffale.idCategoria}</td>
+                                    <td>#{scaffale.idMagazziniere}</td>
+                                </tr>
+                            </ui:repeat>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </h:form>
+
+        <!-- \\\\\\\\\\\\\\\\\\\\\\\\\ FINE TABELLA \\\\\\\\\\\\\\\\\\\\\\\\\ -->
+
+        <!-- \\\\\\\\\\\\\\\\\\\\\\\\\ INIZIO MODALE \\\\\\\\\\\\\\\\\\\\\\\\\ -->
+        <!--Modal--> 
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <h:form id="modale_prodotti">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label>Numero</label><h:inputText class="form-control" value="#{scaffaleBean.scaffale.id}" disabled="true"/>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label>Categoria</label><h:inputText class="form-control" value="#{scaffaleBean.scaffale.idCategoria}" disabled=""/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <label>Magazziniere</label>
+<!--                                    <h:selectOneMenu class="form-control" value="#{scaffaleBean.scaffale.idMagazziniere}" disabled="">
+                                        <f:selectItem itemValue="-1" itemLabel="////////////"/>
+                                        <f:selectItems value="" var="" itemValue="" itemLabel=""/>
+                                    </h:selectOneMenu>-->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <h:commandButton class="btn btn-primary" value="Save" disabled="">
+                                <f:ajax execute="modale_prodotti" render="tabella_prodotti" listener="" onevent="hideModal" />
+                            </h:commandButton>
+                        </div>
+                    </div>
+                </h:form>
+            </div>
+        </div>
+
+        <!-- \\\\\\\\\\\\\\\\\\\\\\\\\ FINE MODALE \\\\\\\\\\\\\\\\\\\\\\\\\ -->
+
+        <!-- \\\\\\\\\\\\\\\\\\\\\\\\\ INIZIO FOOTER \\\\\\\\\\\\\\\\\\\\\\\\\ -->
+
+        <ui:include src="footer.xhtml"/>
+
+        <!-- \\\\\\\\\\\\\\\\\\\\\\\\\ FINE FOOTER \\\\\\\\\\\\\\\\\\\\\\\\\ -->
+    </h:body>
+</html>
+

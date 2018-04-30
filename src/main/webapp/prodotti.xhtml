@@ -1,0 +1,134 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
+<html xmlns='http://www.w3.org/1999/xhtml'
+      xmlns:h='http://xmlns.jcp.org/jsf/html'
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Prodotti</title>
+        <ui:include src="header.xhtml" />
+    </h:head>
+    <h:body>
+        <!-- \\\\\\\\\\\\\\\\\\\\\\\\\ INIZIO NAVBAR \\\\\\\\\\\\\\\\\\\\\\\\\ -->
+
+        <ui:include src="navbar.xhtml"/>
+
+        <!-- \\\\\\\\\\\\\\\\\\\\\\\\\ FINE NAVBAR \\\\\\\\\\\\\\\\\\\\\\\\\ -->
+
+        <!-- \\\\\\\\\\\\\\\\\\\\\\\\\ INIZIO TABELLA \\\\\\\\\\\\\\\\\\\\\\\\\ -->
+        <h:form id='tabella_prodotti'>
+            <div class='row'>
+                <div class='col-sm-8'>
+                    <table class='table table-responsive'>
+                        <thead>
+                            <tr>
+                                <th>
+                                    <h:commandLink value="Nuovo" class="btn btn-primary">
+                                        <f:ajax execute="" render="modale_prodotti" listener="#{prodottoBean.loadProdotto(-1,false)}" onevent="showModal" />
+                                    </h:commandLink>
+                                </th>
+                                <th>
+                                    Nome
+                                </th>
+                                <th>
+                                    Prezzo
+                                </th>
+                                <th>
+                                    Provenienza
+                                </th>
+                                <th>
+                                    Scadenza
+                                </th>
+                                <th>
+                                    Fornitore
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ui:repeat value="#{prodottoBean.listaProdotti}" var="prodotto"> 
+                                <tr>
+                                    <td>
+                                        <h:commandLink class="btn btn-default">
+                                            <span class="glyphicon glyphicon-eye-open"></span>
+                                            <f:ajax execute="" render="modale_prodotti" listener="#{prodottoBean.loadProdotto(prodotto.id,true)}" onevent="showModal" />
+                                        </h:commandLink>
+                                        <h:commandLink class="btn btn-default">
+                                            <span class="glyphicon glyphicon-pencil"></span>
+                                            <f:ajax execute="" render="modale_prodotti" listener="#{prodottoBean.loadProdotto(prodotto.id,false)}" onevent="showModal" />
+                                        </h:commandLink>
+                                    </td>
+                                    <td>#{prodotto.nome}</td>
+                                    <td>#{prodotto.prezzo}</td>
+                                    <td>#{prodotto.provenienza}</td>
+                                    <td>#{prodotto.scadenza}</td>
+                                    <td>#{prodottoBean.getNomeFornitore(prodotto.idFornitore)}</td>
+                                </tr>
+                            </ui:repeat>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </h:form>
+
+        <!-- \\\\\\\\\\\\\\\\\\\\\\\\\ FINE TABELLA \\\\\\\\\\\\\\\\\\\\\\\\\ -->
+
+        <!-- \\\\\\\\\\\\\\\\\\\\\\\\\ INIZIO MODALE \\\\\\\\\\\\\\\\\\\\\\\\\ -->
+        <!--Modal--> 
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <h:form id="modale_prodotti">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <h:inputText class="hidden" value="#{prodottoBean.prodotto.id}"/>
+                                <div class="col-sm-6">
+                                    <label>Nome</label><h:inputText class="form-control" value="#{prodottoBean.prodotto.nome}" disabled="#{prodottoBean.disabled}"/>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label>Prezzo</label><h:inputText class="form-control" value="#{prodottoBean.prodotto.prezzo}" disabled="#{prodottoBean.disabled}"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label>Provenienza</label><h:inputText class="form-control" value="#{prodottoBean.prodotto.provenienza}" disabled="#{prodottoBean.disabled}"/>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label>Scadenza</label><h:inputText class="form-control" value="#{prodottoBean.prodotto.scadenzaAsString}" disabled="#{prodottoBean.disabled}"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <label>Fornitore</label>
+                                    <h:selectOneMenu class="form-control" value="#{prodottoBean.prodotto.idFornitore}" disabled="#{prodottoBean.disabled}">
+                                        <f:selectItem itemValue="-1" itemLabel="--------------"/>
+                                        <f:selectItems value="#{fornitoreBean.idFornitori}" var="idFornitore" itemValue="#{idFornitore}" itemLabel="#{prodottoBean.getNomeFornitore(idFornitore)}"/>
+                                    </h:selectOneMenu>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <h:commandButton class="btn btn-primary" value="Save" disabled="#{prodottoBean.disabled}">
+                                <f:ajax execute="modale_prodotti" render="tabella_prodotti" listener="#{prodottoBean.saveProdotto()}" onevent="hideModal" />
+                            </h:commandButton>
+                        </div>
+                    </div>
+                </h:form>
+            </div>
+        </div>
+
+        <!-- \\\\\\\\\\\\\\\\\\\\\\\\\ FINE MODALE \\\\\\\\\\\\\\\\\\\\\\\\\ -->
+
+        <!-- \\\\\\\\\\\\\\\\\\\\\\\\\ INIZIO FOOTER \\\\\\\\\\\\\\\\\\\\\\\\\ -->
+
+        <ui:include src="footer.xhtml"/>
+
+        <!-- \\\\\\\\\\\\\\\\\\\\\\\\\ FINE FOOTER \\\\\\\\\\\\\\\\\\\\\\\\\ -->
+
+    </h:body>
+</html>
+

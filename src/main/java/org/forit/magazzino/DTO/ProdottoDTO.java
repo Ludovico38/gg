@@ -7,6 +7,7 @@ package org.forit.magazzino.DTO;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.Objects;
 
 /**
@@ -14,12 +15,16 @@ import java.util.Objects;
  * @author forIT
  */
 public class ProdottoDTO {
-    private long id,idFornitore;
-    private String nome,provenienza;
-    private LocalDate scadenza;
-    private BigDecimal prezzo;
-
+    private long id=-1,idFornitore=-1;
+    private String nome="",provenienza="";
+    private LocalDate scadenza=LocalDate.of(1, Month.JANUARY, 1);
+    private BigDecimal prezzo=new BigDecimal(0);
+    
     public ProdottoDTO() {
+    }
+    
+    public ProdottoDTO(long id) {
+        this.id=id;
     }
     
     public ProdottoDTO(long id, String nome, BigDecimal prezzo, LocalDate scadenza, String provenienza) {
@@ -93,6 +98,22 @@ public class ProdottoDTO {
 
     public void setPrezzo(BigDecimal prezzo) {
         this.prezzo = prezzo;
+    }
+    
+    public String getScadenzaAsString(){
+        return scadenza.toString();
+    }
+    
+    public void setScadenzaAsString(String scadenza){
+        this.scadenza=LocalDate.parse(scadenza);
+    }
+    
+    public String getPrezzoAsString(){
+        return prezzo.toPlainString();
+    }
+    
+    public void setPrezzoAsString(String prezzo){
+        this.prezzo= new BigDecimal(prezzo);
     }
 
     @Override

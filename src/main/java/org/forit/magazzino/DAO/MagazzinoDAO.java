@@ -14,8 +14,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import org.forit.magazzino.DTO.CategoriaDTO;
+import org.forit.magazzino.DTO.FornitoreDTO;
 import org.forit.magazzino.utilities.Queries;
 import org.forit.magazzino.DTO.MagazziniereDTO;
 import org.forit.magazzino.DTO.PaymentToSupplierDTO;
@@ -44,19 +49,21 @@ public class MagazzinoDAO {
     public ProdottoDTO getProdotto(long id) throws MagazzinoException {
         try (Connection conn = DriverManager.getConnection(DB_URL);
                 PreparedStatement pst = conn.prepareStatement(Queries.GET_PRODOTTO_WITH_ID)) {
-            long idProdotto;
-            BigDecimal prezzo;
-            String nome, provenienza;
             LocalDate scadenza;
             pst.setLong(1, id);
             ResultSet rs = pst.executeQuery();
             rs.next();
-            idProdotto = rs.getLong("ID");
-            nome = rs.getString("NOME");
-            prezzo = rs.getBigDecimal("PREZZO");
-            provenienza = rs.getString("PROVENIENZA");
-            scadenza = rs.getDate("SCADENZA").toLocalDate();
-            return new ProdottoDTO(idProdotto, nome, prezzo, scadenza, provenienza, idProdotto);
+            long idFornitore = rs.getLong("ID_FORNITORE");
+            String nome = rs.getString("NOME");
+            BigDecimal prezzo = rs.getBigDecimal("PREZZO");
+            String provenienza = rs.getString("PROVENIENZA");
+            Date dataScadenza = rs.getDate("SCADENZA");
+            if (dataScadenza == null) {
+                scadenza = LocalDate.of(9999, Month.JANUARY, 1);
+            } else {
+                scadenza = dataScadenza.toLocalDate();
+            }
+            return new ProdottoDTO(id, nome, prezzo, scadenza, provenienza, idFornitore);
         } catch (SQLException ex) {
             System.out.println("ERRORE:" + ex);
             throw new MagazzinoException(ex);
@@ -68,23 +75,38 @@ public class MagazzinoDAO {
                 Statement st = conn.createStatement();
                 ResultSet rs = st.executeQuery(Queries.GET_PRODOTTI)) {
             List<ProdottoDTO> listaProdotti = new ArrayList<>();
-            long ID;
-            BigDecimal prezzo;
-            String nome, provenienza;
             LocalDate scadenza;
             while (rs.next()) {
-                ID = rs.getLong("ID");
-                nome = rs.getString("NOME");
-                prezzo = new BigDecimal(rs.getDouble("PREZZO"));
+                long ID = rs.getLong("ID");
+                String nome = rs.getString("NOME");
+                BigDecimal prezzo = new BigDecimal(rs.getDouble("PREZZO"));
+                long idFornitore = rs.getLong("ID_FORNITORE");
                 if (rs.getDate("SCADENZA") == null) {
                     scadenza = LocalDate.now();
                 } else {
                     scadenza = rs.getDate("SCADENZA").toLocalDate();
                 }
-                provenienza = rs.getString("PROVENIENZA");
-                listaProdotti.add(new ProdottoDTO(ID, nome, prezzo, scadenza, provenienza));
+                String provenienza = rs.getString("PROVENIENZA");
+                listaProdotti.add(new ProdottoDTO(ID, nome, prezzo, scadenza, provenienza, idFornitore));
             }
             return listaProdotti;
+        } catch (SQLException ex) {
+            System.out.println("ERRORE:" + ex);
+            throw new MagazzinoException(ex);
+        }
+    }
+    
+    public Map<Long, String> getListaCategorie() throws MagazzinoException {
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+                Statement st = conn.createStatement();
+                ResultSet rs = st.executeQuery(Queries.GET_CATEGORIE)) {
+            Map<Long, String> listaCategorie = new LinkedHashMap<>();
+            while (rs.next()) {
+                long id = rs.getLong("ID");
+                String nome = rs.getString("DESCRIZIONE");
+                listaCategorie.put(id, nome);
+            }
+            return listaCategorie;
         } catch (SQLException ex) {
             System.out.println("ERRORE:" + ex);
             throw new MagazzinoException(ex);
@@ -96,14 +118,30 @@ public class MagazzinoDAO {
                 Statement st = conn.createStatement();
                 ResultSet rs = st.executeQuery(Queries.GET_SCAFFALI)) {
             List<ScaffaleDTO> listaScaffali = new ArrayList<>();
-            long ID;
-            String descrizione;
             while (rs.next()) {
-                ID = rs.getLong("ID");
-                descrizione = rs.getString("DESCRIZIONE");
-                listaScaffali.add(new ScaffaleDTO(ID, descrizione));
+                long id = rs.getLong("ID"),
+                        idCategoria = rs.getLong("ID_CATEGORIA"),
+                        idCrossScaffaleProdotto = rs.getLong("ID_SCAFFALE_X_PRODOTTO"),
+                        idMagazziniere = rs.getLong("ID_MAGAZZINIERE");
+                listaScaffali.add(new ScaffaleDTO(id, idCategoria, idMagazziniere, idCrossScaffaleProdotto));
             }
             return listaScaffali;
+        } catch (SQLException ex) {
+            System.out.println("ERRORE:" + ex);
+            throw new MagazzinoException(ex);
+        }
+    }
+    
+    public ScaffaleDTO getScaffale(long id) throws MagazzinoException {
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+                PreparedStatement pst = conn.prepareStatement(Queries.GET_SCAFFALE)) {
+            pst.setLong(1, id);
+            ResultSet rs = pst.executeQuery();
+            rs.next();
+            long idCategoria = rs.getLong("ID_CATEGORIA"),
+                    idCrossScaffaleProdotto = rs.getLong("ID_SCAFFALE_X_PRODOTTO"),
+                    idMagazziniere = rs.getLong("ID_MAGAZZINIERE");
+            return new ScaffaleDTO(id, idCategoria, idMagazziniere, idCrossScaffaleProdotto);
         } catch (SQLException ex) {
             System.out.println("ERRORE:" + ex);
             throw new MagazzinoException(ex);
@@ -154,6 +192,50 @@ public class MagazzinoDAO {
         }
     }
     
+    public Map<Long, FornitoreDTO> getListaFornitori() throws MagazzinoException {
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+                Statement st = conn.createStatement();
+                ResultSet rs = st.executeQuery(Queries.GET_FORNITORI)) {
+            Map<Long, FornitoreDTO> listaFornitori = new LinkedHashMap<>();
+            long id, idCategoria, idOrdine;
+            String nome, indirizzo, recapito;
+            while (rs.next()) {
+                id = rs.getLong("ID");
+                idCategoria = rs.getLong("ID_CATEGORIA");
+                idOrdine = rs.getLong("ID_ORDINE");
+                nome = rs.getString("NOME");
+                indirizzo = rs.getString("INDIRIZZO");
+                recapito = rs.getString("RECAPITO");
+                listaFornitori.put(id, new FornitoreDTO(id, idCategoria, idOrdine, nome, indirizzo, recapito));
+            }
+            return listaFornitori;
+        } catch (SQLException ex) {
+            System.out.println("ERRORE:" + ex);
+            throw new MagazzinoException(ex);
+        }
+    }
+    
+    public FornitoreDTO getFornitore(long id) throws MagazzinoException {
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+                PreparedStatement pst = conn.prepareStatement(Queries.GET_FORNITORE)) {
+            FornitoreDTO fornitore;
+            long idCategoria, idOrdine;
+            String nome, indirizzo, recapito;
+            pst.setLong(1, id);
+            ResultSet rs = pst.executeQuery();
+            idCategoria = rs.getLong("ID_CATEGORIA");
+            idOrdine = rs.getLong("ID_ORDINE");
+            nome = rs.getString("NOME");
+            indirizzo = rs.getString("INDIRIZZO");
+            recapito = rs.getString("RECAPITO");
+            fornitore = new FornitoreDTO(id, idCategoria, idOrdine, nome, indirizzo, recapito);
+            return fornitore;
+        } catch (SQLException ex) {
+            System.out.println("ERRORE:" + ex);
+            throw new MagazzinoException(ex);
+        }
+    }
+    
     public void insertProdotto(String nome, BigDecimal prezzo, LocalDate scadenza, String provenienza, long id_fornitore) throws MagazzinoException {
         try (Connection conn = DriverManager.getConnection(DB_URL);
                 PreparedStatement st = conn.prepareStatement(Queries.INSERT_PRODOTTI)) {
@@ -191,7 +273,8 @@ public class MagazzinoDAO {
             st.setBigDecimal(2, prodotto.getPrezzo());
             st.setDate(3, Date.valueOf(prodotto.getScadenza()));
             st.setString(4, prodotto.getProvenienza());
-            st.setLong(5, prodotto.getId());
+            st.setLong(5, prodotto.getIdFornitore());
+            st.setLong(6, prodotto.getId());
             st.executeUpdate();
         } catch (SQLException ex) {
             System.out.println("ERRORE:" + ex);
@@ -228,7 +311,7 @@ public class MagazzinoDAO {
             String nome, provenienza, categoria, nome_fornitore;
             BigDecimal prezzo_vendita, prezzo_acquisto, spesa_totale, ritorno;
             LocalDate scadenza;
-            long id_scaffale,id_prodotto;
+            long id_scaffale, id_prodotto;
             int quantita_acquistati, quantita_venduti;
             while (rs.next()) {
                 id_prodotto = rs.getLong("ID");
@@ -248,7 +331,7 @@ public class MagazzinoDAO {
                 quantita_venduti = rs.getInt("QUANTITA_VENDUTE");
                 ritorno = rs.getBigDecimal("RITORNO");
                 nome_fornitore = rs.getString("NOME_FORNITORE");
-                listaDettagli.add(new ProductDetailsDTO(id_prodotto,nome, prezzo_vendita, provenienza, scadenza, id_scaffale, categoria, prezzo_acquisto, quantita_acquistati, spesa_totale, quantita_venduti, ritorno, nome_fornitore));
+                listaDettagli.add(new ProductDetailsDTO(id_prodotto, nome, prezzo_vendita, provenienza, scadenza, id_scaffale, categoria, prezzo_acquisto, quantita_acquistati, spesa_totale, quantita_venduti, ritorno, nome_fornitore));
             }
             return listaDettagli;
         } catch (SQLException ex) {
@@ -257,10 +340,11 @@ public class MagazzinoDAO {
         }
     }
     
-    public ProductDetailsDTO getProductDetail(long id_prodotto) throws MagazzinoException{
-        for(ProductDetailsDTO prodotto:getProductDetails()){
-            if(prodotto.getId()==id_prodotto)
+    public ProductDetailsDTO getProductDetail(long id_prodotto) throws MagazzinoException {
+        for (ProductDetailsDTO prodotto : getProductDetails()) {
+            if (prodotto.getId() == id_prodotto) {
                 return prodotto;
+            }
         }
         return null;
     }

@@ -12,8 +12,8 @@ import java.util.Objects;
  * @author forIT
  */
 public class FornitoreDTO {
-    private long id,idCategoria,idOrdine;
-    private String nome,indirizzo,recapito;
+    private long id=-1,idCategoria=-1,idOrdine=-1;
+    private String nome="",indirizzo="",recapito="";
 
     public FornitoreDTO() {
     }

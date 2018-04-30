@@ -5,22 +5,21 @@
  */
 package org.forit.magazzino.DTO;
 
-import java.util.Objects;
-
 /**
  *
  * @author forIT
  */
 public class ScaffaleDTO {
-    private long id;
-    private String descrizione;
+    private long id, idCategoria,idMagazziniere,idCrossScaffaleProdotto;
 
     public ScaffaleDTO() {
     }
 
-    public ScaffaleDTO(long id, String descrizione) {
+    public ScaffaleDTO(long id, long idCategoria, long idMagazziniere, long idCrossScaffaleProdotto) {
         this.id = id;
-        this.descrizione = descrizione;
+        this.idCategoria = idCategoria;
+        this.idMagazziniere = idMagazziniere;
+        this.idCrossScaffaleProdotto = idCrossScaffaleProdotto;
     }
 
     public long getId() {
@@ -31,19 +30,37 @@ public class ScaffaleDTO {
         this.id = id;
     }
 
-    public String getDescrizione() {
-        return descrizione;
+    public long getIdCategoria() {
+        return idCategoria;
     }
 
-    public void setDescrizione(String descrizione) {
-        this.descrizione = descrizione;
+    public void setIdCategoria(long idCategoria) {
+        this.idCategoria = idCategoria;
+    }
+
+    public long getIdMagazziniere() {
+        return idMagazziniere;
+    }
+
+    public void setIdMagazziniere(long idMagazziniere) {
+        this.idMagazziniere = idMagazziniere;
+    }
+
+    public long getIdCrossScaffaleProdotto() {
+        return idCrossScaffaleProdotto;
+    }
+
+    public void setIdCrossScaffaleProdotto(long idCrossScaffaleProdotto) {
+        this.idCrossScaffaleProdotto = idCrossScaffaleProdotto;
     }
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 89 * hash + (int) (this.id ^ (this.id >>> 32));
-        hash = 89 * hash + Objects.hashCode(this.descrizione);
+        int hash = 7;
+        hash = 37 * hash + (int) (this.id ^ (this.id >>> 32));
+        hash = 37 * hash + (int) (this.idCategoria ^ (this.idCategoria >>> 32));
+        hash = 37 * hash + (int) (this.idMagazziniere ^ (this.idMagazziniere >>> 32));
+        hash = 37 * hash + (int) (this.idCrossScaffaleProdotto ^ (this.idCrossScaffaleProdotto >>> 32));
         return hash;
     }
 
@@ -62,7 +79,13 @@ public class ScaffaleDTO {
         if (this.id != other.id) {
             return false;
         }
-        if (!Objects.equals(this.descrizione, other.descrizione)) {
+        if (this.idCategoria != other.idCategoria) {
+            return false;
+        }
+        if (this.idMagazziniere != other.idMagazziniere) {
+            return false;
+        }
+        if (this.idCrossScaffaleProdotto != other.idCrossScaffaleProdotto) {
             return false;
         }
         return true;
@@ -70,8 +93,7 @@ public class ScaffaleDTO {
 
     @Override
     public String toString() {
-        return "ScaffaleDTO{" + "id=" + id + ", descrizione=" + descrizione + '}';
+        return "ScaffaleDTO{" + "id=" + id + ", idCategoria=" + idCategoria + ", idMagazziniere=" + idMagazziniere + ", idCrossScaffaleProdotto=" + idCrossScaffaleProdotto + '}';
     }
-    
     
 }
