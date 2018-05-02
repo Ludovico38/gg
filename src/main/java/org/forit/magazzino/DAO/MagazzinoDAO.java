@@ -266,6 +266,19 @@ public class MagazzinoDAO {
         }
     }
     
+    public void insertScaffale(ScaffaleDTO scaffale) throws MagazzinoException {
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+                PreparedStatement pst = conn.prepareStatement(Queries.INSERT_SCAFFALE)) {
+            pst.setLong(1, scaffale.getIdCategoria());
+            pst.setLong(2, scaffale.getIdCrossScaffaleProdotto());
+            pst.setLong(3, scaffale.getIdMagazziniere());
+            pst.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println("ERRORE:" + ex);
+            throw new MagazzinoException(ex);
+        }
+    }
+    
     public void updateProdotto(ProdottoDTO prodotto) throws MagazzinoException {
         try (Connection conn = DriverManager.getConnection(DB_URL);
                 PreparedStatement st = conn.prepareStatement(Queries.UPDATE_PRODOTTI)) {
@@ -278,6 +291,40 @@ public class MagazzinoDAO {
             st.executeUpdate();
         } catch (SQLException ex) {
             System.out.println("ERRORE:" + ex);
+            throw new MagazzinoException(ex);
+        }
+    }
+    
+    public void updateScaffale(ScaffaleDTO scaffale) throws MagazzinoException {
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+                PreparedStatement pst = conn.prepareStatement(Queries.INSERT_SCAFFALE)) {
+            pst.setLong(1, scaffale.getIdCategoria());
+            pst.setLong(2, scaffale.getIdCrossScaffaleProdotto());
+            pst.setLong(3, scaffale.getIdMagazziniere());
+            pst.setLong(4, scaffale.getId());
+            pst.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println("ERRORE:" + ex);
+            throw new MagazzinoException(ex);
+        }
+    }
+    
+    public void deleteProdotto(long id) throws MagazzinoException{
+        try(Connection conn=DriverManager.getConnection(DB_URL);
+                PreparedStatement pst=conn.prepareStatement(Queries.DELETE_PRODOTTO)){
+            pst.setLong(1, id);
+            pst.executeUpdate();
+        }catch(SQLException ex){
+            throw new MagazzinoException(ex);
+        }
+    }
+    
+    public void deleteScaffale(long id) throws MagazzinoException {
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+                PreparedStatement pst = conn.prepareStatement(Queries.INSERT_SCAFFALE)) {
+            pst.setLong(1, id);
+            pst.executeUpdate();
+        } catch (SQLException ex) {
             throw new MagazzinoException(ex);
         }
     }
