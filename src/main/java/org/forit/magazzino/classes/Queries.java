@@ -12,8 +12,8 @@ package org.forit.magazzino.classes;
 public class Queries {
 
      public static final String GET_PRODOTTI = "SELECT p.ID,p.NOME,p.PREZZO,p.SCADENZA,p.PROVENIENZA "
-            + "FROM magazzino.prodotto AS p";
-    public static final String GET_MAGAZZINIERI = "SELECT m.ID,m.NOME,m.COGNOME,m.CODICE_FISCALE,m.DATA_NASCITA,m.PATENTE "
+            + "FROM magazzino.prodotto AS p ORDER BY p.nome";
+    public static final String GET_MAGAZZINIERI = "SELECT m.ID,m.NOME,m.COGNOME,m.CODICE_FISCALE,m.DATA_NASCITA,m.PATENTE, m.ID_VEICOLO "
             + "FROM magazziniere as m;";
     public static final String GET_SCAFFALI = "SELECT s.ID,c.DESCRIZIONE FROM scaffale as s,categoria as c WHERE s.ID_CATEGORIA=c.ID";
     public static final String GET_VEICOLI = "SELECT v.ID,tv.DESCRIZIONE,v.PATENTE_RICHIESTA "

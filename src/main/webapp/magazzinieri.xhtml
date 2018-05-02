@@ -141,10 +141,10 @@
                             </div>
                         </div>
                         <div class='modal-footer'>
+                            <button type='button' class='btn btn-default' data-dismiss='modal'>Chiudi</button>
                             <h:commandButton class='btn btn-primary' value='Salva' disabled='#{mBean.disabled}'>
                                 <f:ajax execute='modale_magazzinieri' render='tabella_magazzinieri' listener='#{mBean.saveMagazziniere()}' onevent='nascondiModale' />
                             </h:commandButton>
-                            <button type='button' class='btn btn-default' data-dismiss='modal'>Chiudi</button>
                         </div>
                     </div>
                 </h:form>
