@@ -33,6 +33,7 @@ public class Queries {
             + "SET NOME = ?, INDIRIZZO = ?, ID_CATEGORIA = ?, RECAPITO = ?, ID_ORDINE = ? "
             + "WHERE ID = ?";
     public static final String DELETE_FORNITORE = "DELETE FROM fornitore WHERE nome = ?";
+    public static final String DELETE_MAGAZZINIERE = "DELETE FROM magazziniere WHERE id = ?";
     public static final String INSERT_MAGAZZINIERE = "INSERT INTO magazziniere (NOME, COGNOME, CODICE_FISCALE, DATA_NASCITA, PATENTE, ID_VEICOLO)  values (?, ?, ?, ?, ?, ?)";
 
     public static final String UPDATE_MAGAZZINIERE
