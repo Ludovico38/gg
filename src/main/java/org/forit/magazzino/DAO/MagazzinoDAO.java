@@ -21,6 +21,7 @@ import org.forit.magazzino.DTO.ScaffaleDTO;
 import org.forit.magazzino.DTO.VeicoloDTO;
 import org.forit.magazzino.Exception.MagazzinoException;
 import org.forit.magazzino.classes.Queries;
+import static org.forit.magazzino.classes.Queries.DELETE_FORNITORE;
 import static org.forit.magazzino.classes.Queries.INSERT_FORNITORE;
 import static org.forit.magazzino.classes.Queries.INSERT_MAGAZZINIERE;
 import static org.forit.magazzino.classes.Queries.UPDATE_FORNITORE;
@@ -337,6 +338,18 @@ public class MagazzinoDAO {
 
         } catch (SQLException ex) {
             System.out.println("Si è verificato un errore " + ex.getMessage());
+            throw new MagazzinoException(ex);
+        }
+    }
+
+    public void deleteFornitore(String nome) throws MagazzinoException {
+        try (
+                Connection conn = DriverManager.getConnection(DB_URL);
+                PreparedStatement ps = conn.prepareStatement(DELETE_FORNITORE);) {
+            ps.setString(1, nome);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println("Si è verificato un errore: " + ex.getMessage());
             throw new MagazzinoException(ex);
         }
     }

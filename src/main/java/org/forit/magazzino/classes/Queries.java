@@ -27,11 +27,12 @@ public class Queries {
             + " where p.ID_FORNITORE=f.ID AND f.ID_ORDINE=o.ID AND o.ID_ORDINE_X_PRODOTTO=oxp.ID AND oxp.ID_PRODOTTO=p.ID AND p.ID=sxp.ID_PRODOTTO "
             + " AND sxp.ID_SCAFFALE=s.ID AND s.ID_CATEGORIA=c.ID AND v.ID_PRODOTTO=p.ID"
             + " group by p.nome";
-    public static final String INSERT_FORNITORE = "INSERT INTO fornitore (NOME,INDIRIZZO,ID_CATEGORIA,RECAPITO,ID) values(?,?,?,?,?)";
+    public static final String INSERT_FORNITORE = "INSERT INTO fornitore (NOME,INDIRIZZO,ID_CATEGORIA,RECAPITO,ID_ORDINE) values(?,?,?,?,?)";
     public static final String UPDATE_FORNITORE
             = "UPDATE FORNITORE "
             + "SET NOME = ?, INDIRIZZO = ?, ID_CATEGORIA = ?, RECAPITO = ?, ID_ORDINE = ? "
             + "WHERE ID = ?";
+    public static final String DELETE_FORNITORE = "DELETE FROM fornitore WHERE nome = ?";
     public static final String INSERT_MAGAZZINIERE = "INSERT INTO magazziniere (NOME, COGNOME, CODICE_FISCALE, DATA_NASCITA, PATENTE, ID_VEICOLO)  values (?, ?, ?, ?, ?, ?)";
 
     public static final String UPDATE_MAGAZZINIERE
