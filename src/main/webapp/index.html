@@ -8,7 +8,6 @@
         <link rel="stylesheet" href="css/bootstrap.css" type="text/css"/>
         <link rel="icon" href="img/icon.png">
         <link rel="stylesheet" href="css/default.css" type="text/css"/>
-
         <script type="text/javascript">
             function mostraModale() {
                 $('#myModal').modal('show');
@@ -17,6 +16,13 @@
                 $('#myModal').modal('hide');
             }
         </script>
+<!--        <script type="text/javascript">
+            function formVerification() {
+                var pw = document.getElementById("password").value;
+                if (pw.length <= 8) {
+                    window.alert("La password " + pw + " non ci piace, usane una più lunga.");
+                }
+        </script>-->
     </head>
     <body>
         <nav class="navbar navbar-inverse">
@@ -37,6 +43,7 @@
                         <li><a href="faces/prodotti.xhtml">Prodotti</a></li>
                         <li><a href="#">Scaffali</a></li>
                         <li><a href="faces/magazzinieri.xhtml">Magazzinieri</a></li>
+                        <li><a href="#">Veicoli</a></li>
                         <li><a href="faces/fornitori.xhtml">Fornitori</a></li>
                         <li><a href="#">Entrate/Uscite</a></li>
                     </ul>
@@ -64,7 +71,7 @@
                     <img class="first-slide" src="img/home.jpg" alt="Magazzino_home">
                     <div class="container">
                         <div class="carousel-caption">
-                            <h1>Chi Siamo</h1>
+                            <h1>Il nostro team</h1>
                             <h4>Siamo Alciati, Arrichiello, Lombardi e Rosmarino. Quattro studenti che fanno cose.</h4>
                         </div>
                     </div>
@@ -73,9 +80,9 @@
                     <img class="second-slide" src="img/training-service.png" alt="Mappa">
                     <div class="container">
                         <div class="carousel-caption">
-                            <h1>Dove trovarci</h1>
+                            <h1>I nostri contatti</h1>
                             <p></p>
-                            <p><a class="btn btn-lg btn-primary" href="map.html" role="button">Apri la mappa</a></p>
+                            <p><a class="btn btn-lg btn-primary" href="map.html" role="button">Contattaci ora</a></p>
                         </div>
                     </div>
                 </div>
@@ -102,7 +109,7 @@
 
 
         <div class="page-header col-sm-offset-1">
-            <h1>RosMagazzino <small>Organizzazione prima di tutto</small></h1>
+            <h1>RosMagazzino <small>- Organizzazione prima di tutto</small></h1>
         </div>
 
         <div class="jumbotron container-fluid">
@@ -130,6 +137,10 @@
                 </div>
             </div>
         </div>
+        
+        <div>
+            <a href="#" style="color:#66afe9" class="col-md-offset-1">Torna in cima</a>
+        </div>
 
 
         <footer class="footer col-sm-2 col-sm-offset-10">
@@ -145,25 +156,21 @@
             <div class="modal-dialog">
                 <div class="jumbotron container-fluid" id="j2">
                     <div class="loginmodal-container">
-                        <h3 id="j_h2">Effettua il login a RosMagazzino</h3><br>
+                        <h2 id="j_h2" class="text-center">Effettua il login a RosMagazzino</h2><br>
                         <form>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <input class="form-control" type="text" name="user" placeholder="Username">
-                                    <input class="form-control" type="password" name="pass" placeholder="Password" style="margin-top:20px">
+
+                            <div class="form-group">
+                                <div class="col-md-6 col-md-offset-2">
+                                    <input class="form-control" type="text" id="email" name="mail" placeholder="Email">
+                                    <input class="form-control" type="password" id="password" name="pass" placeholder="Password" style="margin-top:20px">
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="form-group">
                                 <div class="col-md-2 col-md-offset-1" style="margin:auto">
-                                    <input type="submit" name="login" class="btn btn-success" value="Login" style="margin-top:20px;margin-bottom:20px">
+                                    <input type="submit" name="login" class="btn btn-success" value="Login" style="margin-top:20px;margin-bottom:20px"/>
                                 </div>
                             </div>
-
                         </form>
-
-                        <div class="login-help">
-                            <a  id="j_h2" href="#">Registrati</a> - <a  id="j_h2" href="#">Password Dimenticata?</a>
-                        </div>
                     </div>
                 </div>
             </div>
