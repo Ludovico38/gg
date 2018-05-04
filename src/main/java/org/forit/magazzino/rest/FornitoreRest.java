@@ -2,6 +2,8 @@ package org.forit.magazzino.rest;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -10,6 +12,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import org.forit.magazzino.DAO.FornitoreDAO;
 import org.forit.magazzino.DAO.MagazzinoDAO;
 import org.forit.magazzino.DTO.FornitoreDTO;
 import org.forit.magazzino.Exception.MagazzinoException;
@@ -21,24 +24,16 @@ public class FornitoreRest {
     @GET()
     @Produces("application/json")
     public List<FornitoreDTO> getFornitori() {
-        try {
-            MagazzinoDAO magazzinoDAO = new MagazzinoDAO();
-            return magazzinoDAO.getListaFornitori();
-        } catch (MagazzinoException ex) {
-            return new ArrayList<>();
-        }
+        FornitoreDAO fornitoreDAO = new FornitoreDAO();
+        return fornitoreDAO.getListaFornitori();
     }
 
     @Path("/{id}")
     @GET()
     @Produces("application/json")
     public FornitoreDTO getFornitore(@PathParam("id") long ID) {
-        try {
-            MagazzinoDAO magazzinoDAO = new MagazzinoDAO();
-            return magazzinoDAO.getFornitore(ID);
-        } catch (MagazzinoException ex) {
-            return null;
-        }
+        FornitoreDAO fornitoreDAO = new FornitoreDAO();
+        return fornitoreDAO.getFornitore(ID);
     }
 
     @Path("/")
@@ -46,11 +41,13 @@ public class FornitoreRest {
     @Consumes("application/json")
     @Produces("application/json")
     public boolean postFornitore(FornitoreDTO fornitore) {
+
         try {
-            MagazzinoDAO magazzinoDAO = new MagazzinoDAO();
-            magazzinoDAO.insertFornitore(fornitore.getId(), fornitore.getIdCategoria(), fornitore.getNome(), fornitore.getIndirizzo(), fornitore.getRecapito(), fornitore.getIdOrdine());
+            FornitoreDAO fornitoreDAO = new FornitoreDAO();
+            fornitoreDAO.insertFornitore(fornitore.getId(), fornitore.getIdCategoria(), fornitore.getNome(), fornitore.getIndirizzo(), fornitore.getRecapito(), fornitore.getIdOrdine());
             return true;
         } catch (MagazzinoException ex) {
+            System.out.println("Errore: " + ex.getMessage());
             return false;
         }
     }
