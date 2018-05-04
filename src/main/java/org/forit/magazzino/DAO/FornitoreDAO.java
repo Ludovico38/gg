@@ -43,7 +43,7 @@ public class FornitoreDAO {
         return fornitore;
     }
 
-    public void insertFornitore(long id, long idCategoria, String nome, String indirizzo, String recapito, long idOrdine) throws MagazzinoException {
+    public void insertFornitore(long idCategoria, String nome, String indirizzo, String recapito, long idOrdine) throws MagazzinoException {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("magazzino_pu");
         EntityManager em = emf.createEntityManager();
 
@@ -52,12 +52,11 @@ public class FornitoreDAO {
             transaction.begin();
 
             FornitoreEntity fornitore = new FornitoreEntity();
-            fornitore.getID();
-            fornitore.getIdCategoria();
-            fornitore.getNome();
-            fornitore.getIndirizzo();
-            fornitore.getRecapito();
-            fornitore.getIdOrdine();
+            fornitore.setIdCategoria(idCategoria);
+            fornitore.setNome(nome);
+            fornitore.setIndirizzo(indirizzo);
+            fornitore.setRecapito(recapito);
+            fornitore.setIdOrdine(idOrdine);
             em.persist(fornitore);
 
             transaction.commit();
@@ -79,9 +78,33 @@ public class FornitoreDAO {
             transaction.begin();
 
             FornitoreEntity fornitore = em.find(FornitoreEntity.class, id);
-            //to do
+            fornitore.setIdCategoria(idCategoria);
+            fornitore.setNome(nome);
+            fornitore.setIndirizzo(indirizzo);
+            fornitore.setRecapito(recapito);
+            fornitore.setIdOrdine(idOrdine);
             em.merge(fornitore);
 
+            transaction.commit();
+        } catch (Exception ex) {
+            transaction.rollback();
+            throw new MagazzinoException(ex);
+        } finally {
+            em.close();
+            emf.close();
+        }
+    }
+
+    public void deleteFornitore(long ID) throws MagazzinoException {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("magazzino_pu");
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction transaction = em.getTransaction();
+        try {
+            transaction.begin();
+            
+            FornitoreEntity fornitore = em.find(FornitoreEntity.class, ID);
+            em.remove(fornitore);
+            
             transaction.commit();
         } catch (Exception ex) {
             transaction.rollback();

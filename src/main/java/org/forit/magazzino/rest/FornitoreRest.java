@@ -44,7 +44,7 @@ public class FornitoreRest {
 
         try {
             FornitoreDAO fornitoreDAO = new FornitoreDAO();
-            fornitoreDAO.insertFornitore(fornitore.getId(), fornitore.getIdCategoria(), fornitore.getNome(), fornitore.getIndirizzo(), fornitore.getRecapito(), fornitore.getIdOrdine());
+            fornitoreDAO.insertFornitore(fornitore.getIdCategoria(), fornitore.getNome(), fornitore.getIndirizzo(), fornitore.getRecapito(), fornitore.getIdOrdine());
             return true;
         } catch (MagazzinoException ex) {
             System.out.println("Errore: " + ex.getMessage());
@@ -72,8 +72,8 @@ public class FornitoreRest {
     @Produces("application/json")
     public boolean deleteFornitore(FornitoreDTO fornitore) {
         try {
-            MagazzinoDAO magazzinoDAO = new MagazzinoDAO();
-            magazzinoDAO.deleteFornitore(fornitore.getNome());
+            FornitoreDAO fornitoreDAO = new FornitoreDAO();
+            fornitoreDAO.deleteFornitore(fornitore.getId());
             return true;
         } catch (MagazzinoException ex) {
             return false;
