@@ -5,7 +5,8 @@
  */
 package org.forit.magazzino.rest;
 
-import java.util.ArrayList;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -13,9 +14,8 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import org.forit.magazzino.DAO.MagazzinoDAO;
+import org.forit.magazzino.DAO.ProdottoDAO;
 import org.forit.magazzino.DTO.ProdottoDTO;
-import org.forit.magazzino.Exception.MagazzinoException;
 
 /**
  *
@@ -28,24 +28,16 @@ public class ProdottoRest {
     @GET()
     @Produces("application/json")
     public List<ProdottoDTO> getProdotti(){
-        try{
-            MagazzinoDAO mDAO = new MagazzinoDAO();
-            return mDAO.getListaProdotti();
-        } catch(MagazzinoException ex){
-            return new ArrayList<>();
-        }
+        ProdottoDAO prodotto = new ProdottoDAO();
+        return prodotto.getListaProdotti();
     }
     
     @Path("/{id}")
     @GET()
     @Produces("application/json")
     public ProdottoDTO getProdotto(@PathParam("id") long ID){
-        try{
-            MagazzinoDAO mDAO = new MagazzinoDAO();
-            return mDAO.getProdotto(ID);
-        } catch(MagazzinoException ex){
-            return null;
-        }
+        ProdottoDAO prodotto = new ProdottoDAO();
+        return prodotto.getProdotto(ID);
     }
     
     @Path("/")
@@ -53,12 +45,8 @@ public class ProdottoRest {
     @Consumes("application/json")
     @Produces("application/json")
     public boolean postProdotto(ProdottoDTO prodotto){
-        try{
-            MagazzinoDAO mDAO = new MagazzinoDAO();
-            mDAO.insertProdotto(prodotto);
-            return true;
-        } catch(MagazzinoException ex){
-            return false;
-        }
+        ProdottoDAO p = new ProdottoDAO();
+        p.insertProdotto(prodotto.getNome(), prodotto.getPrezzo(), prodotto.getScadenza(), prodotto.getProvenienza(), prodotto.getIdFornitore());
+        return true;
     }
 }
