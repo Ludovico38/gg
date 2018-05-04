@@ -58,8 +58,8 @@ public class FornitoreRest {
     @Produces("application/json")
     public boolean putFornitore(FornitoreDTO fornitore) {
         try {
-            MagazzinoDAO magazzinoDAO = new MagazzinoDAO();
-            magazzinoDAO.updateFornitore(fornitore.getId(), fornitore.getIdCategoria(), fornitore.getNome(), fornitore.getIndirizzo(), fornitore.getRecapito(), fornitore.getIdOrdine());
+            FornitoreDAO fornitoreDAO = new FornitoreDAO();
+            fornitoreDAO.updateFornitore(fornitore.getId(), fornitore.getIdCategoria(), fornitore.getNome(), fornitore.getIndirizzo(), fornitore.getRecapito(), fornitore.getIdOrdine());
             return true;
         } catch (MagazzinoException ex) {
             return false;

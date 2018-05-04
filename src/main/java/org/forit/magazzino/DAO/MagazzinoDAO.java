@@ -31,7 +31,7 @@ import static org.forit.magazzino.classes.Queries.UPDATE_MAGAZZINIERE;
 public class MagazzinoDAO {
 
     public final static String DB_URL = "jdbc:mysql://localhost:3306/magazzino?useSSL=false&user=forit&password=12345";
-    public final static String LISTA_FORNITORI = "SELECT * FROM fornitore";
+    public final static String LISTA_FORNITORI = "SELECT * FROM fornitore order by ID_CATEGORIA";
     private static final String FORNITORE
             = "SELECT f.* "
             + "FROM fornitore f "
