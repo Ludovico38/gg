@@ -35,7 +35,7 @@ public class ProdottoEntity implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", unique = true, nullable = false)
-    private long ID;
+    private long ID = -1;
     
     @Column(name = "NOME", unique = false, nullable = false)
     private String nome;

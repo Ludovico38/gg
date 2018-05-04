@@ -90,7 +90,52 @@ public class ProdottoDAO {
             em.close();
             emf.close();
         }
-
     }
 
+    public void updateProdotto(ProdottoDTO prodotto) {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("magazzino_pu");
+        EntityManager em = emf.createEntityManager();
+
+        EntityTransaction transaction = em.getTransaction();
+        try {
+            transaction.begin();
+
+            ProdottoEntity entity = em.find(ProdottoEntity.class, prodotto.getId());
+            entity.setNome(prodotto.getNome());
+            entity.setPrezzo(prodotto.getPrezzo());
+            entity.setScadenza(prodotto.getScadenza());
+            entity.setProvenienza(prodotto.getProvenienza());
+            entity.setIdFornitore(prodotto.getIdFornitore());
+            em.merge(entity);
+
+            transaction.commit();
+        } catch (Exception ex) {
+            System.out.println("Errore " + ex.getMessage());
+            transaction.rollback();
+        } finally {
+            em.close();
+            emf.close();
+        }
+    }
+    
+    public void deleteProdotto(ProdottoDTO p){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("magazzino_pu");
+        EntityManager em = emf.createEntityManager();
+
+        EntityTransaction transaction = em.getTransaction();
+        try {
+            transaction.begin();
+            
+            ProdottoEntity prodotto = em.find(ProdottoEntity.class, p.getId());
+            em.remove(prodotto);
+            
+            transaction.commit();
+        } catch (Exception ex) {
+            System.out.println("Errore " + ex.getMessage());
+            transaction.rollback();
+        } finally {
+            em.close();
+            emf.close();
+        }
+    }
 }

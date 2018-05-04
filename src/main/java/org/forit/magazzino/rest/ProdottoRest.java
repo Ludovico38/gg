@@ -5,10 +5,9 @@
  */
 package org.forit.magazzino.rest;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.List;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -46,7 +45,21 @@ public class ProdottoRest {
     @Produces("application/json")
     public boolean postProdotto(ProdottoDTO prodotto){
         ProdottoDAO p = new ProdottoDAO();
-        p.insertProdotto(prodotto.getNome(), prodotto.getPrezzo(), prodotto.getScadenza(), prodotto.getProvenienza(), prodotto.getIdFornitore());
-        return true;
+        if(prodotto.getId() == -1){
+            p.insertProdotto(prodotto.getNome(), prodotto.getPrezzo(), prodotto.getScadenza(), prodotto.getProvenienza(), prodotto.getIdFornitore());
+            return true;
+        } else {
+            p.updateProdotto(prodotto);
+            return false;
+        }
+    }
+    
+    @Path("/")
+    @DELETE()
+    @Consumes("application/json")
+    @Produces("application/json")
+    public void deleteProdotto(ProdottoDTO prodotto){
+        ProdottoDAO p = new ProdottoDAO();
+        p.deleteProdotto(prodotto);
     }
 }
