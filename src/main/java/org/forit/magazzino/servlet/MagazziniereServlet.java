@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.forit.magazzino.DAO.MagazzinoDAO;
 import org.forit.magazzino.DTO.MagazziniereDTO;
+import org.forit.magazzino.DTO.TipoVeicoloDTO;
 import org.forit.magazzino.Exception.MagazzinoException;
 
 /**
@@ -96,10 +97,10 @@ public class MagazziniereServlet extends HttpServlet {
             switch (action) {
                 case "view":
                     String ID = req.getParameter("ID");
-//                    this.dettaglioMagazziniere(resp, Long.parseLong(ID), true);
+                    this.dettaglioMagazziniere(resp, Long.parseLong(ID), true);
                     break;
                 case "edit":
-                    ID = req.getParameter("ID");
+//                    ID = req.getParameter("ID");
 //                    this.dettaglioMagazziniere(resp, Long.parseLong(ID), false);
                     break;
                 case "new":
@@ -112,20 +113,20 @@ public class MagazziniereServlet extends HttpServlet {
     }
 
     private void listaMagazzinieri(HttpServletResponse resp) throws IOException {
-//        List<MagazziniereDTO> magazzinieri;
-//        String messaggioErrore = null;
-//        try {
-//            MagazzinoDAO magazzinoDAO = new MagazzinoDAO();
-//            magazzinieri = magazzinoDAO.getMagazziniere(ID);)
-//        } catch (MagazzinoException ex) {
-//            magazzinieri = new ArrayList<>();
-//            messaggioErrore = "Impossibile leggere i dati dal database";
-//        }
-//        try (PrintWriter out = resp.getWriter()) {
-//            this.apriHTML(out, messaggioErrore, "$$clienti$$");
-//            this.createTabellaMagazzinieri(out, magazzinieri);
-//            this.chiudiHTML(out);
-//        }
+        List<MagazziniereDTO> magazziniere;
+        String messaggioErrore = null;
+        try {
+            MagazzinoDAO magazzinoDAO = new MagazzinoDAO();
+            magazziniere = magazzinoDAO.getListaMagazziniere();
+        } catch (MagazzinoException ex) {
+            magazziniere = new ArrayList<>();
+            messaggioErrore = "Impossibile leggere i dati dal database";
+        }
+        try (PrintWriter out = resp.getWriter()) {
+            this.apriHTML(out, messaggioErrore, "$$magazzinieri$$");
+            this.createTabellaMagazzinieri(out, magazziniere);
+            this.chiudiHTML(out);
+        }
     }
 
     private void createTabellaMagazzinieri(PrintWriter out, List<MagazziniereDTO> magazzinieri) {
@@ -153,8 +154,87 @@ public class MagazziniereServlet extends HttpServlet {
         out.println("</div>");
     }
 
-   
+    private void dettaglioMagazziniere(HttpServletResponse resp, long ID, boolean disabled) throws IOException {
+        MagazziniereDTO magazziniere = null;
+        TipoVeicoloDTO veicolo = null;
+        String messaggioErrore = null;
 
+//        if (ID == -1) {
+//            magazziniere = new MagazziniereDTO(-1, "", "", null, "", "");
+//            magazziniere.setId(-1);
+//        } else {
+        try {
+            MagazzinoDAO magazzinoDAO = new MagazzinoDAO();
+            magazziniere = magazzinoDAO.getMagazziniere(ID);
+        } catch (MagazzinoException ex) {
+            messaggioErrore = "Impossibile leggere i dati dal database";
+        }
+//        }
+        try (PrintWriter out = resp.getWriter()) {
+            this.apriHTML(out, messaggioErrore, "$$magazzinieri$$");
+            if (magazziniere != null) {
+                this.creaDettaglioMagazziniere(out, magazziniere, veicolo, disabled);
+            }
+            this.chiudiHTML(out);
+        }
+    }
+
+    private void creaDettaglioMagazziniere(PrintWriter out, MagazziniereDTO magazziniere, TipoVeicoloDTO veicolo, boolean disabled) {
+
+        out.println("<form action = 'clienti' method ='POST' class='container-fluid'>");
+        out.println("<div class='panel panel-default'>");
+        out.println("<div class='panel-heading'>");
+        out.println("<div class='panel-title'>Dettaglio Magazziniere</div>");
+        out.println("</div>");
+        out.println("<div class='panel-body'>");
+        out.println("<input type='hidden' name = 'ID' value = '" + magazziniere.getId() + "'/>");
+        this.creaDatiAnagrafici(out, magazziniere, veicolo, disabled);
+
+        out.println("</div>");
+        out.println("<div class='panel-footer text-right'>");
+        if (!disabled) {
+            out.println("<input type='submit' class='btn btn-primary' value='Salva Modifiche'/>");
+        }
+        out.println("</div>");
+        out.println("</div>");
+        out.println("</form>");
+    }
+
+    private void creaDatiAnagrafici(PrintWriter out, MagazziniereDTO magazziniere, TipoVeicoloDTO veicolo, boolean disabled) {
+        out.println("<div class='row'>");
+        out.println("<div class='col-sm-6'>");
+        out.println("<label>Nome</label>");
+        out.println("<input type='text' name='nome' class='form-control' value ='" + magazziniere.getNome() + "'" + (disabled ? " disabled='disabled'" : "") + "/>");
+        out.println("</div>");
+        out.println("<div class='col-sm-6'>");
+        out.println("<label>Cognome</label>");
+        out.println("<input type='text' name='cognome' class='form-control' value ='" + magazziniere.getCognome() + "'" + (disabled ? " disabled='disabled'" : "") + "/>");
+        out.println("</div>");
+        out.println("</div>");
+        out.println("<div class='col-sm-6'>");
+        out.println("<label>Codice Fiscale</label>");
+        out.println("<input type='text' name='codiceFiscale' class='form-control' value ='" + magazziniere.getCodiceFiscale() + "'" + (disabled ? " disabled='disabled'" : "") + "/>");
+        out.println("</div>");
+        out.println("<div class='row'>");
+        out.println("<div class='col-sm-6'>");
+        out.println("<label>Data di Nascita</label>");
+        out.println("<input type='date' name='dataNascita' class='form-control' value ='" + magazziniere.getDataDiNascita() + "'" + (disabled ? " disabled='disabled'" : "") + "/>");
+        out.println("</div>");
+        out.println("</div>");
+        out.println("<div class='row'>");
+        out.println("<div class='col-sm-6'>");
+        out.println("<label>Patente</label>");
+        out.println("<input type='text' name='patente' class='form-control' value ='" + magazziniere.getPatente() + "'" + (disabled ? " disabled='disabled'" : "") + "/>");
+        out.println("</div>");
+        out.println("</div>");
+
+        out.println("<div class='col-sm-6'>");
+        out.println("<label>Veicolo</label>");
+        out.println("<input type='text' name='veicolo' class='form-control' value ='" + veicolo.getDescrizione() + "'" + (disabled ? " disabled='disabled'" : "") + "/>");
+        out.println("</div>");
+
+    }
+    
     protected void apriHTML(PrintWriter out, String messaggioErrore, String active) {
         out.println("<!DOCTYPE html>");
         out.println("<html>");

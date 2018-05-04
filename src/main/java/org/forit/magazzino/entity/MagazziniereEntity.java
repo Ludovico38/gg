@@ -3,35 +3,61 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.forit.magazzino.DTO;
+package org.forit.magazzino.entity;
 
+import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
-import javax.persistence.CollectionTable;
-import javax.persistence.ElementCollection;
-import javax.persistence.JoinColumn;
-import org.forit.magazzino.entity.VeicoloEntity;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 /**
  *
  * @author UTENTE
  */
-public class MagazziniereDTO {
+@Entity
+@Table(name = "magazziniere")
+@NamedQueries({
+    @NamedQuery(
+            name = "magazziniere.selectAll",
+            query = "SELECT m FROM MagazziniereEntity m ORDER BY m.cognome"
+    )
+})
+public class MagazziniereEntity implements Serializable {
 
-    private long id = -1;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID", unique = true, nullable = false)
+    private long id;
+
+    @Column(table = "magazziniere", name = "NOME", unique = false, nullable = false)
     private String nome;
+
+    @Column(table = "magazziniere", name = "COGNOME", unique = false, nullable = false)
     private String cognome;
+
+    @Column(table = "magazziniere", name = "CODICE_FISCALE", unique = false, nullable = false)
     private String codiceFiscale;
+
+    @Column(table = "magazziniere", name = "DATA_NASCITA", unique = false, nullable = false)
     private LocalDate dataDiNascita;
+
+    @Column(table = "magazziniere", name = "PATENTE", unique = false, nullable = true)
     private String patente;
+
+    @Column(table = "magazziniere", name = "ID_VEICOLO", unique = false, nullable = false)
     private long idVeicolo;
 
-    public MagazziniereDTO() {
+    public MagazziniereEntity() {
     }
 
-    public MagazziniereDTO(long id, String nome, String cognome, String codiceFiscale, LocalDate dataDiNascita, String patente, long idVeicolo) {
+    public MagazziniereEntity(long id, String nome, String cognome, String codiceFiscale, LocalDate dataDiNascita, String patente, long idVeicolo) {
         this.id = id;
         this.nome = nome;
         this.cognome = cognome;
@@ -81,14 +107,6 @@ public class MagazziniereDTO {
         this.dataDiNascita = dataDiNascita;
     }
 
-    public String getDatadinascitaAsString() {
-        return dataDiNascita.toString();
-    }
-
-    public void setDatadinascitaAsString(String dataDiNascita) {
-        this.dataDiNascita = LocalDate.parse(dataDiNascita);
-    }
-
     public String getPatente() {
         return patente;
     }
@@ -107,15 +125,14 @@ public class MagazziniereDTO {
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 83 * hash + (int) (this.id ^ (this.id >>> 32));
-        hash = 83 * hash + Objects.hashCode(this.nome);
-        hash = 83 * hash + Objects.hashCode(this.cognome);
-        hash = 83 * hash + Objects.hashCode(this.codiceFiscale);
-        hash = 83 * hash + Objects.hashCode(this.dataDiNascita);
-        hash = 83 * hash + Objects.hashCode(this.patente);
-        hash = 83 * hash + (int) (this.idVeicolo ^ (this.idVeicolo >>> 32));
-
+        int hash = 7;
+        hash = 23 * hash + (int) (this.id ^ (this.id >>> 32));
+        hash = 23 * hash + Objects.hashCode(this.nome);
+        hash = 23 * hash + Objects.hashCode(this.cognome);
+        hash = 23 * hash + Objects.hashCode(this.codiceFiscale);
+        hash = 23 * hash + Objects.hashCode(this.dataDiNascita);
+        hash = 23 * hash + Objects.hashCode(this.patente);
+        hash = 23 * hash + (int) (this.idVeicolo ^ (this.idVeicolo >>> 32));
         return hash;
     }
 
@@ -130,7 +147,7 @@ public class MagazziniereDTO {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final MagazziniereDTO other = (MagazziniereDTO) obj;
+        final MagazziniereEntity other = (MagazziniereEntity) obj;
         if (this.id != other.id) {
             return false;
         }
@@ -152,17 +169,12 @@ public class MagazziniereDTO {
         if (!Objects.equals(this.dataDiNascita, other.dataDiNascita)) {
             return false;
         }
-
         return true;
     }
 
     @Override
     public String toString() {
-        return "MagazziniereDTO{" + "id=" + id + ", nome=" + nome + ", cognome=" + cognome + ", codiceFiscale=" + codiceFiscale + ", dataDiNascita=" + dataDiNascita + ", patente=" + patente + ", idVeicolo=" + idVeicolo + '}';
-    }
-
-    public void setVeicoli(List<TipoVeicoloDTO> veicoli) {
-        throw new UnsupportedOperationException("Not supported yet."); 
+        return "MagazziniereEntity{" + "id=" + id + ", nome=" + nome + ", cognome=" + cognome + ", codiceFiscale=" + codiceFiscale + ", dataDiNascita=" + dataDiNascita + ", patente=" + patente + ", idVeicolo=" + idVeicolo + '}';
     }
 
 }

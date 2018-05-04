@@ -1,24 +1,88 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <context-param>
+        <param-name>javax.faces.PROJECT_STAGE</param-name>
+        <param-value>Development</param-value>
+        <!--<param-value>Production</param-value>-->
+    </context-param>
+    <servlet>
+        <servlet-name>Faces Servlet</servlet-name>
+        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>/faces/*</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>ProdottiServlet</servlet-name>
+        <servlet-class>org.forit.magazzino.servlet.ProdottiServlet</servlet-class>
+    </servlet>
     <servlet>
         <servlet-name>MagazzinoServlet</servlet-name>
         <servlet-class>org.forit.magazzino.servlet.MagazzinoServlet</servlet-class>
     </servlet>
+    <!--    <servlet>
+        <servlet-name>ScaffaliServlet</servlet-name>
+        <servlet-class>org.forit.magazzino.servlet.ScaffaliServlet</servlet-class>
+    </servlet>-->
     <servlet>
-        <servlet-name>MagazziniereServlet</servlet-name>
-        <servlet-class>org.forit.magazzino.servlet.MagazziniereServlet</servlet-class>
+        <servlet-name>MagazzinieriServlet</servlet-name>
+        <servlet-class>org.forit.magazzino.servlet.MagazzinieriServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Jersey REST Service</servlet-name>
+        <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
+        <init-param>
+            <param-name>jersey.config.server.provider.packages</param-name>
+            <param-value>org.forit.magazzino.rest</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet>
+        <servlet-name>VeicoliServlet</servlet-name>
+        <servlet-class>org.forit.magazzino.servlet.VeicoliServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>FornitoriServlet</servlet-name>
+        <servlet-class>org.forit.magazzino.servlet.FornitoriServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ProdottiServlet</servlet-name>
+        <url-pattern>/prodotti</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>MagazzinoServlet</servlet-name>
         <url-pattern>/magazzino</url-pattern>
     </servlet-mapping>
+    <!--    <servlet-mapping>
+        <servlet-name>ScaffaliServlet</servlet-name>
+        <url-pattern>/scaffali</url-pattern>
+    </servlet-mapping>-->
     <servlet-mapping>
-        <servlet-name>MagazziniereServlet</servlet-name>
-        <url-pattern>/magazziniere</url-pattern>
+        <servlet-name>MagazzinieriServlet</servlet-name>
+        <url-pattern>/magazzinieri</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>VeicoliServlet</servlet-name>
+        <url-pattern>/veicoli</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FornitoriServlet</servlet-name>
+        <url-pattern>/fornitori</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Jersey REST Service</servlet-name>
+        <url-pattern>/rest/*</url-pattern>
     </servlet-mapping>
     <session-config>
-        <session-timeout>
-            30
-        </session-timeout>
+        <session-timeout>30</session-timeout>
     </session-config>
+    
+    <resource-ref>
+        <description>netflix Datasource</description>
+        <res-ref-name>jdbc/magazzino</res-ref-name>
+        <res-type>javax.sql.DataSource</res-type>
+        <res-auth>Container</res-auth>
+    </resource-ref>
 </web-app>

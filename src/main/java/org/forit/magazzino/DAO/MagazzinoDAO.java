@@ -26,25 +26,15 @@ public class MagazzinoDAO {
 
     private static final String DB_URL = "jdbc:mysql://localhost:3306/magazzino?user=forit&password=12345";
 
-    static {
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-        } catch (ClassNotFoundException ex) {
-            ex.printStackTrace();
-        }
-    }
-
     private static final String listaMagazzinieri
-            = "SELECT tv.ID, m.NOME,m.COGNOME,m.PATENTE,m.ID_VEICOLO "
-            + "FROM veicolo v,tipo_veicolo tv, magazziniere m "
-            + "WHERE tv.ID = v.ID_TIPO_VEICOLO AND m.ID_VEICOLO = v.ID "
-            + "ORDER BY m.COGNOME";
+            = "SELECT m.* "
+            + "FROM magazziniere m";
     private static final String inserisciMagazziniere
             = "INSERT INTO magazziniere (NOME,COGNOME,CODICE_FISCALE,DATA_NASCITA,PATENTE,ID_VEICOLO)"
             + "VALUES (?,?,?,?,?,?)";
     private static final String modificaMagazziniere
             = "UPDATE magazziniere "
-            + "SET NOME = ?, COGNOME = ?, PATENTE = ? "
+            + "SET NOME = ?, COGNOME = ?, CODICE_FISCALE = ?, DATA_NASCITA = ?, PATENTE = ?, ID_VEICOLO = ? "
             + "WHERE ID = ?";
 //    private static final String modificaMagazziniere2
 //            = "UPDATE magazziniere "
@@ -54,6 +44,17 @@ public class MagazzinoDAO {
             = "SELECT m.* , v.ID_TIPO_VEICOLO, tv.DESCRIZIONE "
             + "FROM magazziniere m, veicolo v, tipo_veicolo tv "
             + "WHERE m.ID = ? and v.ID_TIPO_VEICOLO = tv.ID";
+    public static final String DELETE_MAGAZZINIERE
+            = "DELETE FROM magazziniere "
+            + "WHERE id = ?";
+
+    static {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+    }
 
     public List<MagazziniereDTO> getListaMagazziniere() throws MagazzinoException {
         try (Connection conn = DriverManager.getConnection(DB_URL);
@@ -66,7 +67,7 @@ public class MagazzinoDAO {
                 String nome = rs.getString("NOME");
                 String cognome = rs.getString("COGNOME");
                 String codiceFiscale = rs.getString("CODICE_FISCALE");
-                LocalDate dataDiNascita = rs.getDate("DATA_DI_NASCITA").toLocalDate();
+                LocalDate dataDiNascita = rs.getDate("DATA_NASCITA").toLocalDate();
                 String patente = rs.getString("PATENTE");
                 long idveicolo = rs.getLong("ID_VEICOLO");
 
@@ -80,7 +81,7 @@ public class MagazzinoDAO {
         }
     }
 
-    public void insertMagazzinieri(String nome, String cognome, String codiceFiscale, LocalDate datanascita, String patente, long idveicolo) throws MagazzinoException {
+    public void insertMagazzinieri(long ID, String nome, String cognome, String codiceFiscale, LocalDate dataDiNascita, String patente, long idveicolo) throws MagazzinoException {
         try (Connection conn = DriverManager.getConnection(DB_URL)) {
             conn.setAutoCommit(false);
             try (PreparedStatement ps1 = conn.prepareStatement(inserisciMagazziniere, Statement.RETURN_GENERATED_KEYS)) {
@@ -88,14 +89,14 @@ public class MagazzinoDAO {
                 ps1.setString(1, nome);
                 ps1.setString(2, cognome);
                 ps1.setString(3, codiceFiscale);
-                ps1.setDate(4, Date.valueOf(datanascita));
+                ps1.setDate(4, Date.valueOf(dataDiNascita));
                 ps1.setString(5, patente);
                 ps1.setLong(6, idveicolo);
                 ps1.executeUpdate();
 
                 ResultSet generatedKey = ps1.getGeneratedKeys();
                 generatedKey.next();
-                //long Id = generatedKey.getLong(1);
+                long Id = generatedKey.getLong(1);
 
                 conn.commit();
             } catch (SQLException ex) {
@@ -109,24 +110,25 @@ public class MagazzinoDAO {
         }
     }
 
-    public void updateMagazziniere(MagazziniereDTO magazziniere) throws MagazzinoException {
-        try (Connection conn = DriverManager.getConnection(DB_URL)) {
-            conn.setAutoCommit(false);
-            try (PreparedStatement ps2 = conn.prepareStatement(modificaMagazziniere)) {
-                ps2.setString(1, magazziniere.getNome());
-                ps2.setString(2, magazziniere.getCognome());
-                ps2.setString(3, magazziniere.getPatente());
-                conn.commit();
-            } catch (SQLException ex) {
-                conn.rollback();
-                throw new MagazzinoException(ex);
-            }
+    public void updateMagazziniere(long id, String nome, String cognome, String codiceFiscale, LocalDate dataDiNascita, String patente, long idVeicolo) throws MagazzinoException {
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+                PreparedStatement ps = conn.prepareStatement(modificaMagazziniere)) {
+
+            ps.setString(1, nome);
+            ps.setString(2, cognome);
+            ps.setString(3, codiceFiscale);
+            ps.setDate(4, Date.valueOf(dataDiNascita));
+            ps.setString(5, patente);
+            ps.setLong(6, idVeicolo);
+            ps.setLong(7, id);
+            ps.executeUpdate();
+
         } catch (SQLException ex) {
             throw new MagazzinoException(ex);
         }
     }
 
-    public void getMagazziniere(long id) throws MagazzinoException {
+    public MagazziniereDTO getMagazziniere(long id) throws MagazzinoException {
         try (
                 Connection conn = DriverManager.getConnection(DB_URL);
                 PreparedStatement ps1 = conn.prepareStatement(magazziniere)) {
@@ -134,16 +136,32 @@ public class MagazzinoDAO {
             ResultSet rs = ps1.executeQuery();
             rs.next();
 
+            id = rs.getLong("ID");
             String nome = rs.getString("NOME");
             String cognome = rs.getString("COGNOME");
             String codicefiscale = rs.getString("CODICE_FISCALE");
-            LocalDate datadinascita = rs.getDate("DATA_DI_NASCITA").toLocalDate();
+            LocalDate dataDiNascita = rs.getDate("DATA_NASCITA").toLocalDate();
             String patente = rs.getString("PATENTE");
             Long idveicolo = rs.getLong("ID_VEICOLO");
 
-            MagazziniereDTO magazziniere = new MagazziniereDTO(id, nome, cognome, codicefiscale, datadinascita, patente, idveicolo);
+            MagazziniereDTO magazziniere = new MagazziniereDTO(id, nome, cognome, codicefiscale, dataDiNascita, patente, idveicolo);
+
+            return magazziniere;
         } catch (SQLException ex) {
             throw new MagazzinoException(ex);
         }
     }
+
+    public void deleteMagazziniere(long id) throws MagazzinoException {
+        try (
+                Connection conn = DriverManager.getConnection(DB_URL);
+                PreparedStatement ps = conn.prepareStatement(DELETE_MAGAZZINIERE);) {
+            ps.setLong(1, id);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println("Si è verificato un errore: " + ex.getMessage());
+            throw new MagazzinoException(ex);
+        }
+    }
+
 }

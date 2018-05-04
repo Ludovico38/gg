@@ -1,0 +1,140 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>RosMagazzino - Prodotti</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+        <script type="text/javascript" src="../js/bootstrap.js"></script>
+        <link rel="stylesheet" href="../css/bootstrap.css" type="text/css"/>
+        <link rel="stylesheet" href="../css/default.css" type="text/css"/>
+        <link rel="icon" href="../img/icon.png"/>
+
+        <script type="text/javascript">
+            function mostraModale() {
+                $('#myModal').modal('show');
+            }
+            function nascondiModale() {
+                $('#myModal').modal('hide');
+            }
+        </script>
+    </h:head>
+    <h:body>
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigazione">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="../index.html">
+                        <img id="icon" alt="Netflix" src="../img/icon.png" width="32"/>
+                    </a>
+                </div>
+
+                <div class="collapse navbar-collapse" id="navigazione">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="#">Prodotti</a></li>
+                        <li><a href="#">Scaffali</a></li>
+                        <li><a href="../faces/magazzinieri.xhtml">Magazzinieri</a></li>
+                        <li><a href="#">Veicoli</a></li>
+                        <li><a href="../faces/fornitori.xhtml">Fornitori</a></li>
+                        <li><a href="#">Entrate/Uscite</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="../map.html">Dove Siamo</a></li>
+                        <li><a href="#" data-toggle="modal" data-target="#login-modal">Login</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <h:form id='tabella_prodotti'>
+            <div class='container-fluid table-responsive'>
+                <table class='table'>
+                    <thead>
+                        <tr>
+                            <th class='col-sm-1'>
+                                <h:commandButton class='btn btn-primary' value="Nuovo">
+                                    <f:ajax execute="" render="modale_prodotti" listener="#{pBean.loadProdotto(-1, false)}" onevent="mostraModale"/>
+                                </h:commandButton>
+                            </th>
+                            <th class='col-sm-4'>Nome</th>
+                            <th class='col-sm-4'>Prezzo</th>
+                            <th class='col-sm-2'>Scadenza</th>
+                            <th class='col-sm-2'>Provenienza</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ui:repeat value="#{pBean.prodotti}" var="prodotto">
+                            <tr>
+                                <td>
+                                    <h:commandLink class='btn btn-link' title='Mostra Dettagli'>
+                                        <span class='glyphicon glyphicon-eye-open'></span>
+                                        <f:ajax execute="" render="modale_prodotti" listener="#{pBean.loadProdotto(prodotto.id, true)}" onevent="mostraModale"/>
+                                    </h:commandLink>
+                                    <h:commandLink class='btn btn-link' title='Modifica Dati'>
+                                        <span class='glyphicon glyphicon-pencil'></span>
+                                        <f:ajax execute="" render="modale_prodotti" listener="#{pBean.loadProdotto(prodotto.id, false)}" onevent="mostraModale"/>
+                                    </h:commandLink>
+                                </td>
+                                <td>#{prodotto.nome}</td>
+                                <td>#{prodotto.prezzo}</td>
+                                <td><h:outputFormat value="#{prodotto.scadenza}"/></td>
+                                <td>#{prodotto.provenienza}</td>
+                            </tr>
+                        </ui:repeat>
+                    </tbody>
+                </table>
+            </div>
+        </h:form>
+
+
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <h:form id="modale_prodotti">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Dettaglio Prodotto</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label>Nome</label>
+                                    <h:inputText class="form-control" value="#{pBean.prodotto.nome}" disabled="#{pBean.disabled}"></h:inputText>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label>Prezzo</label>
+                                    <h:inputText class="form-control" value="#{pBean.prodotto.prezzo}" disabled="#{pBean.disabled}"></h:inputText>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label>Scadenza</label>
+                                    <h:inputText class="form-control" value="#{pBean.prodotto.scadenzaAsString}" disabled="#{pBean.disabled}">
+                                        <f:passThroughAttribute name="type" value="date"/>
+                                    </h:inputText>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label>Provenienza</label>
+                                    <h:inputText class="form-control" value="#{pBean.prodotto.provenienza}" disabled="#{pBean.disabled}"></h:inputText>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Chiudi</button>
+                            <h:commandButton class="btn btn-success" value="Salva" disabled="#{pBean.disabled}">
+                                <f:ajax execute="modale_prodotti" render="tabella_prodotti" listener="#{pBean.saveProdotto()}" onevent="nascondiModale"/>
+                            </h:commandButton>
+                        </div>
+                    </div>
+                </h:form>
+            </div>
+        </div>
+    </h:body>
+</html>
